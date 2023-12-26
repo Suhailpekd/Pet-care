@@ -1,4 +1,3 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class Pet_rec_graph extends StatefulWidget {
@@ -52,38 +51,6 @@ class _Pet_rec_graphState extends State<Pet_rec_graph> {
                   ),
                   const Center(child: Text("Name")),
                   const Center(child: Text("Age")),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: LineChart(
-                      LineChartData(
-                        gridData: const FlGridData(show: true),
-                        titlesData: const FlTitlesData(show: true),
-                        borderData: FlBorderData(show: true),
-                        lineBarsData: [
-                          LineChartBarData(
-                            spots: [
-                              const FlSpot(0, 3),
-                              const FlSpot(1, 4),
-                              const FlSpot(2, 3.5),
-                              const FlSpot(3, 5),
-                              const FlSpot(4, 4.5),
-                            ],
-                            isCurved: true,
-                            color: Colors.blue,
-                            barWidth: 4,
-                            isStrokeCapRound: true,
-                            belowBarData: BarAreaData(show: false),
-                          ),
-                        ],
-                        minY: 0,
-                        // titlesData: const FlTitlesData(
-                        //   leftTitles: SideTitles(showTitles: true),
-                        //   bottomTitles: SideTitles(showTitles: true),
-                        // ),
-                        lineTouchData: const LineTouchData(enabled: true),
-                      ),
-                    ),
-                  ),
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.only(

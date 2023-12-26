@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:petcare/adding_pet_rec/adding_pet_rec.dart';
-import 'package:petcare/admin/adminlogin.dart';
-import 'package:petcare/costemerdoctor/costemer_doctor.dart';
-import 'package:petcare/customer_add_pet.dart';
-import 'package:petcare/customer_booking/costemer_booking.dart';
-import 'package:petcare/petrecordview_with_graph/petrecord_graph.dart';
+import 'package:petcare/user/appointment_inner_page/appointment_inner_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -42,6 +37,6 @@ class MyApp extends StatelessWidget {
 
             // Customer_pet_add(),
             // Customer_doctor());
-            Pet_rec_graph());
+            Appointment_inner_page());
   }
 }
