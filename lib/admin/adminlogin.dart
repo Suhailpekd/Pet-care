@@ -13,25 +13,40 @@ class _LoginpageState extends State<Loginpage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(children: [
-        CircleAvatar(
-          radius: 40,
-          backgroundImage: AssetImage("asset/Screenshot.png"),
+        Padding(
+          padding: const EdgeInsets.only(top: 45),
+          child: SizedBox(
+            height: 120,
+            width: 120,
+            child: Image.asset(
+              "asset/Screenshot.png",
+            ),
+          ),
         ),
         Center(
           child: Padding(
-            padding: const EdgeInsets.only(top: 145, bottom: 36),
+            padding: const EdgeInsets.only(top: 22, bottom: 30),
             child: Text(
-              "LOGIN",
-              style: GoogleFonts.alkatra(
-                  fontSize: 74, color: Color.fromARGB(255, 6, 6, 6)),
+              "REGISTER",
+              style: GoogleFonts.lato(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 22,
+                  color: Color.fromARGB(255, 200, 139, 6)),
             ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 34, bottom: 5),
+          child: Text(
+            "name",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           ),
         ),
         Center(
           child: Padding(
             padding: const EdgeInsets.only(left: 25, right: 25),
             child: Container(
-              height: 55,
+              height: 52,
               width: double.infinity,
               child: Center(
                 child: TextFormField(
@@ -42,28 +57,29 @@ class _LoginpageState extends State<Loginpage> {
                       icon: Padding(
                         padding: const EdgeInsets.only(left: 11),
                       ),
-                      hintText: "Email"),
+                      hintText: "Enter your name"),
                 ),
               ),
               decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5), // Shadow color
-                      spreadRadius: 2, // Spread radius
-                      blurRadius: 5, // Blur radius
-                      offset: Offset(0, 3), // Offset in x and y directions
-                    ),
-                  ],
+                  border: Border.all(
+                      width: 1.4, color: Color.fromARGB(255, 200, 139, 6)),
                   color: Color.fromARGB(255, 255, 255, 255),
-                  borderRadius: BorderRadius.circular(5)),
+                  borderRadius: BorderRadius.circular(12)),
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 25, left: 25, right: 25),
-          child: Center(
+          padding: const EdgeInsets.only(left: 34, bottom: 5, top: 15),
+          child: Text(
+            "email",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+          ),
+        ),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 25, right: 25),
             child: Container(
-              height: 55,
+              height: 52,
               width: double.infinity,
               child: Center(
                 child: TextFormField(
@@ -74,50 +90,89 @@ class _LoginpageState extends State<Loginpage> {
                       icon: Padding(
                         padding: const EdgeInsets.only(left: 11),
                       ),
-                      hintText: "Password"),
+                      hintText: "Enter your email"),
                 ),
               ),
               decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5), // Shadow color
-                      spreadRadius: 2, // Spread radius
-                      blurRadius: 5, // Blur radius
-                      offset: Offset(0, 3), // Offset in x and y directions
-                    ),
-                  ],
+                  border: Border.all(
+                      width: 1.4, color: Color.fromARGB(255, 200, 139, 6)),
                   color: Color.fromARGB(255, 255, 255, 255),
-                  borderRadius: BorderRadius.circular(5)),
+                  borderRadius: BorderRadius.circular(12)),
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 38, top: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              InkWell(
-                  // onTap: () => Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) => Forgotpassword(),
-                  //     )),
-                  child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  "Forgot Password?",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+          padding: const EdgeInsets.only(left: 34, bottom: 5, top: 15),
+          child: Text(
+            "contact",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+          ),
+        ),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 25, right: 25),
+            child: Container(
+              height: 52,
+              width: double.infinity,
+              child: Center(
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      enabledBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      icon: Padding(
+                        padding: const EdgeInsets.only(left: 11),
+                      ),
+                      hintText: "Enter your contact"),
                 ),
-              )),
-            ],
+              ),
+              decoration: BoxDecoration(
+                  border: Border.all(
+                      width: 1.4, color: Color.fromARGB(255, 200, 139, 6)),
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  borderRadius: BorderRadius.circular(12)),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 34, bottom: 5, top: 15),
+          child: Text(
+            "password",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+          ),
+        ),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 25, right: 25),
+            child: Container(
+              height: 52,
+              width: double.infinity,
+              child: Center(
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      enabledBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      icon: Padding(
+                        padding: const EdgeInsets.only(left: 11),
+                      ),
+                      hintText: "Enter password"),
+                ),
+              ),
+              decoration: BoxDecoration(
+                  border: Border.all(
+                      width: 1.4, color: Color.fromARGB(255, 200, 139, 6)),
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  borderRadius: BorderRadius.circular(12)),
+            ),
           ),
         ),
         Center(
           child: Padding(
             padding: const EdgeInsets.only(
-              top: 15,
-              left: 37.0,
-              right: 37.0,
+              top: 20,
+              left: 77.0,
+              right: 77.0,
             ),
             child: InkWell(
               onTap: () {
@@ -129,7 +184,7 @@ class _LoginpageState extends State<Loginpage> {
               },
               child: Container(
                 width: double.infinity,
-                height: 45,
+                height: 50,
                 decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -138,34 +193,15 @@ class _LoginpageState extends State<Loginpage> {
                         spreadRadius: 5,
                       )
                     ],
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
-                child: Center(child: Text("Continue")),
+                    color: Color.fromARGB(222, 192, 12, 12),
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: Center(
+                    child: Text(
+                  "Register",
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                )),
               ),
             ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 28, right: 28, top: 28),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 18.0),
-                child: Text("Don't have an account ?"),
-              ),
-              InkWell(
-                // onTap: () => Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => Reg(),
-                // )),
-                child: Text(
-                  "Register",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
           ),
         ),
         SizedBox(
