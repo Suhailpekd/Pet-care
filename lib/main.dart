@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:petcare/admin/doctoraprove.dart';
+import 'package:petcare/admin/doctorlist.dart';
+import 'package:petcare/admin/tabbar.dart';
+import 'package:petcare/doctor/registor.dart';
+import 'package:petcare/firstpages/login.dart';
+import 'package:petcare/firstpages/selectionpage_user.dart';
+import 'package:petcare/firstpages/splash.dart';
 import 'package:petcare/user/appointment_inner_page/appointment_inner_page.dart';
+import 'package:petcare/user/userediting/user_edit_profile.dart';
+import 'admin/customeraprove.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,31 +21,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // TRY THIS: Try running your application with "flutter run". You'll see
-          // the application has a blue toolbar. Then, without quitting the app,
-          // try changing the seedColor in the colorScheme below to Colors.green
-          // and then invoke "hot reload" (save your changes or press the "hot
-          // reload" button in a Flutter-supported IDE, or press "r" if you used
-          // the command line to start the app).
-          //
-          // Notice that the counter didn't reset back to zero; the application
-          // state is not lost during the reload. To reset the state, use hot
-          // restart instead.
-          //
-          // This works for code too, not just values: Most code changes can be
-          // tested with just a hot reload.
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const
-            // Loginpage()
-
-            // Customer_pet_add(),
-            // Customer_doctor());
-            Appointment_inner_page());
+        home: const Splash_());
+    // Loginpage()
+    // Tabbar1());
+    // Customer_pet_add(),
+    // Customer_doctor());
+    //  Appointment_inner_page());
+    //Customeraprove());
   }
 }

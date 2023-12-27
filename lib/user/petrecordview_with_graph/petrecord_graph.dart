@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:petcare/navigation/navigation.dart';
+import 'package:petcare/user/adding_pet_rec/adding_pet_rec.dart';
 
 class Pet_rec_graph extends StatefulWidget {
   const Pet_rec_graph({super.key});
@@ -16,17 +18,28 @@ class _Pet_rec_graphState extends State<Pet_rec_graph> {
         child: Column(
           children: [
             Container(
-              decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 164, 125, 111)),
+              decoration:
+                  BoxDecoration(color: Color.fromARGB(255, 164, 125, 111)),
               height: 140 / 2,
-              child: const Padding(
+              child: Padding(
                 padding: EdgeInsets.only(left: 34),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.arrow_back,
-                      size: 30,
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Adding_pet_rec(),
+                            ));
+                      },
+                      child: SizedBox(
+                        child: Icon(
+                          Icons.arrow_back,
+                          size: 30,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -57,11 +70,11 @@ class _Pet_rec_graphState extends State<Pet_rec_graph> {
                           top: 20, left: 77.0, right: 77.0, bottom: 70),
                       child: InkWell(
                         onTap: () {
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (context) => Catogories(),
-                          //     ));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Navigation(),
+                              ));
                         },
                         child: Container(
                           width: double.infinity,
@@ -79,7 +92,7 @@ class _Pet_rec_graphState extends State<Pet_rec_graph> {
                                   BorderRadius.all(Radius.circular(10))),
                           child: const Center(
                               child: Text(
-                            "Add",
+                            "Update",
                             style: TextStyle(fontSize: 16, color: Colors.white),
                           )),
                         ),

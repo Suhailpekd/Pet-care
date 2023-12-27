@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:petcare/user/conformbooking/conformbook.dart';
 
 class Appointment_inner_page extends StatefulWidget {
   const Appointment_inner_page({super.key});
@@ -10,12 +12,13 @@ class Appointment_inner_page extends StatefulWidget {
 class _Appointment_inner_pageState extends State<Appointment_inner_page> {
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQueryData().size;
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       body: ListView(
         children: [
           Container(
-            height: 260,
+            height: 235,
             color: Colors.white,
             child: Stack(
               children: [
@@ -116,12 +119,12 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
           Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Container(
-                height: 150,
+                height: 110,
                 color: Colors.white,
                 child: Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Container(
-                        height: 60,
+                        height: 40,
                         color: Color.fromARGB(255, 255, 255, 255),
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
@@ -140,15 +143,51 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
                         )))),
           ),
           Padding(
-            padding:
-                const EdgeInsets.only(top: 15, left: 75, right: 75, bottom: 10),
+            padding: EdgeInsets.only(top: 15, left: 75, right: 75, bottom: 10),
             child: InkWell(
               onTap: () {
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => Catogories(),
-                //     ));
+                showDialog(
+                  context: context,
+                  builder: (context) => Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(28.0),
+                      child: Container(
+                        height: 300,
+                        decoration:
+                            BoxDecoration(color: Colors.white, boxShadow: []),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                "25",
+                                style: TextStyle(color: Colors.amber),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 48, right: 48),
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                        boxShadow: [],
+                                        color: Color.fromARGB(255, 1, 140, 112),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10))),
+                                    height: 40,
+                                    child: Center(
+                                      child: Text(
+                                        "Ok",
+                                        style: TextStyle(
+                                            fontSize: 16, color: Colors.white),
+                                      ),
+                                    )),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
               },
               child: Container(
                 width: double.infinity,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:petcare/user/adding_pet_rec/adding_pet_rec.dart';
+import 'package:petcare/user/userediting/user_edit_profile.dart';
 
 class Customer_pet_add extends StatefulWidget {
   const Customer_pet_add({super.key});
@@ -92,17 +94,22 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
             ],
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 200, left: 70),
-              child: CircleAvatar(
-                child: IconButton(icon: Icon(Icons.edit), onPressed: () {}),
-              ),
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 200, left: 70),
+            child: CircleAvatar(
+              child: IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => User_profile_edit(),
+                        ));
+                  }),
             ),
-          ],
-        ),
+          )
+        ]),
         Padding(
           padding: const EdgeInsets.all(18.0),
           child: Column(
@@ -113,7 +120,13 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
                 children: [
                   FloatingActionButton(
                       backgroundColor: Color.fromARGB(255, 164, 125, 111),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Adding_pet_rec(),
+                            ));
+                      },
                       child: Icon(
                         Icons.add,
                         color: Colors.white,

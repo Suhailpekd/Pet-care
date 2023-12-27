@@ -39,6 +39,7 @@ dependencies:
   flutter_rating_stars: ^1.0.3+4
   simple_star_rating: ^0.0.3
   custom_rating_bar: ^2.0.5
+  lottie: ^2.7.0
 
 dev_dependencies:
   flutter_test:

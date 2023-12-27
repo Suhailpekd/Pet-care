@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:petcare/navigation/navigation.dart';
+import 'package:petcare/user/petrecordview_with_graph/petrecord_graph.dart';
 
 class Adding_pet_rec extends StatefulWidget {
   const Adding_pet_rec({super.key});
@@ -18,13 +20,24 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
             Padding(
               padding: const EdgeInsets.only(left: 15, right: 15),
               child: SizedBox(
-                height: 120 / 2,
+                height: 55,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.arrow_back,
-                      size: 30,
+                    InkWell(
+                      onTap: () {
+                        {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Navigation(),
+                              ));
+                        }
+                      },
+                      child: Icon(
+                        Icons.arrow_back,
+                        size: 30,
+                      ),
                     ),
                   ],
                 ),
@@ -48,7 +61,7 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsets.only(left: 34, top: 10, bottom: 7),
+                        const EdgeInsets.only(left: 34, top: 10, bottom: 4),
                     child: Text(
                       "Date",
                       style:
@@ -58,7 +71,7 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                   Padding(
                     padding: const EdgeInsets.only(left: 27, right: 27),
                     child: Container(
-                      height: 52,
+                      height: 48,
                       width: double.infinity,
                       child: Center(
                         child: TextFormField(
@@ -82,7 +95,7 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsets.only(left: 38, top: 10, bottom: 7),
+                        const EdgeInsets.only(left: 38, top: 10, bottom: 4),
                     child: Text(
                       "Age",
                       style:
@@ -93,7 +106,7 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 27, right: 27),
                       child: Container(
-                        height: 52,
+                        height: 48,
                         width: double.infinity,
                         child: Center(
                           child: TextFormField(
@@ -136,7 +149,7 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 18, top: 10),
+                        padding: const EdgeInsets.only(right: 14, top: 10),
                         child: SizedBox(
                           width: screenSize.width / 2.5,
                           child: Row(
@@ -154,14 +167,14 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 4),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 27),
                           child: Container(
-                            height: 52,
+                            height: 48,
                             width: screenSize.width / 2.5,
                             child: Center(
                               child: TextFormField(
@@ -186,7 +199,7 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                         Padding(
                           padding: const EdgeInsets.only(right: 27),
                           child: Container(
-                            height: 52,
+                            height: 48,
                             width: screenSize.width / 2.5,
                             child: Center(
                               child: TextFormField(
@@ -214,7 +227,7 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                   Padding(
                     padding: const EdgeInsets.only(
                       left: 34,
-                      bottom: 7,
+                      bottom: 4,
                       top: 10,
                     ),
                     child: Text(
@@ -227,7 +240,7 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 25, right: 25),
                       child: Container(
-                        height: 52,
+                        height: 48,
                         width: double.infinity,
                         child: Center(
                           child: TextFormField(
@@ -263,7 +276,7 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 25, right: 25),
                       child: Container(
-                        height: 52,
+                        height: 48,
                         width: double.infinity,
                         child: Center(
                           child: TextFormField(
@@ -292,11 +305,11 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                           top: 20, left: 77.0, right: 77.0, bottom: 70),
                       child: InkWell(
                         onTap: () {
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (context) => Catogories(),
-                          //     ));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Pet_rec_graph(),
+                              ));
                         },
                         child: Container(
                           width: double.infinity,
