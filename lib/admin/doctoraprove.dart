@@ -1,9 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:petcare/admin/customeraprove.dart';
+import 'package:petcare/admin/doctorlist.dart';
+import 'package:petcare/admin/tabbar.dart';
 import 'package:petcare/navigation/navigation.dart';
 
 class Doctoraprove extends StatefulWidget {
-  const Doctoraprove({super.key});
+  var name;
+  var qualification;
+  var email;
+  var fees;
+  var documents;
+  Doctoraprove(
+      {super.key,
+      required this.name,
+      required this.email,
+      required this.qualification,
+      required this.fees,
+      required List<DocumentSnapshot<Object?>> documents});
 
   @override
   State<Doctoraprove> createState() => _DoctoraproveState();
@@ -19,8 +33,9 @@ class _DoctoraproveState extends State<Doctoraprove> {
         padding: const EdgeInsets.only(top: 55, left: 30),
         child: InkWell(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => Customeraprove()));
+            Navigator.pop(
+              context,
+            );
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -33,9 +48,12 @@ class _DoctoraproveState extends State<Doctoraprove> {
                 "Doctors Profile",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
-              Icon(
-                Icons.delete,
-                size: 29,
+              InkWell(
+                onTap: () {},
+                child: Icon(
+                  Icons.delete,
+                  size: 29,
+                ),
               ),
             ],
           ),
@@ -60,7 +78,7 @@ class _DoctoraproveState extends State<Doctoraprove> {
                   Padding(
                     padding: const EdgeInsets.only(top: 10, bottom: 5),
                     child: Text(
-                      "name",
+                      " ${widget.name}",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                     ),
@@ -73,7 +91,7 @@ class _DoctoraproveState extends State<Doctoraprove> {
                   Padding(
                     padding: const EdgeInsets.only(top: 10, bottom: 5),
                     child: Text(
-                      "doctor@gmail.com",
+                      " ${widget.email}",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                     ),
@@ -98,7 +116,7 @@ class _DoctoraproveState extends State<Doctoraprove> {
                                     BorderRadius.all(Radius.circular(10))),
                             child: Center(
                                 child: Text(
-                              "Qualification",
+                              " ${widget.qualification}",
                               style:
                                   TextStyle(fontSize: 16, color: Colors.white),
                             )),
@@ -117,7 +135,7 @@ class _DoctoraproveState extends State<Doctoraprove> {
                                     BorderRadius.all(Radius.circular(10))),
                             child: Center(
                                 child: Text(
-                              "Fees",
+                              " ${widget.fees}",
                               style:
                                   TextStyle(fontSize: 16, color: Colors.white),
                             )),
@@ -126,29 +144,41 @@ class _DoctoraproveState extends State<Doctoraprove> {
                       ],
                     ),
                   ),
-
-//
-
+                  SizedBox(
+                    height: 260,
+                  ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                        left: 34, right: 34, top: 500, bottom: 30),
+                    padding:
+                        const EdgeInsets.only(left: 34, right: 34, bottom: 30),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                          child: Container(
-                            width: screenSize.width / 2.3,
-                            height: 50,
-                            decoration: BoxDecoration(
-                                color: Color.fromARGB(222, 224, 10, 10),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            child: Center(
-                                child: Text(
-                              "Reject",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                            )),
+                          child: InkWell(
+                            onTap: () {
+                              return
+                                  //  await FirebaseFirestore.instance
+                                  //               .collection('doctorlist')
+                                  //               .doc(widget.documents[index].id)
+                                  //               .delete();
+                                  setState(() async {
+                                await widget.documents.removeAt(Index);
+                              });
+                            },
+                            child: Container(
+                              width: screenSize.width / 2.3,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  color: Color.fromARGB(222, 224, 10, 10),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              child: Center(
+                                  child: Text(
+                                "Reject",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.white),
+                              )),
+                            ),
                           ),
                         ),
                         SizedBox(

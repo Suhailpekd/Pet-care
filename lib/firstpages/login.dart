@@ -1,6 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:petcare/admin/tabbar.dart';
+import 'package:petcare/doctor/doctorhome.dart';
+import 'package:petcare/firstpages/selectionpageregister.dart';
+import 'package:petcare/registerpages/registor.dart';
 import 'package:petcare/firstpages/selectionpage_user.dart';
+import 'package:petcare/navigation/navigation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Firstlogin extends StatefulWidget {
   const Firstlogin({super.key});
@@ -10,6 +18,96 @@ class Firstlogin extends StatefulWidget {
 }
 
 class _FirstloginState extends State<Firstlogin> {
+  var email = TextEditingController();
+  var password = TextEditingController();
+
+  Future<void> loginUser() async {
+    try {
+      const String adminEmail = 'admin@gmail.com';
+      const String adminPassword = 'admin@123';
+
+      if (email.text == adminEmail && password.text == adminPassword) {
+        Fluttertoast.showToast(msg: 'Login Successful as Admin');
+        //Redirect to the admin home page
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return Tabbar1();
+        }));
+        return;
+      }
+      // Check if the user with the provided email and password exists in the customers' table
+      final QuerySnapshot<Map<String, dynamic>> customerSnapshot =
+          await FirebaseFirestore.instance
+              .collection('doctorlist')
+              .where('email', isEqualTo: email.text)
+              .where('password', isEqualTo: password.text)
+              // .where('status', isEqualTo: '1')
+              .get();
+
+      if (customerSnapshot.docs.isNotEmpty) {
+        // String customerId = customerSnapshot
+        //     .docs[4].id; // Retrieve the ID from the first document
+
+        // SharedPreferences spref = await SharedPreferences.getInstance();
+        // spref.setString(
+        //     'name', customerId
+
+        //     ); // Save the user ID to SharedPreferences
+
+        // Fluttertoast.showToast(msg: 'Login Successful as Doctor');
+        // print('Customer ID: $customerId');
+
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return Doctorhome();
+        }));
+        return;
+      }
+      final QuerySnapshot<Map<String, dynamic>> userSnapshot =
+          await FirebaseFirestore.instance
+              .collection('userlist')
+              .where('email', isEqualTo: email.text)
+              .where('password', isEqualTo: password.text)
+              // .where('status', isEqualTo: '1')
+              .get();
+      if (userSnapshot.docs.isNotEmpty) {
+        // print('object');
+        var name = userSnapshot.docs[0]['name'];
+        String email = userSnapshot.docs[0]["email"];
+        String location = userSnapshot.docs[0]["location"];
+        String contact = userSnapshot.docs[0]["phone"];
+        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>$location');
+        var id = userSnapshot.docs[0].id
+            .toString(); // Retrieve the ID from the first document
+
+        SharedPreferences spref = await SharedPreferences.getInstance();
+        spref.setString('name', name);
+        spref.setString('email', email);
+        spref.setString('location', location);
+        spref.setString('contact', contact);
+        spref.setString('id', id); // Save the user ID to SharedPreferences
+
+        Fluttertoast.showToast(msg: 'Login Successful as user');
+        print('Customer ID: $name');
+        // String userId = userSnapshot.docs[0].id;
+
+        // SharedPreferences spref = await SharedPreferences.getInstance();
+        // spref.setString('user_id', userId);
+
+        // print('Customer ID: $userId');
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return Navigation();
+        }));
+      } else {
+        print("object");
+      }
+    } catch (e) {
+      print('Error logging in:');
+      // Handle errors and show an error message to the user if needed
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +137,7 @@ class _FirstloginState extends State<Firstlogin> {
         Padding(
           padding: const EdgeInsets.only(left: 34, bottom: 5),
           child: Text(
-            "User name",
+            "email",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           ),
         ),
@@ -51,6 +149,7 @@ class _FirstloginState extends State<Firstlogin> {
               width: double.infinity,
               child: Center(
                 child: TextFormField(
+                  controller: email,
                   decoration: InputDecoration(
                       enabledBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
@@ -58,7 +157,7 @@ class _FirstloginState extends State<Firstlogin> {
                       icon: Padding(
                         padding: const EdgeInsets.only(left: 11),
                       ),
-                      hintText: "Enter your name"),
+                      hintText: "Enter your email"),
                 ),
               ),
               decoration: BoxDecoration(
@@ -84,6 +183,7 @@ class _FirstloginState extends State<Firstlogin> {
               width: double.infinity,
               child: Center(
                 child: TextFormField(
+                  controller: password,
                   decoration: InputDecoration(
                       enabledBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
@@ -111,11 +211,12 @@ class _FirstloginState extends State<Firstlogin> {
             ),
             child: InkWell(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => User_selection(),
-                    ));
+                loginUser();
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => User_selection(),
+                //     ));
               },
               child: Container(
                 width: double.infinity,
@@ -141,8 +242,15 @@ class _FirstloginState extends State<Firstlogin> {
         ),
         Center(
             child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text("Sign up"),
+          padding: EdgeInsets.all(8.0),
+          child: InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => User_selectionforreg()));
+              },
+              child: Text("Sign up")),
         )),
         SizedBox(
           height: 45,

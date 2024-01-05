@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare/admin/tabbar.dart';
 import 'package:petcare/doctor/doctorhome.dart';
+import 'package:petcare/registerpages/adminregistor.dart';
 import 'package:petcare/registerpages/registor.dart';
 import 'package:petcare/navigation/navigation.dart';
+import 'package:petcare/registerpages/userregisterpage.dart';
 import 'package:petcare/user/add_pet/customer_add_pet.dart';
 
-class User_selection extends StatefulWidget {
-  const User_selection({super.key});
+class User_selectionforreg extends StatefulWidget {
+  const User_selectionforreg({super.key});
 
   @override
-  State<User_selection> createState() => _User_selectionState();
+  State<User_selectionforreg> createState() => _User_selectionforregState();
 }
 
-class _User_selectionState extends State<User_selection> {
+class _User_selectionforregState extends State<User_selectionforreg> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,32 +30,35 @@ class _User_selectionState extends State<User_selection> {
             ),
           ),
         ),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 25, right: 25, top: 150),
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Tabbar1(),
-                    ));
-              },
-              child: Container(
-                height: 52,
-                width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Text("Admin",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold)),
-                ),
-                decoration: BoxDecoration(
-                    color: Color.fromARGB(222, 192, 12, 12),
-                    borderRadius: BorderRadius.circular(12)),
-              ),
-            ),
-          ),
+        // Center(
+        //   child: Padding(
+        //     padding: const EdgeInsets.only(left: 25, right: 25, top: 150),
+        //     child: InkWell(
+        //       onTap: () {
+        //         Navigator.push(
+        //             context,
+        //             MaterialPageRoute(
+        //               builder: (context) => Adminreg(),
+        //             ));
+        //       },
+        // child: Container(
+        //   height: 52,
+        //   width: double.infinity,
+        //   child: Padding(
+        //     padding: const EdgeInsets.all(18.0),
+        //     child: Text("Admin",
+        //         style: TextStyle(
+        //             color: Colors.white, fontWeight: FontWeight.bold)),
+        //   ),
+        //         decoration: BoxDecoration(
+        //             color: Color.fromARGB(222, 192, 12, 12),
+        //             borderRadius: BorderRadius.circular(12)),
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        SizedBox(
+          height: 200,
         ),
         Center(
           child: Padding(
@@ -63,7 +68,7 @@ class _User_selectionState extends State<User_selection> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Doctorhome(),
+                      builder: (context) => Loginpage_doctor(),
                     ));
               },
               child: Container(
@@ -90,7 +95,7 @@ class _User_selectionState extends State<User_selection> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Navigation(),
+                      builder: (context) => Userreg(),
                     ));
               },
               child: Container(

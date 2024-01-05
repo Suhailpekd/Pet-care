@@ -40,6 +40,10 @@ dependencies:
   simple_star_rating: ^0.0.3
   custom_rating_bar: ^2.0.5
   lottie: ^2.7.0
+  firebase_core: ^2.24.2
+  cloud_firestore: ^4.13.6
+  fluttertoast: ^8.2.4
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

@@ -16,7 +16,6 @@ class _Tabbar1State extends State<Tabbar1> {
       length: 2, // Number of tabs
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Tab Bar Example'),
           bottom: TabBar(
             tabs: [
               Tab(text: 'Doctor'),

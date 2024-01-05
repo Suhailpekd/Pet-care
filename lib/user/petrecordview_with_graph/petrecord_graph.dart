@@ -3,7 +3,9 @@ import 'package:petcare/navigation/navigation.dart';
 import 'package:petcare/user/adding_pet_rec/adding_pet_rec.dart';
 
 class Pet_rec_graph extends StatefulWidget {
-  const Pet_rec_graph({super.key});
+  var name;
+  var age;
+  Pet_rec_graph({super.key, required this.name, required this.age});
 
   @override
   State<Pet_rec_graph> createState() => _Pet_rec_graphState();
@@ -62,8 +64,21 @@ class _Pet_rec_graphState extends State<Pet_rec_graph> {
                       ),
                     ),
                   ),
-                  const Center(child: Text("Name")),
-                  const Center(child: Text("Age")),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Name :  "),
+                      Text("${widget.name}"),
+                    ],
+                  ),
+                  Center(
+                      child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Age "),
+                      Text("${widget.age}"),
+                    ],
+                  )),
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.only(

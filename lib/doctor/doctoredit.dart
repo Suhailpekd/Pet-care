@@ -1,75 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:petcare/doctor/doctorhome.dart';
 import 'package:petcare/navigation/navigation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class User_profile_edit extends StatefulWidget {
-  const User_profile_edit({super.key});
+class Doctorproedit extends StatefulWidget {
+  const Doctorproedit({super.key});
 
   @override
-  State<User_profile_edit> createState() => _User_profile_editState();
+  State<Doctorproedit> createState() => _DoctorproeditState();
 }
 
-class _User_profile_editState extends State<User_profile_edit> {
-  var name = "";
-  var email = "";
-  var location = "";
-  var contact = "";
-  var id = "";
-
-  @override
-  void initState() {
-    super.initState();
-    // Call your function to retrieve user ID here
-    retrieveUserID();
-
-    name1 = TextEditingController(text: name);
-    email2 = TextEditingController(text: email);
-    location3 = TextEditingController(text: location);
-    contact4 = TextEditingController(text: contact);
-  }
-
-  Future<void> updateDocument() async {
-    // Get a reference to the Firestore collection
-    await FirebaseFirestore.instance.collection('userlist').doc(id).update({
-      'name': name1.text,
-      'email': email2.text,
-      "location": location3.text,
-      "contact": contact4.text,
-    });
-
-    print('Document successfully updated!');
-  }
-
-  Future<dynamic> retrieveUserID() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      name = prefs.getString('name') ?? '';
-      email = prefs.getString('email') ?? '';
-      location = prefs.getString('location') ?? '';
-      contact = prefs.getString('contact') ?? '';
-      id = prefs.getString('id') ?? '';
-      print(id);
-      print(contact);
-      print(email);
-      print(location);
-      print(name); // Retrieve the user ID
-    });
-  }
-
-  var name1 = TextEditingController();
-  var email2 = TextEditingController();
-  var location3 = TextEditingController();
-  var contact4 = TextEditingController();
-
-  // void initstate() {
-  //   user1 = TextEditingController(text: widget.docs66);
-  //   user2 = TextEditingController(text: widget.name1);
-  //   user3 = TextEditingController(text: widget.mob);
-  //   user4 = TextEditingController(text: widget.password);
-  // }
-
+class _DoctorproeditState extends State<Doctorproedit> {
+  var selectedOption;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,11 +25,9 @@ class _User_profile_editState extends State<User_profile_edit> {
                 InkWell(
                   onTap: () {
                     {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Navigation(),
-                          ));
+                      Navigator.pop(
+                        context,
+                      );
                     }
                   },
                   child: Icon(
@@ -116,6 +55,31 @@ class _User_profile_editState extends State<User_profile_edit> {
                         radius: 70,
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Radio(
+                            value: 'Option 1',
+                            groupValue: selectedOption,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedOption = value;
+                              });
+                            },
+                          ),
+                          Text('Available'),
+                          Radio(
+                            value: 'Option 2',
+                            groupValue: selectedOption,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedOption = value;
+                              });
+                            },
+                          ),
+                          Text('Not Available'),
+                        ],
+                      ),
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
@@ -136,7 +100,6 @@ class _User_profile_editState extends State<User_profile_edit> {
                             width: double.infinity,
                             child: Center(
                               child: TextFormField(
-                                controller: name1,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
                                     disabledBorder: InputBorder.none,
@@ -178,7 +141,6 @@ class _User_profile_editState extends State<User_profile_edit> {
                             width: double.infinity,
                             child: Center(
                               child: TextFormField(
-                                controller: email2,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
                                     disabledBorder: InputBorder.none,
@@ -220,7 +182,6 @@ class _User_profile_editState extends State<User_profile_edit> {
                             width: double.infinity,
                             child: Center(
                               child: TextFormField(
-                                controller: location3,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
                                     disabledBorder: InputBorder.none,
@@ -247,7 +208,7 @@ class _User_profile_editState extends State<User_profile_edit> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              "Contact",
+                              "About",
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.w500),
                             ),
@@ -258,11 +219,10 @@ class _User_profile_editState extends State<User_profile_edit> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 25, right: 25),
                           child: Container(
-                            height: 52,
+                            height: 104,
                             width: double.infinity,
                             child: Center(
                               child: TextFormField(
-                                controller: contact4,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
                                     disabledBorder: InputBorder.none,
@@ -270,7 +230,7 @@ class _User_profile_editState extends State<User_profile_edit> {
                                     icon: Padding(
                                       padding: const EdgeInsets.only(left: 11),
                                     ),
-                                    hintText: "Enter contact number"),
+                                    hintText: "write somthing about you"),
                               ),
                             ),
                             decoration: BoxDecoration(
@@ -287,13 +247,11 @@ class _User_profile_editState extends State<User_profile_edit> {
                           padding: const EdgeInsets.only(
                               top: 34, left: 77.0, right: 77.0, bottom: 20),
                           child: InkWell(
-                            onTap: () async {
-                              await updateDocument();
-
-                              Navigator.pushReplacement(
+                            onTap: () {
+                              Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => Navigation(),
+                                    builder: (context) => Doctorhome(),
                                   ));
                             },
                             child: Container(

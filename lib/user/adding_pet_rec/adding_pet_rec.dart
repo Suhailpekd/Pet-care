@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:petcare/navigation/navigation.dart';
 import 'package:petcare/user/petrecordview_with_graph/petrecord_graph.dart';
@@ -10,6 +11,13 @@ class Adding_pet_rec extends StatefulWidget {
 }
 
 class _Adding_pet_recState extends State<Adding_pet_rec> {
+  var name;
+  var age;
+  var height;
+  var Weight;
+  var heartrate;
+  var bp;
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -63,7 +71,7 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                     padding:
                         const EdgeInsets.only(left: 34, top: 10, bottom: 4),
                     child: Text(
-                      "Date",
+                      "Name",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                     ),
@@ -75,6 +83,7 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                       width: double.infinity,
                       child: Center(
                         child: TextFormField(
+                          onChanged: (value) => name = value,
                           decoration: InputDecoration(
                               enabledBorder: InputBorder.none,
                               disabledBorder: InputBorder.none,
@@ -110,6 +119,7 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                         width: double.infinity,
                         child: Center(
                           child: TextFormField(
+                            onChanged: (value) => age = value,
                             decoration: InputDecoration(
                                 enabledBorder: InputBorder.none,
                                 disabledBorder: InputBorder.none,
@@ -178,6 +188,7 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                             width: screenSize.width / 2.5,
                             child: Center(
                               child: TextFormField(
+                                onChanged: (value) => height = value,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
                                     disabledBorder: InputBorder.none,
@@ -203,6 +214,7 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                             width: screenSize.width / 2.5,
                             child: Center(
                               child: TextFormField(
+                                onChanged: (value) => Weight = value,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
                                     disabledBorder: InputBorder.none,
@@ -244,6 +256,7 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                         width: double.infinity,
                         child: Center(
                           child: TextFormField(
+                            onChanged: (value) => heartrate = value,
                             decoration: InputDecoration(
                                 enabledBorder: InputBorder.none,
                                 disabledBorder: InputBorder.none,
@@ -280,6 +293,7 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                         width: double.infinity,
                         child: Center(
                           child: TextFormField(
+                            onChanged: (value) => bp = value,
                             decoration: InputDecoration(
                                 enabledBorder: InputBorder.none,
                                 disabledBorder: InputBorder.none,
@@ -304,12 +318,22 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                       padding: const EdgeInsets.only(
                           top: 20, left: 77.0, right: 77.0, bottom: 70),
                       child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Pet_rec_graph(),
-                              ));
+                        onTap: () async {
+                          await FirebaseFirestore.instance
+                              .collection("petlist")
+                              .add({
+                            "name": name,
+                            "age": age,
+                            "height": height,
+                            "weight": Weight,
+                            "heartrate": heartrate,
+                            "bp": bp
+                          }).then((value) => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        Pet_rec_graph(name: name, age: age),
+                                  )));
                         },
                         child: Container(
                           width: double.infinity,

@@ -1,6 +1,11 @@
 import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
+import 'package:petcare/doctor/docterpetapprove.dart';
+import 'package:petcare/doctor/doctoredit.dart';
+import 'package:petcare/logoutbuttun.dart';
+import 'package:petcare/user/admin/adminlogin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_star_rating/simple_star_rating.dart';
 
 class Doctorhome extends StatefulWidget {
@@ -11,249 +16,218 @@ class Doctorhome extends StatefulWidget {
 }
 
 class _DoctorhomeState extends State<Doctorhome> {
+//   @override
+//   void initState() {
+//     super.initState();
+//     // Call your function to retrieve user ID here
+//     retrieveUserID();
+//   }
+//   Future<dynamic> retrieveUserID() async {
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   String userId = prefs.getString('name') ?? ''; // Retrieve the user ID
+
+// return userId;
+//   }
+
   @override
   Widget build(BuildContext context) {
     double value = 3.5;
     final Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      body: Stack(
-        children: [
-          ListView(
-            physics: NeverScrollableScrollPhysics(),
-            children: [
-              Container(
-                height: 170,
-                color: Color.fromARGB(255, 164, 125, 111),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 73,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 32),
-                      child: Column(
-                        children: [
-                          CircleAvatar(
-                            backgroundColor:
-                                const Color.fromARGB(255, 163, 202, 234),
-                            backgroundImage: AssetImage(
-                              "asset/Avatar-Profile-Vector-PNG-File.png",
-                            ),
-                            radius: 40,
-                          ),
-                        ],
-                      ),
+        body: SafeArea(
+            child: Column(children: [
+      SizedBox(child: logout1()),
+      Container(
+        height: 170,
+        color: Color.fromARGB(255, 164, 125, 111),
+        child: Padding(
+          padding: const EdgeInsets.only(right: 32, left: 32, top: 30),
+          child: Column(children: [
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 37),
+                child: Container(
+                  child: Center(
+                    child: Text(
+                      "token",
+                      style: TextStyle(color: Colors.white, fontSize: 25),
                     ),
-                  ],
-                ),
-                Expanded(
-                    child: Container(
-                  width: screenSize.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(33),
-                        topRight: Radius.circular(33)),
-                    color: const Color.fromARGB(255, 251, 251, 251),
                   ),
-                  child: Column(
+                  height: 47,
+                  width: 100,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(color: Colors.white, width: 1.5)),
+                ),
+              ),
+              Stack(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: const Color.fromARGB(255, 163, 202, 234),
+                    backgroundImage: AssetImage(
+                      "asset/Avatar-Profile-Vector-PNG-File.png",
+                    ),
+                    radius: 40,
+                  ),
+                  Stack(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(18.0),
+                        padding: const EdgeInsets.only(left: 55, top: 34),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text(
-                              "Appoinment",
-                              style: TextStyle(
-                                  fontSize: 19, fontWeight: FontWeight.w600),
+                            CircleAvatar(
+                              radius: 18,
+                              child: Center(
+                                child: IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Doctorproedit()));
+                                    },
+                                    icon: Icon(
+                                      Icons.edit,
+                                    )),
+                              ),
                             ),
                           ],
                         ),
                       ),
-                      Expanded(
-                          child: ListView(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 20,
-                              right: 20,
-                            ),
-                            child: Container(
-                              height: 120,
-                              width: screenSize.width * 0.9,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 1,
-                                    color: Color.fromARGB(255, 164, 125, 111),
-                                  ),
-                                  color: Color.fromARGB(208, 255, 255, 255),
-                                  borderRadius: BorderRadius.circular(12)),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      width: screenSize.width * 0.3,
-                                      height: 120,
-                                      color: Colors.white,
-                                      child: Center(
-                                          child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100),
-                                              child: Image.asset(
-                                                "asset/Avatar-Profile-Vector-PNG-File.png",
-                                                fit: BoxFit.cover,
-                                              ))),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10, left: 10),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            "dr.Name",
-                                            style: TextStyle(fontSize: 23),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            "Date",
-                                            style: TextStyle(fontSize: 23),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            "Time",
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w600,
-                                                color: Color.fromARGB(
-                                                    255, 0, 0, 0)),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: RatingBar(
-                                      filledIcon: Icons.star,
-                                      size: screenSize.width / 20,
-                                      emptyIcon: Icons.star_border,
-                                      onRatingChanged: (value) =>
-                                          debugPrint('$value'),
-                                      initialRating: 3,
-                                      maxRating: 5,
-                                    ),
-                                  )
-                                ],
-                              ),
+                    ],
+                  )
+                ],
+              ),
+            ]),
+          ]),
+        ),
+      ),
+      Expanded(
+        child: ListView(children: [
+          Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  child: Column(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Doctorappointments()));
+                        },
+                        child: SizedBox(
+                          width: screenSize.width / 2.55,
+                          height: 100,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: Image.asset(
+                              "asset/catpic.jpg",
+                              fit: BoxFit.fill,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              top: 17,
-                              left: 20,
-                              right: 20,
-                            ),
-                            child: Container(
-                              height: 120,
-                              width: screenSize.width * 0.9,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 1,
-                                    color: Color.fromARGB(255, 164, 125, 111),
-                                  ),
-                                  color: Color.fromARGB(208, 255, 255, 255),
-                                  borderRadius: BorderRadius.circular(12)),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      width: screenSize.width * 0.3,
-                                      height: 120,
-                                      color: Colors.white,
-                                      child: Center(
-                                          child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100),
-                                              child: Image.asset(
-                                                "asset/Avatar-Profile-Vector-PNG-File.png",
-                                                fit: BoxFit.cover,
-                                              ))),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10, left: 10),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            "dr.Name",
-                                            style: TextStyle(fontSize: 23),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            "Date",
-                                            style: TextStyle(fontSize: 23),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            "Time",
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w600,
-                                                color: Color.fromARGB(
-                                                    255, 0, 0, 0)),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: RatingBar(
-                                      filledIcon: Icons.star,
-                                      size: screenSize.width / 20,
-                                      emptyIcon: Icons.star_border,
-                                      onRatingChanged: (value) =>
-                                          debugPrint('$value'),
-                                      initialRating: 3,
-                                      maxRating: 5,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ))
+                        ),
+                      ),
+                      Text("Issue"),
+                      Text("Date"),
+                      Text("Time"),
                     ],
                   ),
-                )),
+                  height: 190,
+                  width: screenSize.width / 2.5,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                          color: Color.fromARGB(255, 109, 74, 5), width: 1.5)),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Doctorappointments()));
+                  },
+                  child: Container(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: screenSize.width / 2.55,
+                          height: 100,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: Image.asset(
+                              "asset/catpic.jpg",
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        Text("Issue"),
+                        Text("Date"),
+                        Text("Time"),
+                      ],
+                    ),
+                    height: 190,
+                    width: screenSize.width / 2.5,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                            color: Color.fromARGB(255, 109, 74, 5),
+                            width: 1.5)),
+                  ),
+                ),
               ],
             ),
           ),
-        ],
-      ),
-    );
+        ]),
+      )
+    ])));
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Stack(
+//       children: [
+//       
+//         ]),
+//         Stack(
+//           children: [
+//             Padding(
+//               padding: const EdgeInsets.only(right: 30, top: 125),
+//               child: Row(
+//                 mainAxisAlignment: MainAxisAlignment.end,
+//                 children: [
+//                   CircleAvatar(
+//                     radius: 18,
+//                     child: Center(
+//                       child: IconButton(
+//                           onPressed: () {},
+//                           icon: Icon(
+//                             Icons.edit,
+//                           )),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ],
+//         ),
+//       ],
+//     ));
+//   }
+// }

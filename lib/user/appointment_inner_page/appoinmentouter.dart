@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:petcare/user/conformbooking/conformbook.dart';
 
-class Appointment_inner_page extends StatefulWidget {
-  const Appointment_inner_page({super.key});
+class Cancelbooking extends StatefulWidget {
+  const Cancelbooking({super.key});
 
   @override
-  State<Appointment_inner_page> createState() => _Appointment_inner_pageState();
+  State<Cancelbooking> createState() => _CancelbookingState();
 }
 
-class _Appointment_inner_pageState extends State<Appointment_inner_page> {
+class _CancelbookingState extends State<Cancelbooking> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQueryData().size;
@@ -207,11 +207,11 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
                         spreadRadius: 5,
                       )
                     ],
-                    color: Color.fromARGB(255, 164, 125, 111),
+                    color: Color.fromARGB(255, 221, 8, 4),
                     borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Center(
                     child: Text(
-                  "Booknow",
+                  "Cancel Booking",
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 )),
               ),
