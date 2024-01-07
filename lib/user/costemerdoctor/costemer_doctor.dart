@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:petcare/logoutbuttun.dart';
 import 'package:petcare/user/appointment_inner_page/appointment_inner_page.dart';
 
 class Customer_doctor extends StatefulWidget {
@@ -51,15 +52,21 @@ class _Customer_doctorState extends State<Customer_doctor> {
 
             // Extract the documents from the snapshot
             final List<DocumentSnapshot> documents = snapshot.data!.docs;
+            var id = documents[0].id.toString();
 
             return Column(
               children: [
+                logout1(),
                 Container(
-                  height: 100,
-                  width: screenSize.width,
-                  color: Colors.brown,
-                  child: Text("Doctor"),
-                ),
+                    height: 100,
+                    width: screenSize.width,
+                    color: Colors.brown,
+                    child: Center(
+                      child: Text(
+                        documents[0]["name"].toString(),
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                      ),
+                    )),
                 Expanded(
                   child: ListView.builder(
                       itemCount: documents.length,
@@ -77,7 +84,12 @@ class _Customer_doctorState extends State<Customer_doctor> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        Appointment_inner_page(),
+                                        Appointment_inner_page(
+                                            name: data["name"].toString(),
+                                            about: data["about"].toString(),
+                                            fees: data["fees"].toString(),
+                                            time: data["time"].toString(),
+                                            id: id),
                                   ));
                             },
                             child: Container(
@@ -126,12 +138,12 @@ class _Customer_doctorState extends State<Customer_doctor> {
                                         ),
                                         Expanded(
                                           child: Text(
-                                            "Available",
+                                            data["available"].toString(),
                                             style: TextStyle(
-                                                fontSize: 20,
+                                                fontSize: 25,
                                                 fontWeight: FontWeight.w600,
                                                 color: Color.fromARGB(
-                                                    255, 0, 132, 97)),
+                                                    255, 4, 7, 1)),
                                           ),
                                         ),
                                       ],

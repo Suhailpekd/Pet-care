@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:petcare/doctor/doctorhome.dart';
 import 'package:petcare/navigation/navigation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Doctorproedit extends StatefulWidget {
   const Doctorproedit({super.key});
@@ -11,6 +13,38 @@ class Doctorproedit extends StatefulWidget {
 
 class _DoctorproeditState extends State<Doctorproedit> {
   var selectedOption;
+
+  var nametext = TextEditingController();
+  var emailtext = TextEditingController();
+  var locationtext = TextEditingController();
+  var abouttext = TextEditingController();
+  var id = "";
+  void initState() {
+    share();
+  }
+
+  Future<void> share() async {
+    var share = await SharedPreferences.getInstance();
+    // setState(() {
+    id = share.getString("id").toString();
+    // var email = share.getString("email");
+    // var location = share.getString("");
+    // });
+  }
+
+  Future<void> updateDocument() async {
+    // Get a reference to the Firestore collection
+    await FirebaseFirestore.instance.collection('doctorlist').doc(id).update({
+      'name': nametext.text,
+      'email': emailtext.text,
+      "location": locationtext.text,
+      "about": abouttext.text,
+      "available": selectedOption
+    });
+
+    print('Document successfully updated!');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +92,7 @@ class _DoctorproeditState extends State<Doctorproedit> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Radio(
-                            value: 'Option 1',
+                            value: 'Available',
                             groupValue: selectedOption,
                             onChanged: (value) {
                               setState(() {
@@ -68,7 +102,7 @@ class _DoctorproeditState extends State<Doctorproedit> {
                           ),
                           Text('Available'),
                           Radio(
-                            value: 'Option 2',
+                            value: 'Not Available',
                             groupValue: selectedOption,
                             onChanged: (value) {
                               setState(() {
@@ -100,6 +134,7 @@ class _DoctorproeditState extends State<Doctorproedit> {
                             width: double.infinity,
                             child: Center(
                               child: TextFormField(
+                                controller: nametext,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
                                     disabledBorder: InputBorder.none,
@@ -141,6 +176,7 @@ class _DoctorproeditState extends State<Doctorproedit> {
                             width: double.infinity,
                             child: Center(
                               child: TextFormField(
+                                controller: emailtext,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
                                     disabledBorder: InputBorder.none,
@@ -182,6 +218,7 @@ class _DoctorproeditState extends State<Doctorproedit> {
                             width: double.infinity,
                             child: Center(
                               child: TextFormField(
+                                controller: locationtext,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
                                     disabledBorder: InputBorder.none,
@@ -223,6 +260,7 @@ class _DoctorproeditState extends State<Doctorproedit> {
                             width: double.infinity,
                             child: Center(
                               child: TextFormField(
+                                controller: abouttext,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
                                     disabledBorder: InputBorder.none,
@@ -247,7 +285,8 @@ class _DoctorproeditState extends State<Doctorproedit> {
                           padding: const EdgeInsets.only(
                               top: 34, left: 77.0, right: 77.0, bottom: 20),
                           child: InkWell(
-                            onTap: () {
+                            onTap: () async {
+                              await updateDocument();
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

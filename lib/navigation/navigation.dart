@@ -34,11 +34,11 @@ class _NavigationState extends State<Navigation> {
           onTap: navigat,
           items: [
             BottomNavigationBarItem(
-                label: "jjj",
+                label: "Home",
                 icon: Icon(Icons.pets_rounded, size: 20, color: Colors.black54),
                 backgroundColor: Color.fromARGB(255, 131, 99, 31)),
             BottomNavigationBarItem(
-              label: "jjj",
+              label: "Doctors",
               icon: Icon(Icons.people_alt, size: 20, color: Colors.black54),
               activeIcon: Icon(
                 Icons.shop_2_outlined,
@@ -48,8 +48,9 @@ class _NavigationState extends State<Navigation> {
               backgroundColor: Color.fromARGB(153, 9, 70, 0),
             ),
             BottomNavigationBarItem(
-                label: "jjj",
-                icon: Icon(Icons.pets_rounded, size: 20, color: Colors.black54),
+                label: "Appointments",
+                icon: Icon(Icons.date_range_outlined,
+                    size: 20, color: Colors.black54),
                 backgroundColor: Color.fromARGB(255, 131, 99, 31)),
           ]),
     );

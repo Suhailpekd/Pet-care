@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare/doctor/doctorhome.dart';
+import 'package:petcare/firstpages/login.dart';
 import 'package:petcare/navigation/navigation.dart';
+import 'package:petcare/user/admin/adminlogin.dart';
 
 class Userreg extends StatefulWidget {
   const Userreg({super.key});
@@ -294,10 +296,10 @@ class _UserregState extends State<Userreg> {
                     "password": password,
                     "location": location,
                     "phone": phone
-                  }).then((value) => Navigator.push(
+                  }).then((value) => Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Navigation(),
+                        builder: (context) => Firstlogin(),
                       )));
                 }
               },

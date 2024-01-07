@@ -1,15 +1,60 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
+import 'package:petcare/navigation/navigation.dart';
 import 'package:petcare/user/conformbooking/conformbook.dart';
 
 class Appointment_inner_page extends StatefulWidget {
-  const Appointment_inner_page({super.key});
+  String name;
+  String about;
+  String fees;
+  String time;
+  String id;
+  Appointment_inner_page(
+      {super.key,
+      required this.name,
+      required this.about,
+      required this.fees,
+      required this.time,
+      required this.id});
 
   @override
   State<Appointment_inner_page> createState() => _Appointment_inner_pageState();
 }
 
 class _Appointment_inner_pageState extends State<Appointment_inner_page> {
+  DateTime now = DateTime.now();
+
+  Future<void> updatebooking() async {
+    // Get a reference to the Firestore collection
+    await FirebaseFirestore.instance.collection('appoinments').add({
+      'time': '${now.hour}:${(now.minute)}:${(now.second)}'.toString(),
+      "date": '${now.year}-${(now.month)}-${(now.day)}'.toString(),
+      "name": widget.name,
+      "about": widget.about,
+      "fees": widget.fees,
+      "doctorid": widget.id,
+      "sheduledtime": widget.time
+    });
+    Navigator.pop(context);
+
+    // Fluttertoast.showToast(msg: 'Booking Successful ${widget.name}');
+  }
+
+  Future<void> updateDocument() async {
+    // Get a reference to the Firestore collection
+    await FirebaseFirestore.instance
+        .collection('doctorlist')
+        .doc(widget.id)
+        .update({
+      'booked': "1",
+      "bookedtime": '${now.hour}:${(now.minute)}:${(now.second)}'.toString(),
+    });
+
+    Fluttertoast.showToast(msg: 'Booking Successful ${widget.name}');
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQueryData().size;
@@ -57,7 +102,7 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
                               ),
                               radius: 70,
                             ),
-                            Text("Name")
+                            Text("${widget.name}")
                           ],
                         ),
                       ),
@@ -85,8 +130,7 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
                     Expanded(
                       child: ListView(
                         children: [
-                          Text(
-                              "with passion for animals and 2years of voterinery experience,with passion for animals and 2years of voterinery experience with passion for animals and 2years of voterinery experience"),
+                          Text("${widget.about}"),
                         ],
                       ),
                     ),
@@ -113,8 +157,7 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
                     Expanded(
                       child: ListView(
                         children: [
-                          Text(
-                              "with passion for animals and of voterinery experience,"),
+                          Text("${widget.time}"),
                         ],
                       ),
                     ),
@@ -144,7 +187,7 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
                                     style:
                                         TextStyle(fontWeight: FontWeight.w700)),
                               ),
-                              Text("Amount"),
+                              Text("${widget.fees}"),
                             ],
                           ),
                         )))),
@@ -152,49 +195,10 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
           Padding(
             padding: EdgeInsets.only(top: 15, left: 75, right: 75, bottom: 10),
             child: InkWell(
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(28.0),
-                      child: Container(
-                        height: 300,
-                        decoration:
-                            BoxDecoration(color: Colors.white, boxShadow: []),
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(
-                                "25",
-                                style: TextStyle(color: Colors.amber),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 48, right: 48),
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                        boxShadow: [],
-                                        color: Color.fromARGB(255, 1, 140, 112),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10))),
-                                    height: 40,
-                                    child: Center(
-                                      child: Text(
-                                        "Ok",
-                                        style: TextStyle(
-                                            fontSize: 16, color: Colors.white),
-                                      ),
-                                    )),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
+              onTap: () async {
+                await updateDocument();
+                await updatebooking();
+                print("object");
               },
               child: Container(
                 width: double.infinity,

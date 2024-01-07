@@ -1,17 +1,62 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:petcare/user/conformbooking/conformbook.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Cancelbooking extends StatefulWidget {
-  const Cancelbooking({super.key});
+  var id;
+  var drabout;
+  var drname;
+  var drfees;
+  var drtime;
+  Cancelbooking(
+      {super.key,
+      required this.drabout,
+      required this.id,
+      required this.drname,
+      required this.drtime,
+      required this.drfees});
 
   @override
   State<Cancelbooking> createState() => _CancelbookingState();
 }
 
 class _CancelbookingState extends State<Cancelbooking> {
+  String ids = "";
+  var names = "ddd";
+  List docList = [];
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   retrieveUserID();
+  //   // firedata();
+  // }
+
+  // Future<dynamic> retrieveUserID() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     ids = prefs.getString('id') ?? '';
+  //     print(ids);
+  //     // Retrieve the user ID
+  //   });
+  // }
+
+  // Future<List<QueryDocumentSnapshot>> firedata() async {
+  //   QuerySnapshot snapshot = await FirebaseFirestore.instance
+  //       .collection("appoinments")
+  //       .get(widget.id);
+  //   List<QueryDocumentSnapshot> docList = snapshot.docs;
+  //   setState(() {
+  //     // var names1 = docList[0]["email"].toString();
+  //   });
+  //   return docList;
+  // }
+
   @override
   Widget build(BuildContext context) {
+    var names = docList;
     final screenSize = MediaQueryData().size;
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
@@ -55,9 +100,12 @@ class _CancelbookingState extends State<Cancelbooking> {
                               backgroundImage: AssetImage(
                                 "asset/Avatar-Profile-Vector-PNG-File.png",
                               ),
-                              radius: 70,
+                              radius: 50,
                             ),
-                            Text("Name")
+                            Text(
+                              "${widget.drname}",
+                              style: TextStyle(fontSize: 23),
+                            )
                           ],
                         ),
                       ),
@@ -85,8 +133,7 @@ class _CancelbookingState extends State<Cancelbooking> {
                     Expanded(
                       child: ListView(
                         children: [
-                          Text(
-                              "with passion for animals and 2years of voterinery experience,with passion for animals and 2years of voterinery experience with passion for animals and 2years of voterinery experience"),
+                          Text("${widget.drabout}"),
                         ],
                       ),
                     ),
@@ -113,8 +160,7 @@ class _CancelbookingState extends State<Cancelbooking> {
                     Expanded(
                       child: ListView(
                         children: [
-                          Text(
-                              "with passion for animals and of voterinery experience,"),
+                          Text("${widget.drtime}"),
                         ],
                       ),
                     ),
@@ -144,7 +190,7 @@ class _CancelbookingState extends State<Cancelbooking> {
                                     style:
                                         TextStyle(fontWeight: FontWeight.w700)),
                               ),
-                              Text("Amount"),
+                              Text("${widget.drfees}"),
                             ],
                           ),
                         )))),

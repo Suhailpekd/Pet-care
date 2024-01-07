@@ -45,10 +45,10 @@ class _User_profile_editState extends State<User_profile_edit> {
   Future<dynamic> retrieveUserID() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      name = prefs.getString('name') ?? '';
-      email = prefs.getString('email') ?? '';
-      location = prefs.getString('location') ?? '';
-      contact = prefs.getString('contact') ?? '';
+      var name = prefs.getString('name') ?? '';
+      var email = prefs.getString('email') ?? '';
+      var location = prefs.getString('location') ?? '';
+      var contact = prefs.getString('contact') ?? '';
       id = prefs.getString('id') ?? '';
       print(id);
       print(contact);

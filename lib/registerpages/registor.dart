@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare/doctor/doctorhome.dart';
+import 'package:petcare/firstpages/login.dart';
+import 'package:petcare/user/admin/adminlogin.dart';
 
 class Loginpage_doctor extends StatefulWidget {
   const Loginpage_doctor({super.key});
@@ -293,10 +295,10 @@ class _Loginpage_doctorState extends State<Loginpage_doctor> {
                     "qualification": qualification,
                     "fees": fees,
                     "department": department,
-                  }).then((value) => Navigator.push(
+                  }).then((value) => Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Doctorhome(),
+                            builder: (context) => Firstlogin(),
                           )));
                 }
               },

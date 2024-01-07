@@ -45,14 +45,21 @@ class _FirstloginState extends State<Firstlogin> {
               .get();
 
       if (customerSnapshot.docs.isNotEmpty) {
-        // String customerId = customerSnapshot
-        //     .docs[4].id; // Retrieve the ID from the first document
+        String customerId = customerSnapshot.docs[0].id;
+        String name = customerSnapshot.docs[0]["name"];
+        String department = customerSnapshot.docs[0]["department"];
+        String email = customerSnapshot.docs[0]["email"];
+        String fees = customerSnapshot.docs[0]["fees"];
+        String qualification = customerSnapshot.docs[0]
+            ["qualification"]; // Retrieve the ID from the first document
 
-        // SharedPreferences spref = await SharedPreferences.getInstance();
-        // spref.setString(
-        //     'name', customerId
-
-        //     ); // Save the user ID to SharedPreferences
+        SharedPreferences spref = await SharedPreferences.getInstance();
+        spref.setString('id', customerId);
+        spref.setString('name', name);
+        spref.setString('email', email);
+        spref.setString('department', department);
+        spref.setString('fees', fees); // Save the user ID to SharedPreferences
+        spref.setString('qualification', qualification);
 
         // Fluttertoast.showToast(msg: 'Login Successful as Doctor');
         // print('Customer ID: $customerId');
@@ -76,9 +83,10 @@ class _FirstloginState extends State<Firstlogin> {
         String email = userSnapshot.docs[0]["email"];
         String location = userSnapshot.docs[0]["location"];
         String contact = userSnapshot.docs[0]["phone"];
+        String id = userSnapshot.docs[0].id.toString();
         print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>$location');
-        var id = userSnapshot.docs[0].id
-            .toString(); // Retrieve the ID from the first document
+
+        // Retrieve the ID from the first document
 
         SharedPreferences spref = await SharedPreferences.getInstance();
         spref.setString('name', name);

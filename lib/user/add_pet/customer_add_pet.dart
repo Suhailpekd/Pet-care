@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:petcare/admin/doctoraprove.dart';
+import 'package:petcare/logoutbuttun.dart';
 import 'package:petcare/user/adding_pet_rec/adding_pet_rec.dart';
 import 'package:petcare/user/userediting/user_edit_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -50,6 +51,7 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
       children: [
         SafeArea(
           child: Column(children: [
+            logout1(),
             Container(
                 height: 170,
                 color: Color.fromARGB(255, 164, 125, 111),
