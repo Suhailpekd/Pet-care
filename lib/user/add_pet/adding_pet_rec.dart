@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:petcare/navigation/navigation.dart';
 import 'package:petcare/user/petrecordview_with_graph/petrecord_graph.dart';
 
-class Updatepet extends StatefulWidget {
-  const Updatepet({super.key});
+class Adding_pet_rec extends StatefulWidget {
+  const Adding_pet_rec({super.key});
 
   @override
-  State<Updatepet> createState() => _UpdatepetState();
+  State<Adding_pet_rec> createState() => _Adding_pet_recState();
 }
 
-class _UpdatepetState extends State<Updatepet> {
+class _Adding_pet_recState extends State<Adding_pet_rec> {
   var name;
   var age;
   var height;
@@ -91,7 +91,7 @@ class _UpdatepetState extends State<Updatepet> {
                               icon: Padding(
                                 padding: const EdgeInsets.only(left: 11),
                               ),
-                              hintText: "Enter your name"),
+                              hintText: "Enter pets name"),
                         ),
                       ),
                       decoration: BoxDecoration(
@@ -127,7 +127,7 @@ class _UpdatepetState extends State<Updatepet> {
                                 icon: Padding(
                                   padding: const EdgeInsets.only(left: 11),
                                 ),
-                                hintText: "Enter your age"),
+                                hintText: "Enter pets age"),
                           ),
                         ),
                         decoration: BoxDecoration(
@@ -331,8 +331,12 @@ class _UpdatepetState extends State<Updatepet> {
                           }).then((value) => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        Pet_rec_graph(name: name, age: age),
+                                    builder: (context) => Pet_rec_graph(
+                                        name: name,
+                                        age: age,
+                                        height: height,
+                                        weight: Weight,
+                                        heartrate: heartrate),
                                   )));
                         },
                         child: Container(

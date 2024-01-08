@@ -10,13 +10,15 @@ class Cancelbooking extends StatefulWidget {
   var drname;
   var drfees;
   var drtime;
+  var appointmentid;
   Cancelbooking(
       {super.key,
       required this.drabout,
       required this.id,
       required this.drname,
       required this.drtime,
-      required this.drfees});
+      required this.drfees,
+      required this.appointmentid});
 
   @override
   State<Cancelbooking> createState() => _CancelbookingState();
@@ -133,7 +135,7 @@ class _CancelbookingState extends State<Cancelbooking> {
                     Expanded(
                       child: ListView(
                         children: [
-                          Text("${widget.drabout}"),
+                          Text("${widget.appointmentid}"),
                         ],
                       ),
                     ),
@@ -199,48 +201,48 @@ class _CancelbookingState extends State<Cancelbooking> {
             padding: EdgeInsets.only(top: 15, left: 75, right: 75, bottom: 10),
             child: InkWell(
               onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(28.0),
-                      child: Container(
-                        height: 300,
-                        decoration:
-                            BoxDecoration(color: Colors.white, boxShadow: []),
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(
-                                "25",
-                                style: TextStyle(color: Colors.amber),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 48, right: 48),
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                        boxShadow: [],
-                                        color: Color.fromARGB(255, 1, 140, 112),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10))),
-                                    height: 40,
-                                    child: Center(
-                                      child: Text(
-                                        "Ok",
-                                        style: TextStyle(
-                                            fontSize: 16, color: Colors.white),
-                                      ),
-                                    )),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
+                // showDialog(
+                //   context: context,
+                //   builder: (context) => Center(
+                //     child: Padding(
+                //       padding: const EdgeInsets.all(28.0),
+                //       child: Container(
+                //         height: 300,
+                //         decoration:
+                //             BoxDecoration(color: Colors.white, boxShadow: []),
+                //         child: Center(
+                //           child: Column(
+                //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //             children: [
+                //               Text(
+                //                 "25",
+                //                 style: TextStyle(color: Colors.amber),
+                //               ),
+                //               Padding(
+                //                 padding:
+                //                     const EdgeInsets.only(left: 48, right: 48),
+                //                 child: Container(
+                //                     decoration: BoxDecoration(
+                //                         boxShadow: [],
+                //                         color: Color.fromARGB(255, 1, 140, 112),
+                //                         borderRadius: BorderRadius.all(
+                //                             Radius.circular(10))),
+                //                     height: 40,
+                //                     child: Center(
+                //                       child: Text(
+                //                         "Ok",
+                //                         style: TextStyle(
+                //                             fontSize: 16, color: Colors.white),
+                //                       ),
+                //                     )),
+                //               )
+                //             ],
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // );
               },
               child: Container(
                 width: double.infinity,

@@ -6,7 +6,7 @@ import 'package:petcare/registerpages/adminregistor.dart';
 import 'package:petcare/registerpages/registor.dart';
 import 'package:petcare/navigation/navigation.dart';
 import 'package:petcare/registerpages/userregisterpage.dart';
-import 'package:petcare/user/add_pet/customer_add_pet.dart';
+import 'package:petcare/user/user1st.dart';
 
 class User_selectionforreg extends StatefulWidget {
   const User_selectionforreg({super.key});

@@ -2,21 +2,33 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:petcare/navigation/navigation.dart';
 import 'package:petcare/user/petrecordview_with_graph/petrecord_graph.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Adding_pet_rec extends StatefulWidget {
-  const Adding_pet_rec({super.key});
+class Updatepet extends StatefulWidget {
+  const Updatepet({super.key, required Map<String, dynamic> data});
 
   @override
-  State<Adding_pet_rec> createState() => _Adding_pet_recState();
+  State<Updatepet> createState() => _UpdatepetState();
 }
 
-class _Adding_pet_recState extends State<Adding_pet_rec> {
+class _UpdatepetState extends State<Updatepet> {
   var name;
   var age;
   var height;
   var Weight;
   var heartrate;
   var bp;
+  var ids = "";
+  Future<dynamic> share() async {
+    SharedPreferences spref = await SharedPreferences.getInstance();
+    setState(() {
+      ids = spref.getString('idpet')!;
+    });
+    print(ids);
+    return ids;
+
+    // var idsrrr = spref.setString('namepet', name);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,41 +77,6 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                           fit: BoxFit.fill,
                         ),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 34, top: 10, bottom: 4),
-                    child: Text(
-                      "Name",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 27, right: 27),
-                    child: Container(
-                      height: 48,
-                      width: double.infinity,
-                      child: Center(
-                        child: TextFormField(
-                          onChanged: (value) => name = value,
-                          decoration: InputDecoration(
-                              enabledBorder: InputBorder.none,
-                              disabledBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              icon: Padding(
-                                padding: const EdgeInsets.only(left: 11),
-                              ),
-                              hintText: "Enter your name"),
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 1.4,
-                              color: Color.fromARGB(255, 200, 139, 6)),
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          borderRadius: BorderRadius.circular(12)),
                     ),
                   ),
                   Padding(
@@ -319,21 +296,27 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                           top: 20, left: 77.0, right: 77.0, bottom: 70),
                       child: InkWell(
                         onTap: () async {
+                          await share();
                           await FirebaseFirestore.instance
-                              .collection("petlist")
+                              .collection("petupdates")
                               .add({
-                            "name": name,
                             "age": age,
                             "height": height,
                             "weight": Weight,
                             "heartrate": heartrate,
                             "bp": bp
-                          }).then((value) => Navigator.push(
+                          }).then((value) => Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        Pet_rec_graph(name: name, age: age),
-                                  )));
+                                      builder: (context) => Navigation()
+                                      // Pet_rec_graph(
+                                      //   name: name,
+                                      //   age: age,
+                                      //   height: height,
+                                      //   weight: Weight,
+                                      //   heartrate: heartrate,
+                                      // ),
+                                      )));
                         },
                         child: Container(
                           width: double.infinity,
@@ -351,7 +334,7 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                                   BorderRadius.all(Radius.circular(10))),
                           child: Center(
                               child: Text(
-                            "Add",
+                            "Update",
                             style: TextStyle(fontSize: 16, color: Colors.white),
                           )),
                         ),

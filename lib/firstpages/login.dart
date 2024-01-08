@@ -41,7 +41,7 @@ class _FirstloginState extends State<Firstlogin> {
               .collection('doctorlist')
               .where('email', isEqualTo: email.text)
               .where('password', isEqualTo: password.text)
-              // .where('status', isEqualTo: '1')
+              .where('status', isEqualTo: '1')
               .get();
 
       if (customerSnapshot.docs.isNotEmpty) {
@@ -50,6 +50,8 @@ class _FirstloginState extends State<Firstlogin> {
         String department = customerSnapshot.docs[0]["department"];
         String email = customerSnapshot.docs[0]["email"];
         String fees = customerSnapshot.docs[0]["fees"];
+        String location = customerSnapshot.docs[0]["location"];
+
         String qualification = customerSnapshot.docs[0]
             ["qualification"]; // Retrieve the ID from the first document
 
@@ -57,6 +59,8 @@ class _FirstloginState extends State<Firstlogin> {
         spref.setString('id', customerId);
         spref.setString('name', name);
         spref.setString('email', email);
+        spref.setString('location', location);
+
         spref.setString('department', department);
         spref.setString('fees', fees); // Save the user ID to SharedPreferences
         spref.setString('qualification', qualification);
@@ -75,7 +79,7 @@ class _FirstloginState extends State<Firstlogin> {
               .collection('userlist')
               .where('email', isEqualTo: email.text)
               .where('password', isEqualTo: password.text)
-              // .where('status', isEqualTo: '1')
+              .where('status', isEqualTo: '1')
               .get();
       if (userSnapshot.docs.isNotEmpty) {
         // print('object');
@@ -97,12 +101,12 @@ class _FirstloginState extends State<Firstlogin> {
 
         Fluttertoast.showToast(msg: 'Login Successful as user');
         print('Customer ID: $name');
-        // String userId = userSnapshot.docs[0].id;
+        String userId = userSnapshot.docs[0].id;
 
-        // SharedPreferences spref = await SharedPreferences.getInstance();
-        // spref.setString('user_id', userId);
+        SharedPreferences spref2 = await SharedPreferences.getInstance();
+        spref.setString('user_id', userId);
 
-        // print('Customer ID: $userId');
+        print('Customer ID: $userId');
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) {
           return Navigation();
@@ -116,154 +120,178 @@ class _FirstloginState extends State<Firstlogin> {
     }
   }
 
+  final formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 45),
-          child: SizedBox(
-            height: 120,
-            width: 120,
-            child: Image.asset(
-              "asset/Screenshot.png",
-            ),
-          ),
-        ),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 22, bottom: 30),
-            child: Text(
-              "Login",
-              style: GoogleFonts.lato(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 22,
-                  color: Color.fromARGB(255, 200, 139, 6)),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 34, bottom: 5),
-          child: Text(
-            "email",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-          ),
-        ),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 25, right: 25),
-            child: Container(
-              height: 52,
-              width: double.infinity,
-              child: Center(
-                child: TextFormField(
-                  controller: email,
-                  decoration: InputDecoration(
-                      enabledBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      icon: Padding(
-                        padding: const EdgeInsets.only(left: 11),
-                      ),
-                      hintText: "Enter your email"),
-                ),
-              ),
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      width: 1.4, color: Color.fromARGB(255, 200, 139, 6)),
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  borderRadius: BorderRadius.circular(12)),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 34, bottom: 5, top: 15),
-          child: Text(
-            "password",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-          ),
-        ),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 25, right: 25),
-            child: Container(
-              height: 52,
-              width: double.infinity,
-              child: Center(
-                child: TextFormField(
-                  controller: password,
-                  decoration: InputDecoration(
-                      enabledBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      icon: Padding(
-                        padding: const EdgeInsets.only(left: 11),
-                      ),
-                      hintText: "Enter your password"),
-                ),
-              ),
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      width: 1.4, color: Color.fromARGB(255, 200, 139, 6)),
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  borderRadius: BorderRadius.circular(12)),
-            ),
-          ),
-        ),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.only(
-              top: 20,
-              left: 77.0,
-              right: 77.0,
-            ),
-            child: InkWell(
-              onTap: () {
-                loginUser();
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => User_selection(),
-                //     ));
-              },
-              child: Container(
-                width: double.infinity,
-                height: 50,
-                decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color.fromARGB(255, 234, 227, 236),
-                        blurRadius: 8,
-                        spreadRadius: 5,
-                      )
-                    ],
-                    color: Color.fromARGB(222, 192, 12, 12),
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: Center(
-                    child: Text(
-                  "Login",
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                )),
+      body: Form(
+        key: formkey,
+        child: ListView(children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 45),
+            child: SizedBox(
+              height: 120,
+              width: 120,
+              child: Image.asset(
+                "asset/Screenshot.png",
               ),
             ),
           ),
-        ),
-        Center(
+          Center(
             child: Padding(
-          padding: EdgeInsets.all(8.0),
-          child: InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => User_selectionforreg()));
-              },
-              child: Text("Sign up")),
-        )),
-        SizedBox(
-          height: 45,
-        )
-      ]),
+              padding: const EdgeInsets.only(top: 22, bottom: 30),
+              child: Text(
+                "Login",
+                style: GoogleFonts.lato(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 22,
+                    color: Color.fromARGB(255, 200, 139, 6)),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 34, bottom: 5),
+            child: Text(
+              "Email",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            ),
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 25, right: 25),
+              child: Container(
+                height: 62,
+                width: double.infinity,
+                child: Center(
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      if (!RegExp(
+                              r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+                          .hasMatch(value)) {
+                        return 'Invalid email format';
+                      }
+                      return null;
+                    },
+                    controller: email,
+                    decoration: InputDecoration(
+                        enabledBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        icon: Padding(
+                          padding: const EdgeInsets.only(left: 11),
+                        ),
+                        hintText: "Enter your email"),
+                  ),
+                ),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        width: 1.4, color: Color.fromARGB(255, 200, 139, 6)),
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    borderRadius: BorderRadius.circular(12)),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 34, bottom: 5, top: 15),
+            child: Text(
+              "Password",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            ),
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 25, right: 25),
+              child: Container(
+                height: 62,
+                width: double.infinity,
+                child: Center(
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      return null;
+                    },
+                    controller: password,
+                    decoration: InputDecoration(
+                        enabledBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        icon: Padding(
+                          padding: const EdgeInsets.only(left: 11),
+                        ),
+                        hintText: "Enter your password"),
+                  ),
+                ),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        width: 1.4, color: Color.fromARGB(255, 200, 139, 6)),
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    borderRadius: BorderRadius.circular(12)),
+              ),
+            ),
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 20,
+                left: 77.0,
+                right: 77.0,
+              ),
+              child: InkWell(
+                onTap: () {
+                  if (formkey.currentState?.validate() ?? false) {
+                    loginUser();
+                  }
+
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //       builder: (context) => User_selection(),
+                  //     ));
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromARGB(255, 234, 227, 236),
+                          blurRadius: 8,
+                          spreadRadius: 5,
+                        )
+                      ],
+                      color: Color.fromARGB(222, 192, 12, 12),
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: Center(
+                      child: Text(
+                    "Login",
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  )),
+                ),
+              ),
+            ),
+          ),
+          Center(
+              child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => User_selectionforreg()));
+                },
+                child: Text("Sign up")),
+          )),
+          SizedBox(
+            height: 45,
+          )
+        ]),
+      ),
     );
   }
 }

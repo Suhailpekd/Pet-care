@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:petcare/admin/customeraprove.dart';
 import 'package:petcare/admin/doctorlist.dart';
 import 'package:petcare/admin/tabbar.dart';
+import 'package:petcare/logoutbuttun.dart';
 import 'package:petcare/navigation/navigation.dart';
 
 class Doctoraprove extends StatefulWidget {
@@ -11,13 +12,17 @@ class Doctoraprove extends StatefulWidget {
   var email;
   var fees;
   var documents;
-  Doctoraprove(
-      {super.key,
-      required this.name,
-      required this.email,
-      required this.qualification,
-      required this.fees,
-      required List<DocumentSnapshot<Object?>> documents});
+  String id;
+
+  Doctoraprove({
+    super.key,
+    required this.name,
+    required this.email,
+    required this.qualification,
+    required this.fees,
+    required List<DocumentSnapshot<Object?>> documents,
+    required this.id,
+  });
 
   @override
   State<Doctoraprove> createState() => _DoctoraproveState();
@@ -26,6 +31,7 @@ class Doctoraprove extends StatefulWidget {
 class _DoctoraproveState extends State<Doctoraprove> {
   @override
   Widget build(BuildContext context) {
+    // var a = widget.documents;
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
         body: ListView(children: [
@@ -49,7 +55,17 @@ class _DoctoraproveState extends State<Doctoraprove> {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () async {
+                  await FirebaseFirestore.instance
+                      .collection('doctorlist')
+                      .doc(widget.id)
+                      .delete();
+                  Navigator.pushReplacement(context, MaterialPageRoute(
+                    builder: (context) {
+                      return Tabbar1();
+                    },
+                  ));
+                },
                 child: Icon(
                   Icons.delete,
                   size: 29,
@@ -76,7 +92,7 @@ class _DoctoraproveState extends State<Doctoraprove> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 5),
+                    padding: const EdgeInsets.only(top: 10),
                     child: Text(
                       " ${widget.name}",
                       style:
@@ -155,15 +171,17 @@ class _DoctoraproveState extends State<Doctoraprove> {
                       children: [
                         Expanded(
                           child: InkWell(
-                            onTap: () {
-                              return
-                                  //  await FirebaseFirestore.instance
-                                  //               .collection('doctorlist')
-                                  //               .doc(widget.documents[index].id)
-                                  //               .delete();
-                                  setState(() async {
-                                await widget.documents.removeAt(Index);
-                              });
+                            onTap: () async {
+                              await FirebaseFirestore.instance
+                                  .collection('doctorlist')
+                                  .doc(widget.id)
+                                  .update({'status': '2'});
+                              Navigator.pushReplacement(context,
+                                  MaterialPageRoute(
+                                builder: (context) {
+                                  return Tabbar1();
+                                },
+                              ));
                             },
                             child: Container(
                               width: screenSize.width / 2.3,
@@ -185,19 +203,33 @@ class _DoctoraproveState extends State<Doctoraprove> {
                           width: 30,
                         ),
                         Expanded(
-                          child: Container(
-                            width: screenSize.width / 2.3,
-                            height: 50,
-                            decoration: BoxDecoration(
-                                color: Color.fromARGB(222, 1, 154, 100),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            child: Center(
-                                child: Text(
-                              "Approve",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                            )),
+                          child: InkWell(
+                            onTap: () async {
+                              await FirebaseFirestore.instance
+                                  .collection('doctorlist')
+                                  .doc(widget.id)
+                                  .update({'status': '1'});
+                              Navigator.pushReplacement(context,
+                                  MaterialPageRoute(
+                                builder: (context) {
+                                  return Tabbar1();
+                                },
+                              ));
+                            },
+                            child: Container(
+                              width: screenSize.width / 2.3,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  color: Color.fromARGB(222, 1, 154, 100),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              child: Center(
+                                  child: Text(
+                                "Approve",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.white),
+                              )),
+                            ),
                           ),
                         ),
                       ],

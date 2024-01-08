@@ -9,8 +9,8 @@ import 'package:petcare/firebase_options.dart';
 import 'package:petcare/firstpages/login.dart';
 import 'package:petcare/firstpages/selectionpage_user.dart';
 import 'package:petcare/firstpages/splash.dart';
-import 'package:petcare/user/appointment_inner_page/appointment_inner_page.dart';
-import 'package:petcare/user/userediting/user_edit_profile.dart';
+import 'package:petcare/user/bookingappointment/appointment_inner_page.dart';
+import 'package:petcare/user/profileuserediting/user_edit_profile.dart';
 import 'admin/customeraprove.dart';
 
 Future<void> main() async {

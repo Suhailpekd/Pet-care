@@ -44,6 +44,8 @@ dependencies:
   cloud_firestore: ^4.13.6
   fluttertoast: ^8.2.4
   shared_preferences: ^2.2.2
+  syncfusion_flutter_charts: any
+  fl_chart: ^0.41.0
 
 dev_dependencies:
   flutter_test:

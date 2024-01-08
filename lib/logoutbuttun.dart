@@ -16,6 +16,12 @@ class logout1 extends StatelessWidget {
             },
           ));
         },
-        icon: Icon(Icons.logout));
+        icon: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("LOG OUT"),
+            Icon(Icons.logout),
+          ],
+        ));
   }
 }

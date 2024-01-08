@@ -153,48 +153,11 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
             padding: EdgeInsets.only(top: 15, left: 75, right: 75, bottom: 10),
             child: InkWell(
               onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(28.0),
-                      child: Container(
-                        height: 300,
-                        decoration:
-                            BoxDecoration(color: Colors.white, boxShadow: []),
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(
-                                "25",
-                                style: TextStyle(color: Colors.amber),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 48, right: 48),
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                        boxShadow: [],
-                                        color: Color.fromARGB(255, 1, 140, 112),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10))),
-                                    height: 40,
-                                    child: Center(
-                                      child: Text(
-                                        "Ok",
-                                        style: TextStyle(
-                                            fontSize: 16, color: Colors.white),
-                                      ),
-                                    )),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
+////////
+
+                /////////////
+
+                //////////////
               },
               child: Container(
                 width: double.infinity,

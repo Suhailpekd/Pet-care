@@ -1,40 +1,65 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:petcare/admin/tabbar.dart';
 import 'package:petcare/navigation/navigation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Customeraprove extends StatefulWidget {
   var doc;
   var doc2;
   var doc1;
-  var id1;
-  Customeraprove(
-      {super.key,
-      required this.doc,
-      required this.doc1,
-      required this.doc2,
-      required this.id1}); //name//email//mobail
+
+  String idcustomer;
+
+  Customeraprove({
+    super.key,
+    required this.doc,
+    required this.doc1,
+    required this.doc2,
+    required this.idcustomer,
+  }); //name//email//mobail
 
   @override
   State<Customeraprove> createState() => _CustomeraproveState();
 }
 
 class _CustomeraproveState extends State<Customeraprove> {
-  Future<void> addUserData() async {
-    try {
-      // Replace 'users' with your collection name
-      CollectionReference users =
-          FirebaseFirestore.instance.collection('userlist');
-
-      // Replace these with your actual data to be added
-      await users.add({
-        'status': '1',
-      });
-
-      print('User added to Firestore successfully!');
-    } catch (e) {
-      print('Error adding user to Firestore: $e');
-    }
+  @override
+  void initState() {
+    super.initState();
+    share();
   }
+
+  var id = "";
+  Future<void> share() async {
+    var share = await SharedPreferences.getInstance();
+    setState(() {
+      id = share.getString("iduser").toString();
+      // var email = share.getString("email");
+      // var location = share.getString("");
+      print(id);
+    });
+  }
+
+  // Future<void> updateDocument() async {
+  //   // Get a reference to the Firestore collection
+  //   await FirebaseFirestore.instance
+  //       .collection('doctorlist')
+  //       .doc(id)
+  //       .update({'status': "1"});
+
+  //   print('Document successfully updated!');
+  // }
+
+  // Future<void> updateDocumentreject() async {
+  //   // Get a reference to the Firestore collection
+  //   await FirebaseFirestore.instance
+  //       .collection('doctorlist')
+  //       .doc(id)
+  //       .update({'status': "0"});
+
+  //   print('Document successfully rejected!');
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +84,22 @@ class _CustomeraproveState extends State<Customeraprove> {
               "Customer Profile",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
             ),
-            Icon(
-              Icons.delete,
-              size: 29,
+            InkWell(
+              onTap: () async {
+                await FirebaseFirestore.instance
+                    .collection('userlist')
+                    .doc(widget.idcustomer)
+                    .delete();
+                Navigator.pushReplacement(context, MaterialPageRoute(
+                  builder: (context) {
+                    return Tabbar1();
+                  },
+                ));
+              },
+              child: Icon(
+                Icons.delete,
+                size: 29,
+              ),
             ),
           ],
         ),
@@ -124,19 +162,33 @@ class _CustomeraproveState extends State<Customeraprove> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                          child: Container(
-                            width: screenSize.width / 2.3,
-                            height: 50,
-                            decoration: BoxDecoration(
-                                color: Color.fromARGB(222, 224, 10, 10),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            child: Center(
-                                child: Text(
-                              "Reject",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                            )),
+                          child: InkWell(
+                            onTap: () async {
+                              await FirebaseFirestore.instance
+                                  .collection('userlist')
+                                  .doc(widget.idcustomer)
+                                  .update({'status': '2'});
+                              Navigator.pushReplacement(context,
+                                  MaterialPageRoute(
+                                builder: (context) {
+                                  return Tabbar1();
+                                },
+                              ));
+                            },
+                            child: Container(
+                              width: screenSize.width / 2.3,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  color: Color.fromARGB(222, 224, 10, 10),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              child: Center(
+                                  child: Text(
+                                "Reject",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.white),
+                              )),
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -144,8 +196,17 @@ class _CustomeraproveState extends State<Customeraprove> {
                         ),
                         Expanded(
                           child: InkWell(
-                            onTap: () {
-                              addUserData();
+                            onTap: () async {
+                              await FirebaseFirestore.instance
+                                  .collection('userlist')
+                                  .doc(widget.idcustomer)
+                                  .update({'status': '1'});
+                              Navigator.pushReplacement(context,
+                                  MaterialPageRoute(
+                                builder: (context) {
+                                  return Tabbar1();
+                                },
+                              ));
                             },
                             child: Container(
                               width: screenSize.width / 2.3,

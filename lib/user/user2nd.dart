@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:petcare/logoutbuttun.dart';
-import 'package:petcare/user/appointment_inner_page/appointment_inner_page.dart';
+import 'package:petcare/user/bookingappointment/appointment_inner_page.dart';
 
 class Customer_doctor extends StatefulWidget {
   const Customer_doctor({super.key});
@@ -63,7 +63,7 @@ class _Customer_doctorState extends State<Customer_doctor> {
                     color: Colors.brown,
                     child: Center(
                       child: Text(
-                        documents[0]["name"].toString(),
+                        "DOCTORS",
                         style: TextStyle(color: Colors.white, fontSize: 25),
                       ),
                     )),

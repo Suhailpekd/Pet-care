@@ -3,7 +3,7 @@ import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:petcare/logoutbuttun.dart';
-import 'package:petcare/user/appointment_inner_page/appoinmentouter.dart';
+import 'package:petcare/user/bookingappointment/appoinmentouter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_star_rating/simple_star_rating.dart';
 
@@ -17,14 +17,18 @@ class Customer_booking extends StatefulWidget {
 class _Customer_bookingState extends State<Customer_booking> {
   @override
   var id;
-  var name = "";
+
   @override
   void initState() {
+    super.initState();
     retrieveUserID();
     fair();
     print(id);
   }
 
+  var name = "";
+  var drname = "";
+  var idappointment = "";
   Future<List<QueryDocumentSnapshot>> fetchData() async {
     try {
       QuerySnapshot querySnapshot =
@@ -41,6 +45,8 @@ class _Customer_bookingState extends State<Customer_booking> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       id = prefs.getString('id') ?? '';
+      drname = prefs.getString('name') ?? '';
+      print(drname);
     });
   }
 
@@ -53,7 +59,7 @@ class _Customer_bookingState extends State<Customer_booking> {
       setState(() {
         name = docList[0]["name"];
       });
-      print("$name");
+      print("rrrrrrrrrrrrrrrrrrr$name");
     });
   }
 
@@ -63,14 +69,7 @@ class _Customer_bookingState extends State<Customer_booking> {
   Widget build(BuildContext context) {
     double value = 3.5;
     final Size screenSize = MediaQuery.of(context).size;
-    return FirebaseListView();
-  }
-}
-
-class FirebaseListView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var screensize = MediaQuery.of(context).size;
+    // return var screensize = MediaQuery.of(context).size;
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('appoinments').snapshots(),
       builder: (context, snapshot) {
@@ -86,7 +85,7 @@ class FirebaseListView extends StatelessWidget {
               children: [
                 logout1(),
                 Container(
-                    width: screensize.width,
+                    width: screenSize.width,
                     height: 150,
                     color: Color.fromARGB(255, 164, 125, 111),
                     child: Row(
@@ -96,7 +95,7 @@ class FirebaseListView extends StatelessWidget {
                               padding: const EdgeInsets.only(right: 32),
                               child: Column(children: [
                                 Padding(
-                                  padding: const EdgeInsets.all(28.0),
+                                  padding: const EdgeInsets.all(18.0),
                                   child: CircleAvatar(
                                     backgroundColor: const Color.fromARGB(
                                         255, 163, 202, 234),
@@ -106,6 +105,10 @@ class FirebaseListView extends StatelessWidget {
                                     radius: 40,
                                   ),
                                 ),
+                                Text(
+                                  drname,
+                                  style: TextStyle(color: Colors.white),
+                                )
                               ]))
                         ])),
                 Expanded(
@@ -115,8 +118,7 @@ class FirebaseListView extends StatelessWidget {
                       // Access the data for each document
                       Map<String, dynamic> data = snapshot.data!.docs[index]
                           .data() as Map<String, dynamic>;
-                      var id = data["id"];
-
+                      String apointid = data['id'];
                       // Customize the ListTile based on your data structure
                       return Padding(
                         padding: const EdgeInsets.all(28.0),
@@ -126,16 +128,19 @@ class FirebaseListView extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => Cancelbooking(
-                                      id: id,
-                                      drname: data["name"],
-                                      drabout: data["about"],
-                                      drtime: data["time"],
-                                      drfees: data["fees"]),
+                                    id: data,
+                                    drname: data["name"],
+                                    drabout: data["about"],
+                                    drtime: data["time"],
+                                    drfees: data["fees"],
+                                    appointmentid: apointid,
+                                  ),
+                                  // idappointments: data["id"]),
                                 ));
                           },
                           child: Container(
                             height: 120,
-                            width: screensize.width,
+                            width: screenSize.width,
                             decoration: BoxDecoration(
                                 border: Border.all(
                                   width: 1,

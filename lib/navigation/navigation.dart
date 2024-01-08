@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:petcare/user/add_pet/customer_add_pet.dart';
-import 'package:petcare/user/costemerdoctor/costemer_doctor.dart';
-import 'package:petcare/user/customer_booking/costemer_booking.dart';
+import 'package:petcare/user/user1st.dart';
+import 'package:petcare/user/user2nd.dart';
+import 'package:petcare/user/user3rdappoinmnts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Navigation extends StatefulWidget {

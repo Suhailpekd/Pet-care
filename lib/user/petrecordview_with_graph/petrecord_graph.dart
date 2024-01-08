@@ -1,11 +1,21 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:petcare/navigation/navigation.dart';
-import 'package:petcare/user/adding_pet_rec/adding_pet_rec.dart';
+import 'package:petcare/user/add_pet/adding_pet_rec.dart';
 
 class Pet_rec_graph extends StatefulWidget {
   var name;
   var age;
-  Pet_rec_graph({super.key, required this.name, required this.age});
+  var height;
+  var weight;
+  var heartrate;
+  Pet_rec_graph(
+      {super.key,
+      required this.name,
+      required this.age,
+      required this.height,
+      required this.weight,
+      required this.heartrate});
 
   @override
   State<Pet_rec_graph> createState() => _Pet_rec_graphState();
@@ -79,6 +89,81 @@ class _Pet_rec_graphState extends State<Pet_rec_graph> {
                       Text("${widget.age}"),
                     ],
                   )),
+
+//...........
+
+                  Center(
+                    child: LineChart(
+                      LineChartData(
+                        // Define your line spots here
+                        lineBarsData: [
+                          LineChartBarData(
+                            spots: [
+                              FlSpot(0, 3),
+                              FlSpot(1, 1),
+                              FlSpot(2, 4),
+                              FlSpot(3, 2),
+                              FlSpot(4, 5),
+                              FlSpot(5, 3),
+                            ],
+                            isCurved: true,
+                            colors: [Colors.blue],
+                            barWidth: 4,
+                            isStrokeCapRound: true,
+                            belowBarData: BarAreaData(show: false),
+                          ),
+                        ],
+                        titlesData: FlTitlesData(
+                          // Titles for x and y axes
+                          leftTitles: SideTitles(
+                              showTitles: true, reservedSize: 28, margin: 12),
+                          bottomTitles: SideTitles(
+                              showTitles: true, reservedSize: 28, margin: 12),
+                        ),
+                        borderData: FlBorderData(
+                            show: true, border: Border.all(color: Colors.grey)),
+                        gridData: FlGridData(show: true, horizontalInterval: 1),
+                      ),
+                    ),
+                  )
+
+                  // Expanded(
+                  //   child: LineChart(
+                  //     LineChartData(
+                  //       gridData: FlGridData(show: false),
+                  //       titlesData: FlTitlesData(show: false),
+                  //       borderData: FlBorderData(
+                  //         show: true,
+                  //         border: Border.all(
+                  //           color: const Color(0xff37434d),
+                  //           width: 1,
+                  //         ),
+                  //       ),
+                  //       minX: 0,
+                  //       maxX: 7,
+                  //       minY: 0,
+                  //       maxY: 6,
+                  //       lineBarsData: [
+                  //         LineChartBarData(
+                  //           spots: [
+                  //             FlSpot(0, 3),
+                  //             FlSpot(1, 1),
+                  //             FlSpot(2, 4),
+                  //             FlSpot(3, 2),
+                  //             FlSpot(4, 5),
+                  //             FlSpot(5, 1),
+                  //             FlSpot(6, 4),
+                  //           ],
+                  //           isCurved: true,
+                  //           colors: [Colors.blue],
+                  //           dotData: FlDotData(show: false),
+                  //           belowBarData: BarAreaData(show: false),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                  ,
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.only(

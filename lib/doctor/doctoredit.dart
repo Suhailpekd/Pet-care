@@ -13,23 +13,40 @@ class Doctorproedit extends StatefulWidget {
 
 class _DoctorproeditState extends State<Doctorproedit> {
   var selectedOption;
+  @override
+  var name = "";
+  var email = "";
+  var location = "";
+  var about = "";
+  var id = "";
 
   var nametext = TextEditingController();
   var emailtext = TextEditingController();
   var locationtext = TextEditingController();
   var abouttext = TextEditingController();
-  var id = "";
   void initState() {
+    super.initState();
     share();
   }
 
-  Future<void> share() async {
-    var share = await SharedPreferences.getInstance();
-    // setState(() {
-    id = share.getString("id").toString();
-    // var email = share.getString("email");
-    // var location = share.getString("");
-    // });
+  Future<dynamic> share() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      name = prefs.getString('name') ?? '';
+      email = prefs.getString('email') ?? '';
+      location = prefs.getString('location') ?? '';
+      id = prefs.getString('id') ?? '';
+
+      setState(() {
+        nametext = TextEditingController(text: name);
+        emailtext = TextEditingController(text: email);
+        locationtext = TextEditingController(text: location);
+      });
+
+      print(email);
+      print(location);
+      print(name); // Retrieve the user ID
+    });
   }
 
   Future<void> updateDocument() async {

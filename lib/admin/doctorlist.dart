@@ -63,11 +63,13 @@ class _DoctorlistState extends State<Doctorlist> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => Doctoraprove(
-                                documents: documents,
-                                name: data["name"],
-                                email: data["email"],
-                                qualification: data["qualification"],
-                                fees: data["fees"])));
+                                  documents: documents,
+                                  id: documents[index].id,
+                                  name: data["name"],
+                                  email: data["email"],
+                                  qualification: data["qualification"],
+                                  fees: data["fees"],
+                                )));
                   },
                   child: Container(
                     height: 120,

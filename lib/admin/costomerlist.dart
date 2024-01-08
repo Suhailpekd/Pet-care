@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:petcare/admin/customeraprove.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Customerlist extends StatefulWidget {
   const Customerlist({super.key});
@@ -22,6 +23,8 @@ class _CustomerlistState extends State<Customerlist> {
       return [];
     }
   }
+
+  var id = "";
 
   @override
   Widget build(BuildContext context) {
@@ -59,15 +62,26 @@ class _CustomerlistState extends State<Customerlist> {
                 ),
                 child: InkWell(
                   onTap: () {
-                    var doc1;
+                    Future<void> share() async {
+                      SharedPreferences spref =
+                          await SharedPreferences.getInstance();
+                      spref.setString('iduser', data[0]["id"]);
+
+                      // // var email = share.getString("email");
+                      // // var location = share.getString("");
+                      // // });
+                    }
+
+                    // var doc1;
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => Customeraprove(
-                                doc: data["name"],
-                                doc1: data["email"],
-                                doc2: data["phone"],
-                                id1: data["id"])));
+                                  doc: data["name"],
+                                  doc1: data["email"],
+                                  doc2: data["phone"],
+                                  idcustomer: documents[index].id,
+                                )));
                   },
                   child: Container(
                     height: 120,
