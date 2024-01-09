@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:petcare/navigation/navigation.dart';
 import 'package:petcare/user/conformbooking/conformbook.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Appointment_inner_page extends StatefulWidget {
   String name;
@@ -24,6 +25,26 @@ class Appointment_inner_page extends StatefulWidget {
 }
 
 class _Appointment_inner_pageState extends State<Appointment_inner_page> {
+  @override
+  var userId = "";
+  var userogid = "";
+
+  @override
+  void initState() {
+    super.initState();
+    // Call your function to retrieve user ID here
+    retrieveUserID();
+  }
+
+  Future<dynamic> retrieveUserID() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userId = prefs.getString('name') ?? ''.toString();
+      userogid = prefs.getString("id") ?? "".toString();
+      // Retrieve the user ID
+    });
+  }
+
   DateTime now = DateTime.now();
 
   Future<void> updatebooking() async {
@@ -35,7 +56,8 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
       "about": widget.about,
       "fees": widget.fees,
       "doctorid": widget.id,
-      "sheduledtime": widget.time
+      "sheduledtime": widget.time,
+      'userid': userogid
     });
     Navigator.pop(context);
 

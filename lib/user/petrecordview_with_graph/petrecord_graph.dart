@@ -43,7 +43,9 @@ class _Pet_rec_graphState extends State<Pet_rec_graph> {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Adding_pet_rec(),
+                              builder: (context) => Adding_pet_rec(
+                                userid: '',
+                              ),
                             ));
                       },
                       child: SizedBox(
@@ -92,40 +94,42 @@ class _Pet_rec_graphState extends State<Pet_rec_graph> {
 
 //...........
 
-                  Center(
-                    child: LineChart(
-                      LineChartData(
-                        // Define your line spots here
-                        lineBarsData: [
-                          LineChartBarData(
-                            spots: [
-                              FlSpot(0, 3),
-                              FlSpot(1, 1),
-                              FlSpot(2, 4),
-                              FlSpot(3, 2),
-                              FlSpot(4, 5),
-                              FlSpot(5, 3),
-                            ],
-                            isCurved: true,
-                            colors: [Colors.blue],
-                            barWidth: 4,
-                            isStrokeCapRound: true,
-                            belowBarData: BarAreaData(show: false),
-                          ),
-                        ],
-                        titlesData: FlTitlesData(
-                          // Titles for x and y axes
-                          leftTitles: SideTitles(
-                              showTitles: true, reservedSize: 28, margin: 12),
-                          bottomTitles: SideTitles(
-                              showTitles: true, reservedSize: 28, margin: 12),
-                        ),
-                        borderData: FlBorderData(
-                            show: true, border: Border.all(color: Colors.grey)),
-                        gridData: FlGridData(show: true, horizontalInterval: 1),
-                      ),
-                    ),
-                  )
+                  // Container(
+                  //   height: 100,
+                  //   width: 100,
+                  //   child: LineChart(
+                  //     LineChartData(
+                  //       // Define your line spots here
+                  //       lineBarsData: [
+                  //         LineChartBarData(
+                  //           spots: [
+                  //             FlSpot(0, 3),
+                  //             FlSpot(1, 1),
+                  //             FlSpot(2, 4),
+                  //             FlSpot(3, 2),
+                  //             FlSpot(4, 5),
+                  //             FlSpot(5, 3),
+                  //           ],
+                  //           isCurved: true,
+                  //           colors: [Colors.blue],
+                  //           barWidth: 4,
+                  //           isStrokeCapRound: true,
+                  //           belowBarData: BarAreaData(show: false),
+                  //         ),
+                  //       ],
+                  //       titlesData: FlTitlesData(
+                  //         // Titles for x and y axes
+                  //         leftTitles: SideTitles(
+                  //             showTitles: true, reservedSize: 28, margin: 12),
+                  //         bottomTitles: SideTitles(
+                  //             showTitles: true, reservedSize: 28, margin: 12),
+                  //       ),
+                  //       borderData: FlBorderData(
+                  //           show: true, border: Border.all(color: Colors.grey)),
+                  //       gridData: FlGridData(show: true, horizontalInterval: 1),
+                  //     ),
+                  //   ),
+                  // )
 
                   // Expanded(
                   //   child: LineChart(
@@ -163,7 +167,7 @@ class _Pet_rec_graphState extends State<Pet_rec_graph> {
                   //     ),
                   //   ),
                   // ),
-                  ,
+
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.only(

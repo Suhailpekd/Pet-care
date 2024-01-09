@@ -260,7 +260,7 @@ class _Loginpage_doctorState extends State<Loginpage_doctor> {
           Padding(
             padding: const EdgeInsets.only(left: 34, bottom: 5, top: 15),
             child: Text(
-              "Fees",
+              "Location",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
             ),
           ),
@@ -355,6 +355,7 @@ class _Loginpage_doctorState extends State<Loginpage_doctor> {
                       await FirebaseFirestore.instance
                           .collection("doctorlist")
                           .add({
+                        "sheduledtime": "",
                         "about": "about",
                         "location": location,
                         "name": name,
@@ -364,7 +365,7 @@ class _Loginpage_doctorState extends State<Loginpage_doctor> {
                         "fees": fees,
                         "department": department,
                         'status': "0",
-                        "available": "available"
+                        "available": "not available"
                       }).then((value) => Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(

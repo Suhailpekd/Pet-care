@@ -17,6 +17,7 @@ class Customer_pet_add extends StatefulWidget {
 
 class _Customer_pet_addState extends State<Customer_pet_add> {
   var userId = "";
+  var userogid = "";
 
   @override
   void initState() {
@@ -28,7 +29,8 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
   Future<dynamic> retrieveUserID() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      userId = prefs.getString('name') ?? '';
+      userId = prefs.getString('name') ?? ''.toString();
+      userogid = prefs.getString("id") ?? "".toString();
       // Retrieve the user ID
     });
   }
@@ -47,8 +49,10 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
 
   Future<List<QueryDocumentSnapshot>> fetchData() async {
     try {
-      QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection("petlist").get();
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection("petlist")
+          .where("userid", isEqualTo: userogid)
+          .get();
       return querySnapshot.docs;
     } catch (e) {
       // Handle errors, log or display a meaningful error message.
@@ -68,25 +72,26 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
             logout1(),
             SizedBox(
               height: 190,
-              child: Expanded(
-                child: Container(
-                    height: 10,
-                    color: Color.fromARGB(255, 164, 125, 111),
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 160),
-                      child: Center(
-                          child: Text(
-                        userId,
-                        style: TextStyle(fontSize: 20, color: Colors.white),
-                      )),
+              child: Container(
+                  height: 10,
+                  color: Color.fromARGB(255, 164, 125, 111),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 160),
+                    child: Center(
+                        child: Text(
+                      userId,
+                      style: TextStyle(fontSize: 20, color: Colors.white),
                     )),
-              ),
+                  )),
             ),
             SizedBox(
               height: 30,
             ),
             FutureBuilder<QuerySnapshot>(
-              future: FirebaseFirestore.instance.collection('petlist').get(),
+              future: FirebaseFirestore.instance
+                  .collection('petlist')
+                  .where("userid", isEqualTo: userogid)
+                  .get(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -107,8 +112,9 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
                 // String petId = documents[0].id;
 
                 if (documents.isNotEmpty) {
-                  String customerId = documents[0].id;
-                  String name = documents[0]["name"];
+                  var customerId = documents[0].id;
+                  var name = documents[0]["name"];
+
                   // String department = documents[0]["age"];
                   // String email = customerSnapshot.docs[0]["email"];
                   // String fees = customerSnapshot.docs[0]["fees"];
@@ -133,6 +139,11 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
                       // Access data from each document in the collection
                       Map<String, dynamic> data =
                           documents[index].data() as Map<String, dynamic>;
+                      var age = documents[0]["age"];
+                      var height = documents[0]["height"];
+                      var weight = documents[0]["weight"];
+                      var heartrate = documents[0]["heartrate"];
+                      var bp = documents[0]["bp"];
                       // Create a Container using the data
                       return Padding(
                         padding: EdgeInsets.only(left: 20, right: 20, top: 15),
@@ -141,7 +152,10 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => Updatepet(data: data),
+                                  builder: (context) => Updatepet(
+                                    data: data,
+                                    userid: userogid,
+                                  ),
                                 ));
                           },
                           child: Container(
@@ -250,7 +264,8 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Adding_pet_rec(),
+                              builder: (context) =>
+                                  Adding_pet_rec(userid: userogid),
                             ));
                       },
                       child: Icon(

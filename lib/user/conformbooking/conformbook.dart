@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:petcare/user/conformbooking/conformbook.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Appointment_inner_page extends StatefulWidget {
   const Appointment_inner_page({super.key});
@@ -10,6 +11,25 @@ class Appointment_inner_page extends StatefulWidget {
 }
 
 class _Appointment_inner_pageState extends State<Appointment_inner_page> {
+  var id = "";
+  var drname = "";
+  @override
+  void initState() {
+    super.initState();
+    retrieveUserID();
+    // fair();
+    // print(id);
+  }
+
+  Future<dynamic> retrieveUserID() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      id = prefs.getString('id') ?? '';
+      drname = prefs.getString('name') ?? '';
+      print(drname);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQueryData().size;

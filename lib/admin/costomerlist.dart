@@ -136,18 +136,6 @@ class _CustomerlistState extends State<Customerlist> {
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                "see more",
-                                style: TextStyle(fontSize: 13),
-                              )
-                            ],
-                          ),
-                        )
                       ],
                     ),
                   ),

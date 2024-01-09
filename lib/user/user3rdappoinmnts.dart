@@ -15,24 +15,25 @@ class Customer_booking extends StatefulWidget {
 }
 
 class _Customer_bookingState extends State<Customer_booking> {
-  @override
-  var id;
-
+  // var id;
+  var id = "";
+  var name = "";
+  var drname = "";
+  var idappointment = "";
   @override
   void initState() {
     super.initState();
     retrieveUserID();
-    fair();
-    print(id);
+    // fair();
+    // print(id);
   }
 
-  var name = "";
-  var drname = "";
-  var idappointment = "";
   Future<List<QueryDocumentSnapshot>> fetchData() async {
     try {
-      QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection("appoinments").get();
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection("appoinments")
+          .where("userid", isEqualTo: id)
+          .get();
       return querySnapshot.docs;
     } catch (e) {
       // Handle errors, log or display a meaningful error message.
@@ -46,22 +47,23 @@ class _Customer_bookingState extends State<Customer_booking> {
     setState(() {
       id = prefs.getString('id') ?? '';
       drname = prefs.getString('name') ?? '';
+
       print(drname);
     });
   }
 
-  Future<void> fair() async {
-    await FirebaseFirestore.instance
-        .collection("userlist"[id])
-        .get()
-        .then((snapshot) {
-      List<QueryDocumentSnapshot> docList = snapshot.docs;
-      setState(() {
-        name = docList[0]["name"];
-      });
-      print("rrrrrrrrrrrrrrrrrrr$name");
-    });
-  }
+  // Future<void> fair() async {
+  //   await FirebaseFirestore.instance
+  //       .collection("userlist"[id])
+  //       .get()
+  //       .then((snapshot) {
+  //     List<QueryDocumentSnapshot> docList = snapshot.docs;
+  //     setState(() {
+  //       name = docList[0]["name"];
+  //     });
+  //     print("rrrrrrrrrrrrrrrrrrr$name");
+  //   });
+  // }
 
   // void()
 
@@ -71,7 +73,10 @@ class _Customer_bookingState extends State<Customer_booking> {
     final Size screenSize = MediaQuery.of(context).size;
     // return var screensize = MediaQuery.of(context).size;
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('appoinments').snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('appoinments')
+          .where("userid", isEqualTo: id)
+          .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
@@ -118,7 +123,7 @@ class _Customer_bookingState extends State<Customer_booking> {
                       // Access the data for each document
                       Map<String, dynamic> data = snapshot.data!.docs[index]
                           .data() as Map<String, dynamic>;
-                      String apointid = data['id'];
+                      // String apointid = data['id'];
                       // Customize the ListTile based on your data structure
                       return Padding(
                         padding: const EdgeInsets.all(28.0),
@@ -133,7 +138,7 @@ class _Customer_bookingState extends State<Customer_booking> {
                                     drabout: data["about"],
                                     drtime: data["time"],
                                     drfees: data["fees"],
-                                    appointmentid: apointid,
+                                    // appointmentid: apointid,
                                   ),
                                   // idappointments: data["id"]),
                                 ));
@@ -176,19 +181,20 @@ class _Customer_bookingState extends State<Customer_booking> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          "Dr Name:${data["name"]}  ",
+                                          "Dr Name:${data["name"]}  "
+                                              .toString(),
                                           style: TextStyle(fontSize: 20),
                                         ),
                                       ),
                                       Expanded(
                                         child: Text(
-                                          "Date ${data["date"]}",
+                                          "Date ${data["date"]}".toString(),
                                           style: TextStyle(fontSize: 18),
                                         ),
                                       ),
                                       Expanded(
                                         child: Text(
-                                          "Time ${data["time"]}",
+                                          "Time ${data["time"]}".toString(),
                                           style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.w600,

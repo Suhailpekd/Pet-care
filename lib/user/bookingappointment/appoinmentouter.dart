@@ -10,15 +10,16 @@ class Cancelbooking extends StatefulWidget {
   var drname;
   var drfees;
   var drtime;
-  var appointmentid;
-  Cancelbooking(
-      {super.key,
-      required this.drabout,
-      required this.id,
-      required this.drname,
-      required this.drtime,
-      required this.drfees,
-      required this.appointmentid});
+  // var appointmentid;
+  Cancelbooking({
+    super.key,
+    required this.drabout,
+    required this.id,
+    required this.drname,
+    required this.drtime,
+    required this.drfees,
+    // required this.appointmentid
+  });
 
   @override
   State<Cancelbooking> createState() => _CancelbookingState();
@@ -135,7 +136,7 @@ class _CancelbookingState extends State<Cancelbooking> {
                     Expanded(
                       child: ListView(
                         children: [
-                          Text("${widget.appointmentid}"),
+                          // Text("${widget.appointmentid}"),
                         ],
                       ),
                     ),
