@@ -19,6 +19,7 @@ class _DoctorproeditState extends State<Doctorproedit> {
   var location = "";
   var about = "";
   var id = "";
+  var available = "";
 
   var nametext = TextEditingController();
   var emailtext = TextEditingController();
@@ -36,11 +37,13 @@ class _DoctorproeditState extends State<Doctorproedit> {
       email = prefs.getString('email') ?? '';
       location = prefs.getString('location') ?? '';
       id = prefs.getString('id') ?? '';
+      available = prefs.getString("available") ?? "";
 
       setState(() {
         nametext = TextEditingController(text: name);
         emailtext = TextEditingController(text: email);
         locationtext = TextEditingController(text: location);
+        selectedOption = available;
       });
 
       print(email);
@@ -109,7 +112,7 @@ class _DoctorproeditState extends State<Doctorproedit> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Radio(
-                            value: 'Available',
+                            value: 'available',
                             groupValue: selectedOption,
                             onChanged: (value) {
                               setState(() {
