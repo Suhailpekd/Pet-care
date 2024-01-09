@@ -355,6 +355,7 @@ class _Loginpage_doctorState extends State<Loginpage_doctor> {
                       await FirebaseFirestore.instance
                           .collection("doctorlist")
                           .add({
+                        "token": "",
                         "sheduledtime": "",
                         "about": "about",
                         "location": location,

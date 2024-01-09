@@ -304,11 +304,7 @@ class _DoctorproeditState extends State<Doctorproedit> {
                           child: InkWell(
                             onTap: () async {
                               await updateDocument();
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Doctorhome(),
-                                  ));
+                              Navigator.pop(context);
                             },
                             child: Container(
                               width: double.infinity,

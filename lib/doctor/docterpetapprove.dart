@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
+import 'package:petcare/doctor/doctorhome.dart';
 import 'package:petcare/user/conformbooking/conformbook.dart';
 
 class Doctorappointments extends StatefulWidget {
-  const Doctorappointments({super.key});
+  var appointmentid;
+  Doctorappointments({super.key, required this.appointmentid});
 
   @override
   State<Doctorappointments> createState() => _DoctorappointmentsState();
@@ -97,34 +101,54 @@ class _DoctorappointmentsState extends State<Doctorappointments> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Container(
-              width: 150,
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Center(
-                child: Text(
-                  'Rejected',
-                  style: TextStyle(
-                    color: Colors.white,
+            InkWell(
+              onTap: () async {
+                await FirebaseFirestore.instance
+                    .collection('appoinments')
+                    .doc(widget.appointmentid)
+                    .update({'status': '2'});
+                Fluttertoast.showToast(msg: "appointment rejected");
+                Navigator.pop(context);
+              },
+              child: Container(
+                width: 150,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Center(
+                  child: Text(
+                    'Rejected',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
             ),
-            Container(
-              width: 150,
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.green,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Center(
-                child: Text(
-                  'Approved',
-                  style: TextStyle(
-                    color: Colors.white,
+            InkWell(
+              onTap: () async {
+                await FirebaseFirestore.instance
+                    .collection('appoinments')
+                    .doc(widget.appointmentid)
+                    .update({'status': '1'});
+                Fluttertoast.showToast(msg: "appointment approved");
+                Navigator.pop(context);
+              },
+              child: Container(
+                width: 150,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Center(
+                  child: Text(
+                    'Approved',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),

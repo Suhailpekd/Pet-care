@@ -67,7 +67,7 @@ class _DoctorhomeState extends State<Doctorhome> {
                 child: Container(
                   child: Center(
                     child: Text(
-                      "$userId",
+                      "Token",
                       style: TextStyle(color: Colors.white, fontSize: 25),
                     ),
                   ),
@@ -163,30 +163,35 @@ class _DoctorhomeState extends State<Doctorhome> {
             // spref.setString('department', department);
             // spref.setString('fees', fees); // Save the user ID to SharedPreferences
             // spref.setString('qualification', qualification);
-
             return Expanded(
-              child: ListView.builder(
+              child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
                   itemCount: documents.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    // Access data from each document in the collection
-                    Map<String, dynamic> data =
+                  itemBuilder: (context, index) {
+                    final data =
                         documents[index].data() as Map<String, dynamic>;
-                    // Create a Container using the data
+                    // documents[index].id;
                     return InkWell(
                         onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Doctorappointments()));
+                                  builder: (context) => Doctorappointments(
+                                      appointmentid: documents[index].id)));
                         },
                         child: Padding(
-                          padding: const EdgeInsets.all(18.0),
+                          padding: const EdgeInsets.only(
+                              left: 18, right: 18, top: 23),
                           child: Container(
                             child: Column(
                               children: [
                                 SizedBox(
-                                  width: screenSize.width / .09,
-                                  height: 120,
+                                  width: screenSize.width / 2,
+                                  height: 60,
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(15),
                                     child: Image.asset(
@@ -197,16 +202,16 @@ class _DoctorhomeState extends State<Doctorhome> {
                                 ),
                                 Text(
                                   " Booked Date:${data["date"]}",
-                                  style: TextStyle(fontSize: 20),
+                                  style: TextStyle(fontSize: 14),
                                 ),
                                 Text(
                                   "Booked Time:${data["time"]}",
-                                  style: TextStyle(fontSize: 20),
+                                  style: TextStyle(fontSize: 14),
                                 ),
                               ],
                             ),
                             height: 190,
-                            width: screenSize.width / 2.5,
+                            width: screenSize.width / 2,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 border: Border.all(
@@ -216,7 +221,7 @@ class _DoctorhomeState extends State<Doctorhome> {
                         ));
                   }),
             );
-          })
+          }),
     ])));
   }
 }
