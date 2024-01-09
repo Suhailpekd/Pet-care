@@ -58,7 +58,8 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
       "doctorid": widget.id,
       "sheduledtime": widget.time,
       'userid': userogid,
-      "status": "0"
+      "status": "0",
+      "username": userId,
     });
     Navigator.pop(context);
 

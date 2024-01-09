@@ -181,6 +181,9 @@ class _DoctorhomeState extends State<Doctorhome> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => Doctorappointments(
+                                      username: data["username"],
+                                      bookdate: data["date"],
+                                      bookedtime: data["time"],
                                       appointmentid: documents[index].id)));
                         },
                         child: Padding(
@@ -188,10 +191,11 @@ class _DoctorhomeState extends State<Doctorhome> {
                               left: 18, right: 18, top: 23),
                           child: Container(
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(
                                   width: screenSize.width / 2,
-                                  height: 60,
+                                  height: 80,
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(15),
                                     child: Image.asset(
@@ -200,17 +204,27 @@ class _DoctorhomeState extends State<Doctorhome> {
                                     ),
                                   ),
                                 ),
-                                Text(
-                                  " Booked Date:${data["date"]}",
-                                  style: TextStyle(fontSize: 14),
+                                Expanded(
+                                  child: Text(
+                                    " Name:${data["username"]}",
+                                    style: TextStyle(fontSize: 14),
+                                  ),
                                 ),
-                                Text(
-                                  "Booked Time:${data["time"]}",
-                                  style: TextStyle(fontSize: 14),
+                                Expanded(
+                                  child: Text(
+                                    "Date:${data["date"]}",
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    "Time:${data["time"]}",
+                                    style: TextStyle(fontSize: 14),
+                                  ),
                                 ),
                               ],
                             ),
-                            height: 190,
+                            height: 250,
                             width: screenSize.width / 2,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),

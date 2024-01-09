@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:petcare/logoutbuttun.dart';
 import 'package:petcare/user/bookingappointment/appointment_inner_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Customer_doctor extends StatefulWidget {
   const Customer_doctor({super.key});
@@ -11,6 +12,23 @@ class Customer_doctor extends StatefulWidget {
 }
 
 class _Customer_doctorState extends State<Customer_doctor> {
+  var userId;
+  var userogid;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<dynamic> retrieveUserID() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userId = prefs.getString('name') ?? ''.toString();
+      userogid = prefs.getString("id") ?? "".toString();
+      // Retrieve the user ID
+    });
+  }
+
   Future<List<QueryDocumentSnapshot>> fetchData() async {
     try {
       QuerySnapshot querySnapshot =

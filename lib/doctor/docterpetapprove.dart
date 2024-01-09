@@ -7,7 +7,15 @@ import 'package:petcare/user/conformbooking/conformbook.dart';
 
 class Doctorappointments extends StatefulWidget {
   var appointmentid;
-  Doctorappointments({super.key, required this.appointmentid});
+  var bookdate;
+  var bookedtime;
+  var username;
+  Doctorappointments(
+      {super.key,
+      required this.appointmentid,
+      required this.bookdate,
+      required this.bookedtime,
+      required this.username});
 
   @override
   State<Doctorappointments> createState() => _DoctorappointmentsState();
@@ -77,16 +85,20 @@ class _DoctorappointmentsState extends State<Doctorappointments> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 15),
-                    child: Text("Sheduled Time",
-                        style: TextStyle(fontWeight: FontWeight.w700)),
-                  ),
                   Expanded(
                     child: ListView(
                       children: [
-                        Text("Issue,"),
-                        Text("Date"),
+                        Text(
+                          "BOOKING DETAILS",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        Text("pet owner name :   ${widget.username}"
+                            .toUpperCase()),
+                        Text("booked date   :   ${widget.bookdate}"
+                            .toUpperCase()),
+                        Text("booked time   :   ${widget.bookedtime}"
+                            .toUpperCase()),
                       ],
                     ),
                   ),
@@ -119,7 +131,7 @@ class _DoctorappointmentsState extends State<Doctorappointments> {
                 ),
                 child: Center(
                   child: Text(
-                    'Rejected',
+                    'Rejected'.toUpperCase(),
                     style: TextStyle(
                       color: Colors.white,
                     ),
