@@ -10,24 +10,45 @@ class Tabbar1 extends StatefulWidget {
 }
 
 class _Tabbar1State extends State<Tabbar1> {
+  Color doctorTabColor = Colors.blue; // Color for the Doctor tab
+  Color customerTabColor = Colors.green;
   @override
   Widget build(BuildContext context) {
+    var screensize = MediaQuery.of(context).size;
     return DefaultTabController(
       length: 2, // Number of tabs
       child: Scaffold(
         appBar: AppBar(
           bottom: TabBar(
+            indicatorColor:
+                Colors.transparent, // Set indicator color to transparent
+            onTap: (index) {
+              setState(() {
+                // Update colors based on the selected tab index
+                if (index == 0) {
+                  doctorTabColor = Colors.blue;
+                  customerTabColor = Colors.grey; // Set the inactive tab color
+                } else {
+                  doctorTabColor = Colors.grey; // Set the inactive tab color
+                  customerTabColor = Colors.green;
+                }
+              });
+            },
             tabs: [
-              Tab(text: 'Doctor'),
-              Tab(text: 'Customer'),
+              Container(
+                color: doctorTabColor,
+                child: Tab(text: 'Doctor'),
+              ),
+              Container(
+                color: customerTabColor,
+                child: Tab(text: 'Customer'),
+              ),
             ],
           ),
         ),
         body: TabBarView(
           children: [
-            // Content for Tab 1
             Center(child: Doctorlist()),
-            // Content for Tab 2
             Center(child: Customerlist()),
           ],
         ),

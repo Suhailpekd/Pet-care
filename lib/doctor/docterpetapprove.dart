@@ -107,66 +107,66 @@ class _DoctorappointmentsState extends State<Doctorappointments> {
             ),
           ),
         ),
-        SizedBox(
-          height: 330,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            InkWell(
-              onTap: () async {
-                await FirebaseFirestore.instance
-                    .collection('appoinments')
-                    .doc(widget.appointmentid)
-                    .update({'status': '2'});
-                Fluttertoast.showToast(msg: "appointment rejected");
-                Navigator.pop(context);
-              },
-              child: Container(
-                width: 150,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Center(
-                  child: Text(
-                    'Rejected'.toUpperCase(),
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () async {
-                await FirebaseFirestore.instance
-                    .collection('appoinments')
-                    .doc(widget.appointmentid)
-                    .update({'status': '1'});
-                Fluttertoast.showToast(msg: "appointment approved");
-                Navigator.pop(context);
-              },
-              child: Container(
-                width: 150,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Center(
-                  child: Text(
-                    'Approved',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+        // SizedBox(
+        //   height: 330,
+        // ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //   children: [
+        //     InkWell(
+        //       onTap: () async {
+        //         await FirebaseFirestore.instance
+        //             .collection('appoinments')
+        //             .doc(widget.appointmentid)
+        //             .update({'status': '2'});
+        //         Fluttertoast.showToast(msg: "appointment rejected");
+        //         Navigator.pop(context);
+        //       },
+        //       child: Container(
+        //         width: 150,
+        //         height: 50,
+        //         decoration: BoxDecoration(
+        //           color: Colors.red,
+        //           borderRadius: BorderRadius.circular(15),
+        //         ),
+        //         child: Center(
+        //           child: Text(
+        //             'Rejected'.toUpperCase(),
+        //             style: TextStyle(
+        //               color: Colors.white,
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //     InkWell(
+        //       onTap: () async {
+        //         await FirebaseFirestore.instance
+        //             .collection('appoinments')
+        //             .doc(widget.appointmentid)
+        //             .update({'status': '1'});
+        //         Fluttertoast.showToast(msg: "appointment approved");
+        //         Navigator.pop(context);
+        //       },
+        //       child: Container(
+        //         width: 150,
+        //         height: 50,
+        //         decoration: BoxDecoration(
+        //           color: Colors.green,
+        //           borderRadius: BorderRadius.circular(15),
+        //         ),
+        //         child: Center(
+        //           child: Text(
+        //             'Approved',
+        //             style: TextStyle(
+        //               color: Colors.white,
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ]),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:petcare/logoutbuttun.dart';
 import 'package:petcare/user/bookingappointment/appointment_inner_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,7 +54,10 @@ class _Customer_doctorState extends State<Customer_doctor> {
             //       color: Color.fromARGB(255, 164, 125, 111),
             //       child: Center(child: Text("Doctor"))),
             FutureBuilder<QuerySnapshot>(
-          future: FirebaseFirestore.instance.collection('doctorlist').get(),
+          future: FirebaseFirestore.instance
+              .collection('doctorlist')
+              .where("status", isEqualTo: "1")
+              .get(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -65,7 +69,7 @@ class _Customer_doctorState extends State<Customer_doctor> {
             }
 
             if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-              return Center(child: Text('No data available'));
+              return Center(child: Text('No Doctors Available'));
             }
 
             // Extract the documents from the snapshot
@@ -98,17 +102,22 @@ class _Customer_doctorState extends State<Customer_doctor> {
                               left: 20, right: 20, top: 30),
                           child: InkWell(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        Appointment_inner_page(
-                                            name: data["name"].toString(),
-                                            about: data["about"].toString(),
-                                            fees: data["fees"].toString(),
-                                            time: data["time"].toString(),
-                                            id: id),
-                                  ));
+                              if (data["available"] == "Not Available") {
+                                Fluttertoast.showToast(
+                                    msg: "This Doctor Is Not Available");
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          Appointment_inner_page(
+                                              name: data["name"].toString(),
+                                              about: data["about"].toString(),
+                                              fees: data["fees"].toString(),
+                                              time: data["time"].toString(),
+                                              id: id),
+                                    ));
+                              }
                             },
                             child: Container(
                               height: 120,

@@ -123,6 +123,7 @@ class _Customer_bookingState extends State<Customer_booking> {
                       // Access the data for each document
                       Map<String, dynamic> data = snapshot.data!.docs[index]
                           .data() as Map<String, dynamic>;
+
                       // String apointid = data['id'];
                       // Customize the ListTile based on your data structure
                       return Padding(
@@ -133,7 +134,7 @@ class _Customer_bookingState extends State<Customer_booking> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => Cancelbooking(
-                                    id: data,
+                                    id: "hhh",
                                     drname: data["name"],
                                     drabout: data["about"],
                                     drtime: data["time"],

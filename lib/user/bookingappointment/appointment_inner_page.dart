@@ -28,6 +28,8 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
   @override
   var userId = "";
   var userogid = "";
+  List a = [];
+  int count = 20;
 
   @override
   void initState() {
@@ -60,6 +62,7 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
       'userid': userogid,
       "status": "0",
       "username": userId,
+      "token": count
     });
     Navigator.pop(context);
 
@@ -67,17 +70,25 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
   }
 
   Future<void> updateDocument() async {
-    // Get a reference to the Firestore collection
-    await FirebaseFirestore.instance
-        .collection('doctorlist')
-        .doc(widget.id)
-        .update({
-      'booked': "1",
-      "bookedtime": '${now.hour}:${(now.minute)}:${(now.second)}'.toString(),
+    setState(() {
+      a.add(count);
     });
+    print(a);
+    if (a.length >= 25) {
+      Fluttertoast.showToast(msg: "Error Booking, Slots Full");
+    } else {
+      await FirebaseFirestore.instance
+          .collection('doctorlist')
+          .doc(widget.id)
+          .update({
+        'token': count,
+        "bookedtime": '${now.hour}:${(now.minute)}:${(now.second)}'.toString(),
+      });
 
-    Fluttertoast.showToast(msg: 'Booking Successful ${widget.name}');
+      Fluttertoast.showToast(msg: 'Booking Successful ${widget.name}');
+    }
   }
+  // Get a reference to the Firestore collection
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +186,7 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(bottom: 15),
-                      child: Text("Sheduled Time",
+                      child: Text("Booked Time",
                           style: TextStyle(fontWeight: FontWeight.w700)),
                     ),
                     Expanded(

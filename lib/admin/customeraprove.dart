@@ -65,29 +65,18 @@ class _CustomeraproveState extends State<Customeraprove> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
-        body: ListView(children: [
-      Padding(
-        padding: const EdgeInsets.only(top: 55, left: 30),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        appBar: AppBar(
+            title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(
-                Icons.arrow_back,
-                size: 29,
-              ),
-            ),
             Text(
-              "Customer Profile",
+              "Customer List",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
             ),
             InkWell(
               onTap: () async {
                 await FirebaseFirestore.instance
-                    .collection('userlist')
+                    .collection('doctorlist')
                     .doc(widget.idcustomer)
                     .delete();
                 Navigator.pushReplacement(context, MaterialPageRoute(
@@ -102,135 +91,142 @@ class _CustomeraproveState extends State<Customeraprove> {
               ),
             ),
           ],
-        ),
-      ),
-      Center(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 54),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            CircleAvatar(
-              backgroundColor: const Color.fromARGB(255, 163, 202, 234),
-              backgroundImage: AssetImage(
-                "asset/Avatar-Profile-Vector-PNG-File.png",
-              ),
-              radius: 70,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 5),
-                  child: Text(
-                    "${widget.doc}",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 5),
-                  child: Text(
-                    "${widget.doc1}",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 5),
-                  child: Text(
-                    "${widget.doc2}",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                  ),
-                ),
-              ],
-            ),
-            Container(
-                height: 400,
-                color: Colors.grey,
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 34, right: 34, bottom: 30, top: 280),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        )),
+        body: ListView(children: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 54),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: const Color.fromARGB(255, 163, 202, 234),
+                      backgroundImage: AssetImage(
+                        "asset/Avatar-Profile-Vector-PNG-File.png",
+                      ),
+                      radius: 70,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Expanded(
-                          child: InkWell(
-                            onTap: () async {
-                              await FirebaseFirestore.instance
-                                  .collection('userlist')
-                                  .doc(widget.idcustomer)
-                                  .update({'status': '2'});
-                              Navigator.pushReplacement(context,
-                                  MaterialPageRoute(
-                                builder: (context) {
-                                  return Tabbar1();
-                                },
-                              ));
-                            },
-                            child: Container(
-                              width: screenSize.width / 2.3,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: Color.fromARGB(222, 224, 10, 10),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                              child: Center(
-                                  child: Text(
-                                "Reject",
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.white),
-                              )),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 30,
-                        ),
-                        Expanded(
-                          child: InkWell(
-                            onTap: () async {
-                              await FirebaseFirestore.instance
-                                  .collection('userlist')
-                                  .doc(widget.idcustomer)
-                                  .update({'status': '1'});
-                              Navigator.pushReplacement(context,
-                                  MaterialPageRoute(
-                                builder: (context) {
-                                  return Tabbar1();
-                                },
-                              ));
-                            },
-                            child: Container(
-                              width: screenSize.width / 2.3,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: Color.fromARGB(222, 1, 154, 100),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                              child: Center(
-                                  child: Text(
-                                "Approve",
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.white),
-                              )),
-                            ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10, bottom: 5),
+                          child: Text(
+                            "${widget.doc}",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w500),
                           ),
                         ),
                       ],
                     ),
-                  ),
-                ))
-          ]),
-        ),
-      ),
-    ]));
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10, bottom: 5),
+                          child: Text(
+                            "${widget.doc1}",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10, bottom: 5),
+                          child: Text(
+                            "${widget.doc2}",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                        height: 400,
+                        color: Colors.grey,
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 34, right: 34, bottom: 30, top: 280),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await FirebaseFirestore.instance
+                                          .collection('userlist')
+                                          .doc(widget.idcustomer)
+                                          .update({'status': '2'});
+                                      Navigator.pushReplacement(context,
+                                          MaterialPageRoute(
+                                        builder: (context) {
+                                          return Tabbar1();
+                                        },
+                                      ));
+                                    },
+                                    child: Container(
+                                      width: screenSize.width / 2.3,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          color:
+                                              Color.fromARGB(222, 224, 10, 10),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10))),
+                                      child: Center(
+                                          child: Text(
+                                        "Reject",
+                                        style: TextStyle(
+                                            fontSize: 16, color: Colors.white),
+                                      )),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 30,
+                                ),
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await FirebaseFirestore.instance
+                                          .collection('userlist')
+                                          .doc(widget.idcustomer)
+                                          .update({'status': '1'});
+                                      Navigator.pushReplacement(context,
+                                          MaterialPageRoute(
+                                        builder: (context) {
+                                          return Tabbar1();
+                                        },
+                                      ));
+                                    },
+                                    child: Container(
+                                      width: screenSize.width / 2.3,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          color:
+                                              Color.fromARGB(222, 1, 154, 100),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10))),
+                                      child: Center(
+                                          child: Text(
+                                        "Approve",
+                                        style: TextStyle(
+                                            fontSize: 16, color: Colors.white),
+                                      )),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ))
+                  ]),
+            ),
+          ),
+        ]));
   }
 }

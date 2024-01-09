@@ -335,6 +335,13 @@ class _User_profile_editState extends State<User_profile_edit> {
                                     false) {
                                   await updateDocument();
 
+                                  SharedPreferences spref =
+                                      await SharedPreferences.getInstance();
+                                  spref.setString('name', name1.text);
+                                  spref.setString('email', email2.text);
+                                  spref.setString('location', location3.text);
+                                  spref.setString('contact', contact4.text);
+
                                   Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
