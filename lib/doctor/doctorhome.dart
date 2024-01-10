@@ -10,7 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_star_rating/simple_star_rating.dart';
 
 class Doctorhome extends StatefulWidget {
-  const Doctorhome({super.key});
+  var cunt;
+  Doctorhome({super.key, required this.cunt});
 
   @override
   State<Doctorhome> createState() => _DoctorhomeState();
@@ -32,7 +33,7 @@ class _DoctorhomeState extends State<Doctorhome> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     username = prefs.getString('name') ?? ''.toString();
     userId = prefs.getString('id') ?? ''.toString();
-    counted = prefs.getString('count') ?? "".toString();
+    // counted = prefs.getString('count') ?? "".toString();
     available = prefs.getString("available") ?? "".toString();
 
     print(userId);
@@ -77,7 +78,7 @@ class _DoctorhomeState extends State<Doctorhome> {
                         child: Container(
                           child: Center(
                             child: Text(
-                              counted,
+                              widget.cunt.toString(),
                               style:
                                   TextStyle(color: Colors.white, fontSize: 25),
                             ),

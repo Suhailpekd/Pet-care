@@ -43,9 +43,8 @@ class _DoctorproeditState extends State<Doctorproedit> {
         nametext = TextEditingController(text: name);
         emailtext = TextEditingController(text: email);
         locationtext = TextEditingController(text: location);
-        if (selectedOption == "available") {
-          selectedOption = available;
-        }
+
+        selectedOption = available;
       });
 
       print(email);

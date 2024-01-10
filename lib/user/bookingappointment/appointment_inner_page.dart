@@ -30,7 +30,7 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
   var userogid = "";
   List a = [];
   var b;
-  var count;
+  int count = 0;
 
   @override
   void initState() {
@@ -82,30 +82,28 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
     } catch (e) {
       // Handle errors, log or display a meaningful error message.
       print("Error fetching data: $e");
-      return count;
+      return [];
     }
   }
 
   Future<void> updateDocument() async {
-    fetchData();
-    setState(() {
-      count++;
+    // fetchData();
+    count++;
+
+    // if (count >= 25) {
+    //   Fluttertoast.showToast(msg: "Error Booking, Slots Full");
+    // } else {
+    await FirebaseFirestore.instance
+        .collection('doctorlist')
+        .doc(widget.id)
+        .update({
+      'token': count,
+      "bookedtime": '${now.hour}:${(now.minute)}:${(now.second)}'.toString(),
     });
 
-    if (count >= 25) {
-      Fluttertoast.showToast(msg: "Error Booking, Slots Full");
-    } else {
-      await FirebaseFirestore.instance
-          .collection('doctorlist')
-          .doc(widget.id)
-          .update({
-        'token': count,
-        "bookedtime": '${now.hour}:${(now.minute)}:${(now.second)}'.toString(),
-      });
-
-      Fluttertoast.showToast(msg: 'Booking Successful ${widget.name}');
-    }
+    Fluttertoast.showToast(msg: 'Booking Successful ${widget.name}');
   }
+  // }
   // Get a reference to the Firestore collection
 
   @override

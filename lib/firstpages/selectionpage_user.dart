@@ -60,11 +60,11 @@ class _User_selectionState extends State<User_selection> {
             padding: EdgeInsets.only(left: 25, right: 25, top: 27),
             child: InkWell(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Doctorhome(),
-                    ));
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => Doctorhome(),
+                //     ));
               },
               child: Container(
                 child: Padding(

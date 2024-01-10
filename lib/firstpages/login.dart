@@ -51,7 +51,7 @@ class _FirstloginState extends State<Firstlogin> {
         String email = customerSnapshot.docs[0]["email"];
         String fees = customerSnapshot.docs[0]["fees"];
         String location = customerSnapshot.docs[0]["location"];
-        String count = customerSnapshot.docs[0]["token"];
+        var count = customerSnapshot.docs[0]["token"];
         String available1 = customerSnapshot.docs[0]["available"];
 
         String qualification = customerSnapshot.docs[0]
@@ -62,7 +62,7 @@ class _FirstloginState extends State<Firstlogin> {
         spref.setString('name', name);
         spref.setString('email', email);
         spref.setString('location', location);
-        spref.setString('count', count);
+        // spref.setString('count', count);
         spref.setString("available", available1);
 
         spref.setString('department', department);
@@ -74,7 +74,7 @@ class _FirstloginState extends State<Firstlogin> {
 
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) {
-          return Doctorhome();
+          return Doctorhome(cunt: count);
         }));
         return;
       }
