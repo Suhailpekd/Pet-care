@@ -152,56 +152,65 @@ class _DoctoraproveState extends State<Doctoraprove> {
               ),
             ],
           ),
+          SizedBox(
+            height: screenSize.height / 3,
+          ),
           if (widget.status == "1")
-            InkWell(
-              onTap: () async {
-                await FirebaseFirestore.instance
-                    .collection('doctorlist')
-                    .doc(widget.id)
-                    .update({'status': '2'});
-                Navigator.pushReplacement(context, MaterialPageRoute(
-                  builder: (context) {
-                    return Tabbar1();
-                  },
-                ));
-              },
-              child: Container(
-                width: screenSize.width / 3,
-                height: 50,
-                decoration: BoxDecoration(
-                    color: Color.fromARGB(222, 224, 10, 10),
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: Center(
-                    child: Text(
-                  "Reject",
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                )),
+            Padding(
+              padding: const EdgeInsets.all(28.0),
+              child: InkWell(
+                onTap: () async {
+                  await FirebaseFirestore.instance
+                      .collection('doctorlist')
+                      .doc(widget.id)
+                      .update({'status': '2'});
+                  Navigator.pushReplacement(context, MaterialPageRoute(
+                    builder: (context) {
+                      return Tabbar1();
+                    },
+                  ));
+                },
+                child: Container(
+                  width: screenSize.width / 3,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      color: Color.fromARGB(222, 224, 10, 10),
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: Center(
+                      child: Text(
+                    "Reject",
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  )),
+                ),
               ),
             ),
           if (widget.status == "2" || widget.status == "0")
-            InkWell(
-              onTap: () async {
-                await FirebaseFirestore.instance
-                    .collection('doctorlist')
-                    .doc(widget.id)
-                    .update({'status': '1'});
-                Navigator.pushReplacement(context, MaterialPageRoute(
-                  builder: (context) {
-                    return Tabbar1();
-                  },
-                ));
-              },
-              child: Container(
-                width: screenSize.width / 3,
-                height: 50,
-                decoration: BoxDecoration(
-                    color: Color.fromARGB(222, 1, 154, 100),
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: Center(
-                    child: Text(
-                  "Approve",
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                )),
+            Padding(
+              padding: const EdgeInsets.all(28.0),
+              child: InkWell(
+                onTap: () async {
+                  await FirebaseFirestore.instance
+                      .collection('doctorlist')
+                      .doc(widget.id)
+                      .update({'status': '1'});
+                  Navigator.pushReplacement(context, MaterialPageRoute(
+                    builder: (context) {
+                      return Tabbar1();
+                    },
+                  ));
+                },
+                child: Container(
+                  width: screenSize.width / 3,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      color: Color.fromARGB(222, 1, 154, 100),
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: Center(
+                      child: Text(
+                    "Approve",
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  )),
+                ),
               ),
             ),
         ]));

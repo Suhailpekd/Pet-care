@@ -145,10 +145,6 @@ class _DoctorlistState extends State<Doctorlist> {
                                     });
                                   },
                                   child: Icon(Icons.delete)),
-                              Text(
-                                "see more",
-                                style: TextStyle(fontSize: 13),
-                              )
                             ],
                           ),
                         )

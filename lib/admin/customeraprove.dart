@@ -147,6 +147,9 @@ class _CustomeraproveState extends State<Customeraprove> {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: screenSize.height / 3,
+                    ),
                     if (widget.status == "1")
                       InkWell(
                         onTap: () async {

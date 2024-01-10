@@ -48,7 +48,10 @@ class _CancelbookingState extends State<Cancelbooking> {
   }
 
   Future<void> delt() async {
-    await FirebaseFirestore.instance.collection('doctorlist').doc(ids).delete();
+    await FirebaseFirestore.instance
+        .collection('appoinments')
+        .doc(ids)
+        .delete();
     Navigator.pop(context);
   }
 
@@ -57,59 +60,27 @@ class _CancelbookingState extends State<Cancelbooking> {
     var names = docList;
     final screenSize = MediaQueryData().size;
     return Scaffold(
+      appBar: AppBar(),
       backgroundColor: Colors.grey.shade100,
       body: ListView(
         children: [
           Container(
             height: 235,
             color: Colors.white,
-            child: Stack(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 55, left: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.pop(
-                            context,
-                          );
-                        },
-                        child: Icon(
-                          Icons.arrow_back,
-                          size: 29,
-                        ),
-                      ),
-                    ],
+                CircleAvatar(
+                  backgroundColor: const Color.fromARGB(255, 163, 202, 234),
+                  backgroundImage: AssetImage(
+                    "asset/Avatar-Profile-Vector-PNG-File.png",
                   ),
+                  radius: 50,
                 ),
-                Stack(
-                  children: [
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircleAvatar(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 163, 202, 234),
-                              backgroundImage: AssetImage(
-                                "asset/Avatar-Profile-Vector-PNG-File.png",
-                              ),
-                              radius: 50,
-                            ),
-                            Text(
-                              "${widget.drname}",
-                              style: TextStyle(fontSize: 23),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                Text(
+                  "${widget.drname}",
+                  style: TextStyle(fontSize: 23),
+                )
               ],
             ),
           ),
@@ -132,33 +103,6 @@ class _CancelbookingState extends State<Cancelbooking> {
                       child: ListView(
                         children: [
                           // Text("${widget.appointmentid}"),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Container(
-              height: 110,
-              color: Color.fromARGB(255, 255, 255, 255),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 15),
-                      child: Text("Sheduled Time",
-                          style: TextStyle(fontWeight: FontWeight.w700)),
-                    ),
-                    Expanded(
-                      child: ListView(
-                        children: [
-                          Text("${widget.id}"),
                         ],
                       ),
                     ),
@@ -196,56 +140,14 @@ class _CancelbookingState extends State<Cancelbooking> {
           Padding(
             padding: EdgeInsets.only(top: 15, left: 75, right: 75, bottom: 10),
             child: InkWell(
-              onTap: () {
-                // showDialog(
-                //   context: context,
-                //   builder: (context) => Center(
-                //     child: Padding(
-                //       padding: const EdgeInsets.all(28.0),
-                //       child: Container(
-                //         height: 300,
-                //         decoration:
-                //             BoxDecoration(color: Colors.white, boxShadow: []),
-                //         child: Center(
-                //           child: Column(
-                //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //             children: [
-                //               Text(
-                //                 "25",
-                //                 style: TextStyle(color: Colors.amber),
-                //               ),
-                //               Padding(
-                //                 padding:
-                //                     const EdgeInsets.only(left: 48, right: 48),
-                //                 child: Container(
-                //                     decoration: BoxDecoration(
-                //                         boxShadow: [],
-                //                         color: Color.fromARGB(255, 1, 140, 112),
-                //                         borderRadius: BorderRadius.all(
-                //                             Radius.circular(10))),
-                //                     height: 40,
-                //                     child: Center(
-                //                       child: Text(
-                //                         "Ok",
-                //                         style: TextStyle(
-                //                             fontSize: 16, color: Colors.white),
-                //                       ),
-                //                     )),
-                //               )
-                //             ],
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // );
-              },
+              onTap: () {},
               child: InkWell(
                 onTap: () async {
                   await FirebaseFirestore.instance
                       .collection('appoinments')
-                      .doc()
-                      .delete();
+                      .where("doctorid")
+                      .get();
+
                   Navigator.pop(context);
                 },
                 child: Container(

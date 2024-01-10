@@ -26,51 +26,26 @@ class _DoctorappointmentsState extends State<Doctorappointments> {
   Widget build(BuildContext context) {
     final screenSize = MediaQueryData().size;
     return Scaffold(
+      appBar: AppBar(),
       backgroundColor: Colors.grey.shade100,
       body: ListView(children: [
         Container(
           height: 235,
           color: Colors.white,
-          child: Row(
-            children: [
-              Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 55, left: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Icon(
-                            Icons.arrow_back,
-                            size: 29,
-                          ),
-                        ),
-                      ],
-                    ),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  backgroundColor: const Color.fromARGB(255, 163, 202, 234),
+                  backgroundImage: AssetImage(
+                    "asset/catpic.jpg",
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          backgroundColor:
-                              const Color.fromARGB(255, 163, 202, 234),
-                          backgroundImage: AssetImage(
-                            "asset/catpic.jpg",
-                          ),
-                          radius: 70,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
+                  radius: 70,
+                ),
+              ],
+            ),
           ),
         ),
         Padding(
@@ -83,20 +58,22 @@ class _DoctorappointmentsState extends State<Doctorappointments> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ListView(
-                    children: [
-                      Text(
-                        "BOOKING DETAILS",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      Text("pet owner name :   ${widget.username}"
-                          .toUpperCase()),
-                      Text(
-                          "booked date   :   ${widget.bookdate}".toUpperCase()),
-                      Text("booked time   :   ${widget.bookedtime}"
-                          .toUpperCase()),
-                    ],
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        Text(
+                          "BOOKING DETAILS",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        Text("pet owner name :   ${widget.username}"
+                            .toUpperCase()),
+                        Text("booked date   :   ${widget.bookdate}"
+                            .toUpperCase()),
+                        Text("booked time   :   ${widget.bookedtime}"
+                            .toUpperCase()),
+                      ],
+                    ),
                   ),
                 ],
               ),

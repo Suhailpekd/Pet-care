@@ -20,10 +20,12 @@ class _Customer_bookingState extends State<Customer_booking> {
   var name = "";
   var drname = "";
   var idappointment = "";
+  var appointment = "";
   @override
   void initState() {
     super.initState();
     retrieveUserID();
+    fetchData();
     // fair();
     // print(id);
   }
@@ -34,6 +36,7 @@ class _Customer_bookingState extends State<Customer_booking> {
           .collection("appoinments")
           .where("userid", isEqualTo: id)
           .get();
+      appointment = querySnapshot.docs[0]["doctorid"];
       return querySnapshot.docs;
     } catch (e) {
       // Handle errors, log or display a meaningful error message.

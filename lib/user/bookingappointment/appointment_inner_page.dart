@@ -66,7 +66,6 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
       "username": userId,
       "token": count,
     });
-    Navigator.pop(context);
 
     // Fluttertoast.showToast(msg: 'Booking Successful ${widget.name}');
   }
@@ -90,18 +89,20 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
     // fetchData();
     count++;
 
-    // if (count >= 25) {
-    //   Fluttertoast.showToast(msg: "Error Booking, Slots Full");
-    // } else {
-    await FirebaseFirestore.instance
-        .collection('doctorlist')
-        .doc(widget.id)
-        .update({
-      'token': count,
-      "bookedtime": '${now.hour}:${(now.minute)}:${(now.second)}'.toString(),
-    });
+    if (count >= 30) {
+      Fluttertoast.showToast(msg: "Error Booking, Slots Full");
+      Navigator.pop(context);
+    } else {
+      await FirebaseFirestore.instance
+          .collection('doctorlist')
+          .doc(widget.id)
+          .update({
+        'token': count,
+        "bookedtime": '${now.hour}:${(now.minute)}:${(now.second)}'.toString(),
+      });
 
-    Fluttertoast.showToast(msg: 'Booking Successful ${widget.name}');
+      Fluttertoast.showToast(msg: 'Booking Successful ${widget.name}');
+    }
   }
   // }
   // Get a reference to the Firestore collection
@@ -110,56 +111,24 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
   Widget build(BuildContext context) {
     final screenSize = MediaQueryData().size;
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      appBar: AppBar(),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: ListView(
         children: [
           Container(
             height: 235,
             color: Colors.white,
-            child: Stack(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 55, left: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.pop(
-                            context,
-                          );
-                        },
-                        child: Icon(
-                          Icons.arrow_back,
-                          size: 29,
-                        ),
-                      ),
-                    ],
+                CircleAvatar(
+                  backgroundColor: const Color.fromARGB(255, 163, 202, 234),
+                  backgroundImage: AssetImage(
+                    "asset/Avatar-Profile-Vector-PNG-File.png",
                   ),
+                  radius: 70,
                 ),
-                Stack(
-                  children: [
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircleAvatar(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 163, 202, 234),
-                              backgroundImage: AssetImage(
-                                "asset/Avatar-Profile-Vector-PNG-File.png",
-                              ),
-                              radius: 70,
-                            ),
-                            Text("${widget.name}")
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                Text("${widget.name}")
               ],
             ),
           ),
@@ -190,33 +159,33 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Container(
-              height: 110,
-              color: Color.fromARGB(255, 255, 255, 255),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 15),
-                      child: Text("Booked Time",
-                          style: TextStyle(fontWeight: FontWeight.w700)),
-                    ),
-                    Expanded(
-                      child: ListView(
-                        children: [
-                          Text("${widget.time}"),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(top: 20),
+          //   child: Container(
+          //     height: 110,
+          //     color: Color.fromARGB(255, 255, 255, 255),
+          //     child: Padding(
+          //       padding: const EdgeInsets.all(10.0),
+          //       child: Column(
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           Padding(
+          //             padding: const EdgeInsets.only(bottom: 15),
+          //             child: Text("Booked Time",
+          //                 style: TextStyle(fontWeight: FontWeight.w700)),
+          //           ),
+          //           Expanded(
+          //             child: ListView(
+          //               children: [
+          //                 Text("${widget.time}"),
+          //               ],
+          //             ),
+          // ),
+          //   ],
+          // ),
+          //   ),
+          // ),
+          // ),
           Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Container(
@@ -248,7 +217,71 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
             child: InkWell(
               onTap: () async {
                 await updateDocument();
+
                 await updatebooking();
+                if (count < 31)
+                  showDialog(
+                    barrierLabel: "your token",
+                    context: context,
+                    builder: (context) => Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(28.0),
+                        child: Container(
+                          height: 200,
+                          decoration:
+                              BoxDecoration(color: Colors.white, boxShadow: []),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(18.0),
+                                  child: SizedBox(
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          "Booking Succesfull",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Color.fromARGB(
+                                                  255, 3, 159, 173)),
+                                        ),
+                                        Text(
+                                          "Your Token Number $count",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Color.fromARGB(
+                                                  255, 3, 159, 173)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                // Padding(
+                                //   padding:
+                                //       const EdgeInsets.only(left: 48, right: 48),
+                                //   child: Container(
+                                //       decoration: BoxDecoration(
+                                //           boxShadow: [],
+                                //           color: Color.fromARGB(255, 1, 140, 112),
+                                //           borderRadius: BorderRadius.all(
+                                //               Radius.circular(10))),
+                                //       height: 40,
+                                //       child: Center(
+                                //         child: Text(
+                                //           "Ok",
+                                //           style: TextStyle(
+                                //               fontSize: 16, color: Colors.white),
+                                //         ),
+                                //       )),
+                                // )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
                 print("object");
               },
               child: Container(
@@ -266,7 +299,7 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
                     borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Center(
                     child: Text(
-                  "Booknow",
+                  "Book Now",
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 )),
               ),
