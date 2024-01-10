@@ -32,7 +32,9 @@ class _DoctorhomeState extends State<Doctorhome> {
     username = prefs.getString('name') ?? ''.toString();
     userId = prefs.getString('id') ?? ''.toString();
     counted = prefs.getString('count') ?? "".toString();
-    print(userId); // Retrieve the user ID
+
+    print(userId);
+    print(counted); // Retrieve the user ID
   }
 
   Future<List<QueryDocumentSnapshot>> fetchData() async {

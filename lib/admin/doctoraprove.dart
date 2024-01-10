@@ -29,6 +29,111 @@ class Doctoraprove extends StatefulWidget {
 }
 
 class _DoctoraproveState extends State<Doctoraprove> {
+  // Future<void> cc() async {
+  //   final QuerySnapshot<Map<String, dynamic>> userSnapshot =
+  //       await FirebaseFirestore.instance
+  //           .collection('userlist')
+  //           .where(
+  //             'status',
+  //             isEqualTo: "1",
+  //           )
+  //           .get();
+  //   if (userSnapshot.docs.isNotEmpty) {
+  //     setState(() {
+  //       InkWell(
+  //         onTap: () async {
+  //           await FirebaseFirestore.instance
+  //               .collection('doctorlist')
+  //               .doc(widget.id)
+  //               .update({'status': '1'});
+  //           Navigator.pushReplacement(context, MaterialPageRoute(
+  //             builder: (context) {
+  //               return Tabbar1();
+  //             },
+  //           ));
+  //         },
+  //         child: Container(
+  //           width: 100,
+  //           height: 50,
+  //           decoration: BoxDecoration(
+  //               color: Color.fromARGB(222, 1, 154, 100),
+  //               borderRadius: BorderRadius.all(Radius.circular(10))),
+  //           child: Center(
+  //               child: Text(
+  //             "Approved",
+  //             style: TextStyle(fontSize: 16, color: Colors.white),
+  //           )),
+  //         ),
+  //       );
+  //     });
+  //   } else {
+  //     setState(() {
+  //       Column(
+  //         children: [
+  //           Padding(
+  //             padding: const EdgeInsets.only(left: 34, right: 34, bottom: 30),
+  //             child: Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               children: [
+  //                 InkWell(
+  //                   onTap: () async {
+  //                     await FirebaseFirestore.instance
+  //                         .collection('doctorlist')
+  //                         .doc(widget.id)
+  //                         .update({'status': '2'});
+  //                     Navigator.pushReplacement(context, MaterialPageRoute(
+  //                       builder: (context) {
+  //                         return Tabbar1();
+  //                       },
+  //                     ));
+  //                   },
+  //                   child: Container(
+  //                     width: 50,
+  //                     height: 50,
+  //                     decoration: BoxDecoration(
+  //                         color: Color.fromARGB(222, 224, 10, 10),
+  //                         borderRadius: BorderRadius.all(Radius.circular(10))),
+  //                     child: Center(
+  //                         child: Text(
+  //                       "Reject",
+  //                       style: TextStyle(fontSize: 16, color: Colors.white),
+  //                     )),
+  //                   ),
+  //                 ),
+  //                 InkWell(
+  //                   onTap: () async {
+  //                     await FirebaseFirestore.instance
+  //                         .collection('doctorlist')
+  //                         .doc(widget.id)
+  //                         .update({'status': '1'});
+  //                     Navigator.pushReplacement(context, MaterialPageRoute(
+  //                       builder: (context) {
+  //                         return Tabbar1();
+  //                       },
+  //                     ));
+  //                   },
+  //                   child: Container(
+  //                     width: 50,
+  //                     height: 50,
+  //                     decoration: BoxDecoration(
+  //                         color: Color.fromARGB(222, 1, 154, 100),
+  //                         borderRadius: BorderRadius.all(Radius.circular(10))),
+  //                     child: Center(
+  //                         child: Text(
+  //                       "Approve",
+  //                       style: TextStyle(fontSize: 16, color: Colors.white),
+  //                     )),
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ],
+  //       );
+  //     });
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     // var a = widget.documents;

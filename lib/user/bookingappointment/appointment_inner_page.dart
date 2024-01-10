@@ -29,13 +29,15 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
   var userId = "";
   var userogid = "";
   List a = [];
-  int count = 20;
+  var b;
+  var count;
 
   @override
   void initState() {
     super.initState();
     // Call your function to retrieve user ID here
     retrieveUserID();
+    fetchData();
   }
 
   Future<dynamic> retrieveUserID() async {
@@ -69,12 +71,27 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
     // Fluttertoast.showToast(msg: 'Booking Successful ${widget.name}');
   }
 
+  Future<List<QueryDocumentSnapshot>> fetchData() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection("doctorlist").get();
+      count = querySnapshot.docs[0]["token"];
+      return querySnapshot.docs;
+    } catch (e) {
+      // Handle errors, log or display a meaningful error message.
+      print("Error fetching data: $e");
+      return count;
+    }
+  }
+
   Future<void> updateDocument() async {
     setState(() {
-      a.add(count);
+      count--;
+      b = count;
+      count = b;
     });
     print(a);
-    if (a.length >= 25) {
+    if (count == 0) {
       Fluttertoast.showToast(msg: "Error Booking, Slots Full");
     } else {
       await FirebaseFirestore.instance

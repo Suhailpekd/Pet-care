@@ -51,6 +51,7 @@ class _FirstloginState extends State<Firstlogin> {
         String email = customerSnapshot.docs[0]["email"];
         String fees = customerSnapshot.docs[0]["fees"];
         String location = customerSnapshot.docs[0]["location"];
+        var count = customerSnapshot.docs[0]["token"];
 
         String qualification = customerSnapshot.docs[0]
             ["qualification"]; // Retrieve the ID from the first document
@@ -60,12 +61,13 @@ class _FirstloginState extends State<Firstlogin> {
         spref.setString('name', name);
         spref.setString('email', email);
         spref.setString('location', location);
+        spref.setString('count', count);
 
         spref.setString('department', department);
         spref.setString('fees', fees); // Save the user ID to SharedPreferences
         spref.setString('qualification', qualification);
 
-        // Fluttertoast.showToast(msg: 'Login Successful as Doctor');
+        Fluttertoast.showToast(msg: 'Login Successful as Doctor');
         // print('Customer ID: $customerId');
 
         Navigator.pushReplacement(context,
@@ -74,6 +76,7 @@ class _FirstloginState extends State<Firstlogin> {
         }));
         return;
       }
+
       final QuerySnapshot<Map<String, dynamic>> userSnapshot =
           await FirebaseFirestore.instance
               .collection('userlist')
@@ -112,7 +115,10 @@ class _FirstloginState extends State<Firstlogin> {
           return Navigation();
         }));
       } else {
-        print("object");
+        Fluttertoast.showToast(
+            msg:
+                'your email and password is incorrect OR admin approvement is pending');
+        ;
       }
     } catch (e) {
       print('Error logging in:');
