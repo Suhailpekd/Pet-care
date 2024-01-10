@@ -19,6 +19,7 @@ class _Customer_doctorState extends State<Customer_doctor> {
   @override
   void initState() {
     super.initState();
+    retrieveUserID();
   }
 
   Future<dynamic> retrieveUserID() async {
@@ -46,6 +47,9 @@ class _Customer_doctorState extends State<Customer_doctor> {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(actions: [
+        logout1(),
+      ]),
       body: SafeArea(
         child:
             //Column(children: [
@@ -78,7 +82,6 @@ class _Customer_doctorState extends State<Customer_doctor> {
 
             return Column(
               children: [
-                logout1(),
                 Container(
                     height: 100,
                     width: screenSize.width,

@@ -20,6 +20,7 @@ class _DoctorhomeState extends State<Doctorhome> {
   String userId = "";
   String username = '';
   var counted = "";
+  var available = "";
   @override
   void initState() {
     super.initState();
@@ -32,6 +33,7 @@ class _DoctorhomeState extends State<Doctorhome> {
     username = prefs.getString('name') ?? ''.toString();
     userId = prefs.getString('id') ?? ''.toString();
     counted = prefs.getString('count') ?? "".toString();
+    available = prefs.getString("available") ?? "".toString();
 
     print(userId);
     print(counted); // Retrieve the user ID

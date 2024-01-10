@@ -64,7 +64,7 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
       'userid': userogid,
       "status": "0",
       "username": userId,
-      "token": count
+      "token": count,
     });
     Navigator.pop(context);
 
@@ -73,8 +73,10 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
 
   Future<List<QueryDocumentSnapshot>> fetchData() async {
     try {
-      QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection("doctorlist").get();
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection("doctorlist")
+          // .where(userogid.isNotEmpty)
+          .get();
       count = querySnapshot.docs[0]["token"];
       return querySnapshot.docs;
     } catch (e) {
@@ -85,13 +87,12 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
   }
 
   Future<void> updateDocument() async {
+    fetchData();
     setState(() {
-      count--;
-      b = count;
-      count = b;
+      count++;
     });
-    print(a);
-    if (count == 0) {
+
+    if (count >= 25) {
       Fluttertoast.showToast(msg: "Error Booking, Slots Full");
     } else {
       await FirebaseFirestore.instance

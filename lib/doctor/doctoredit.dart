@@ -43,13 +43,16 @@ class _DoctorproeditState extends State<Doctorproedit> {
         nametext = TextEditingController(text: name);
         emailtext = TextEditingController(text: email);
         locationtext = TextEditingController(text: location);
-        selectedOption = available;
+        if (selectedOption == "available") {
+          selectedOption = available;
+        }
       });
 
       print(email);
       print(location);
       print(name); // Retrieve the user ID
     });
+    return selectedOption;
   }
 
   Future<void> updateDocument() async {
@@ -112,17 +115,17 @@ class _DoctorproeditState extends State<Doctorproedit> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Radio(
-                            value: 'available',
+                            value: selectedOption,
                             groupValue: selectedOption,
                             onChanged: (value) {
                               setState(() {
-                                selectedOption = value;
+                                selectedOption = available;
                               });
                             },
                           ),
                           Text('Available'),
                           Radio(
-                            value: 'Not Available',
+                            value: "",
                             groupValue: selectedOption,
                             onChanged: (value) {
                               setState(() {

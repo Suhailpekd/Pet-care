@@ -31,32 +31,26 @@ class _CancelbookingState extends State<Cancelbooking> {
   var names = "ddd";
   List docList = [];
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   retrieveUserID();
-  //   // firedata();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    retrieveUserID();
+    // firedata();
+  }
 
-  // Future<dynamic> retrieveUserID() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     ids = prefs.getString('id') ?? '';
-  //     print(ids);
-  //     // Retrieve the user ID
-  //   });
-  // }
+  Future<dynamic> retrieveUserID() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      ids = prefs.getString('id') ?? '';
+      print(ids);
+      // Retrieve the user ID
+    });
+  }
 
-  // Future<List<QueryDocumentSnapshot>> firedata() async {
-  //   QuerySnapshot snapshot = await FirebaseFirestore.instance
-  //       .collection("appoinments")
-  //       .get(widget.id);
-  //   List<QueryDocumentSnapshot> docList = snapshot.docs;
-  //   setState(() {
-  //     // var names1 = docList[0]["email"].toString();
-  //   });
-  //   return docList;
-  // }
+  Future<void> delt() async {
+    await FirebaseFirestore.instance.collection('doctorlist').doc(ids).delete();
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -250,7 +244,7 @@ class _CancelbookingState extends State<Cancelbooking> {
                 onTap: () async {
                   await FirebaseFirestore.instance
                       .collection('appoinments')
-                      .doc(widget.id)
+                      .doc()
                       .delete();
                   Navigator.pop(context);
                 },

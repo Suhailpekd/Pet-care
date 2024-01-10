@@ -80,6 +80,7 @@ class _CustomerlistState extends State<Customerlist> {
                                   doc: data["name"],
                                   doc1: data["email"],
                                   doc2: data["phone"],
+                                  status: data["status"],
                                   idcustomer: documents[index].id,
                                 )));
                   },

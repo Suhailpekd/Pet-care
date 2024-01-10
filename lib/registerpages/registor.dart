@@ -355,7 +355,7 @@ class _Loginpage_doctorState extends State<Loginpage_doctor> {
                       await FirebaseFirestore.instance
                           .collection("doctorlist")
                           .add({
-                        "token": "",
+                        "token": "0",
                         "sheduledtime": "",
                         "about": "about",
                         "location": location,
@@ -366,7 +366,7 @@ class _Loginpage_doctorState extends State<Loginpage_doctor> {
                         "fees": fees,
                         "department": department,
                         'status': "0",
-                        "available": "not available"
+                        "available": "Not Available"
                       }).then((value) => Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(

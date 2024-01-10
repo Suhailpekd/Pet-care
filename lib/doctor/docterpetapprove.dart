@@ -31,43 +31,41 @@ class _DoctorappointmentsState extends State<Doctorappointments> {
         Container(
           height: 235,
           color: Colors.white,
-          child: Stack(
+          child: Row(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 55, left: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Icon(
-                        Icons.arrow_back,
-                        size: 29,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               Stack(
                 children: [
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            backgroundColor:
-                                const Color.fromARGB(255, 163, 202, 234),
-                            backgroundImage: AssetImage(
-                              "asset/catpic.jpg",
-                            ),
-                            radius: 70,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 55, left: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Icon(
+                            Icons.arrow_back,
+                            size: 29,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          backgroundColor:
+                              const Color.fromARGB(255, 163, 202, 234),
+                          backgroundImage: AssetImage(
+                            "asset/catpic.jpg",
+                          ),
+                          radius: 70,
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -85,22 +83,20 @@ class _DoctorappointmentsState extends State<Doctorappointments> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: ListView(
-                      children: [
-                        Text(
-                          "BOOKING DETAILS",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                        Text("pet owner name :   ${widget.username}"
-                            .toUpperCase()),
-                        Text("booked date   :   ${widget.bookdate}"
-                            .toUpperCase()),
-                        Text("booked time   :   ${widget.bookedtime}"
-                            .toUpperCase()),
-                      ],
-                    ),
+                  ListView(
+                    children: [
+                      Text(
+                        "BOOKING DETAILS",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      Text("pet owner name :   ${widget.username}"
+                          .toUpperCase()),
+                      Text(
+                          "booked date   :   ${widget.bookdate}".toUpperCase()),
+                      Text("booked time   :   ${widget.bookedtime}"
+                          .toUpperCase()),
+                    ],
                   ),
                 ],
               ),

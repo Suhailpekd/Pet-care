@@ -8,6 +8,7 @@ class Customeraprove extends StatefulWidget {
   var doc;
   var doc2;
   var doc1;
+  var status;
 
   String idcustomer;
 
@@ -17,6 +18,7 @@ class Customeraprove extends StatefulWidget {
     required this.doc1,
     required this.doc2,
     required this.idcustomer,
+    required this.status,
   }); //name//email//mobail
 
   @override
@@ -145,85 +147,60 @@ class _CustomeraproveState extends State<Customeraprove> {
                         ),
                       ],
                     ),
-                    Container(
-                        height: 400,
-                        color: Colors.grey,
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 34, right: 34, bottom: 30, top: 280),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: InkWell(
-                                    onTap: () async {
-                                      await FirebaseFirestore.instance
-                                          .collection('userlist')
-                                          .doc(widget.idcustomer)
-                                          .update({'status': '2'});
-                                      Navigator.pushReplacement(context,
-                                          MaterialPageRoute(
-                                        builder: (context) {
-                                          return Tabbar1();
-                                        },
-                                      ));
-                                    },
-                                    child: Container(
-                                      width: screenSize.width / 2.3,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                          color:
-                                              Color.fromARGB(222, 224, 10, 10),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10))),
-                                      child: Center(
-                                          child: Text(
-                                        "Reject",
-                                        style: TextStyle(
-                                            fontSize: 16, color: Colors.white),
-                                      )),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 30,
-                                ),
-                                Expanded(
-                                  child: InkWell(
-                                    onTap: () async {
-                                      await FirebaseFirestore.instance
-                                          .collection('userlist')
-                                          .doc(widget.idcustomer)
-                                          .update({'status': '1'});
-                                      Navigator.pushReplacement(context,
-                                          MaterialPageRoute(
-                                        builder: (context) {
-                                          return Tabbar1();
-                                        },
-                                      ));
-                                    },
-                                    child: Container(
-                                      width: screenSize.width / 2.3,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                          color:
-                                              Color.fromARGB(222, 1, 154, 100),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10))),
-                                      child: Center(
-                                          child: Text(
-                                        "Approve",
-                                        style: TextStyle(
-                                            fontSize: 16, color: Colors.white),
-                                      )),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ))
+                    if (widget.status == "1")
+                      InkWell(
+                        onTap: () async {
+                          await FirebaseFirestore.instance
+                              .collection('userlist')
+                              .doc(widget.idcustomer)
+                              .update({'status': '2'});
+                          Navigator.pushReplacement(context, MaterialPageRoute(
+                            builder: (context) {
+                              return Tabbar1();
+                            },
+                          ));
+                        },
+                        child: Container(
+                          width: screenSize.width / 2.3,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(222, 224, 10, 10),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: Center(
+                              child: Text(
+                            "Reject",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          )),
+                        ),
+                      ),
+                    if (widget.status == "0" || widget.status == "2")
+                      InkWell(
+                        onTap: () async {
+                          await FirebaseFirestore.instance
+                              .collection('userlist')
+                              .doc(widget.idcustomer)
+                              .update({'status': '1'});
+                          Navigator.pushReplacement(context, MaterialPageRoute(
+                            builder: (context) {
+                              return Tabbar1();
+                            },
+                          ));
+                        },
+                        child: Container(
+                          width: screenSize.width / 2.3,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(222, 1, 154, 100),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: Center(
+                              child: Text(
+                            "Approve",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          )),
+                        ),
+                      ),
                   ]),
             ),
           ),

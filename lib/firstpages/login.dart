@@ -51,7 +51,8 @@ class _FirstloginState extends State<Firstlogin> {
         String email = customerSnapshot.docs[0]["email"];
         String fees = customerSnapshot.docs[0]["fees"];
         String location = customerSnapshot.docs[0]["location"];
-        var count = customerSnapshot.docs[0]["token"];
+        String count = customerSnapshot.docs[0]["token"];
+        String available1 = customerSnapshot.docs[0]["available"];
 
         String qualification = customerSnapshot.docs[0]
             ["qualification"]; // Retrieve the ID from the first document
@@ -62,6 +63,7 @@ class _FirstloginState extends State<Firstlogin> {
         spref.setString('email', email);
         spref.setString('location', location);
         spref.setString('count', count);
+        spref.setString("available", available1);
 
         spref.setString('department', department);
         spref.setString('fees', fees); // Save the user ID to SharedPreferences
