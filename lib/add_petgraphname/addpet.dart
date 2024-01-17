@@ -13,21 +13,36 @@ class Pet_updates extends StatefulWidget {
   var weight;
   var heartrate;
   var bp;
-  Pet_updates(
-      {super.key,
-      required this.userid,
-      required this.image,
-      required this.age,
-      required this.height,
-      required this.weight,
-      required this.heartrate,
-      required this.bp});
+
+  Pet_updates({
+    super.key,
+    required this.userid,
+    required this.image,
+    required this.age,
+    required this.height,
+    required this.weight,
+    required this.heartrate,
+    required this.bp,
+  });
 
   @override
   State<Pet_updates> createState() => _Pet_updatesState();
 }
 
 class _Pet_updatesState extends State<Pet_updates> {
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      name = widget.userid;
+      age = widget.age;
+      height = widget.height;
+      Weight = widget.weight;
+      heartrate = widget.heartrate;
+      bp = widget.bp;
+    });
+  }
+
   var name = "";
   var age = "";
   var height = "";
@@ -97,13 +112,7 @@ class _Pet_updatesState extends State<Pet_updates> {
                                 displayMode: SparkChartMarkerDisplayMode.all),
                             //Enable data label
                             labelDisplayMode: SparkChartLabelDisplayMode.all,
-                            data: <double>[
-                              1,
-                              5,
-                              -6,
-                              0,
-                              1,
-                            ],
+                            data: <double>[double.parse(widget.height)],
                           )),
                     ),
                     Padding(
@@ -129,7 +138,7 @@ class _Pet_updatesState extends State<Pet_updates> {
                                 displayMode: SparkChartMarkerDisplayMode.all),
                             //Enable data label
                             labelDisplayMode: SparkChartLabelDisplayMode.all,
-                            data: <double>[1, 5, -6, 0, 3],
+                            data: <double>[double.parse(widget.bp)],
                           )),
                     ),
                     Padding(
@@ -155,17 +164,7 @@ class _Pet_updatesState extends State<Pet_updates> {
                                 displayMode: SparkChartMarkerDisplayMode.all),
                             //Enable data label
                             labelDisplayMode: SparkChartLabelDisplayMode.all,
-                            data: <double>[
-                              1,
-                              5,
-                              -6,
-                              0,
-                              1,
-                              -2,
-                              7,
-                              -7,
-                              -4,
-                            ],
+                            data: <double>[double.parse(widget.heartrate)],
                           )),
                     ),
                     Padding(
@@ -191,14 +190,7 @@ class _Pet_updatesState extends State<Pet_updates> {
                                 displayMode: SparkChartMarkerDisplayMode.all),
                             //Enable data label
                             labelDisplayMode: SparkChartLabelDisplayMode.all,
-                            data: <double>[
-                              1,
-                              5,
-                              -6,
-                              0,
-                              1,
-                              -2,
-                            ],
+                            data: <double>[double.parse(widget.bp)],
                           )),
                     ),
                     Padding(
@@ -449,6 +441,7 @@ class _Pet_updatesState extends State<Pet_updates> {
                           onTap: () async {
                             if (formKey.currentState?.validate() ?? false) {
                               await share();
+
                               await FirebaseFirestore.instance
                                   .collection("petlist")
                                   .doc(ids)

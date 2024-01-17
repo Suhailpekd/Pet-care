@@ -31,6 +31,7 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
     fetchData();
   }
 
+  var image = "";
   var userId = "";
   var userogid = "";
   Future<dynamic> retrieveUserID() async {
@@ -40,6 +41,11 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
       userogid = prefs.getString("id") ?? "".toString();
       // Retrieve the user ID
     });
+  }
+
+  Future<void> sharedimage() async {
+    SharedPreferences image = await SharedPreferences.getInstance();
+    image.setString("image", image.toString());
   }
 
   Future<List<QueryDocumentSnapshot>> fetchData() async {
@@ -116,12 +122,6 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
                   // String fees = customerSnapshot.docs[0]["fees"];
                   // String qualification = customerSnapshot.docs[0]
                   //     ["qualification"]; // Retrieve the ID from the first document
-                  Future<void> share() async {
-                    SharedPreferences spref =
-                        await SharedPreferences.getInstance();
-                    spref.setString('idpet', customerId);
-                    spref.setString('namepet', name);
-                  }
                 }
                 // spref.setString('agepet', age);
                 // spref.setString('department', department);
@@ -135,8 +135,8 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
                       // Access data from each document in the collection
                       Map<String, dynamic> data =
                           documents[index].data() as Map<String, dynamic>;
-
-                      var image = documents[index]["image_url"];
+                      var id = documents[index].id;
+                      image = documents[index]["image_url"];
                       var age = documents[index]["age"];
                       var height = documents[index]["height"];
                       var weight = documents[index]["weight"];
@@ -145,6 +145,18 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
                       // Create a Container using the data
                       return InkWell(
                         onTap: () {
+                          // Future<void> share() async {
+                          //                   SharedPreferences spref =
+                          //                       await SharedPreferences.getInstance();
+                          //                   spref.setString('idpet', id);
+                          //                   spref.setString('age', age);
+                          //                    spref.setString('height', height);
+                          //                     spref.setString('weight', weight);
+                          //                      spref.setString('heartrate', heartrate);
+                          //                       spref.setString('bp', bp);
+                          //                       spref.setString("image", image);
+                          //                 }
+
                           Navigator.push(
                               context,
                               MaterialPageRoute(
