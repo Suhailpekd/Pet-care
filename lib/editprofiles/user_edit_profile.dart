@@ -12,7 +12,6 @@ class User_profile_edit extends StatefulWidget {
 }
 
 class _User_profile_editState extends State<User_profile_edit> {
-  @override
   var name = "";
   var email = "";
   var location = "";
@@ -23,7 +22,7 @@ class _User_profile_editState extends State<User_profile_edit> {
   var email2 = TextEditingController();
   var location3 = TextEditingController();
   var contact4 = TextEditingController();
-
+  @override
   void initState() {
     super.initState();
 

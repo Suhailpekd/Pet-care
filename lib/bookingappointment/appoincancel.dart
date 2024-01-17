@@ -11,6 +11,7 @@ class Cancelbooking extends StatefulWidget {
   var drname;
   var drfees;
   var drtime;
+  var a_id;
   // var appointmentid;
   Cancelbooking({
     super.key,
@@ -19,6 +20,7 @@ class Cancelbooking extends StatefulWidget {
     required this.drname,
     required this.drtime,
     required this.drfees,
+    required this.a_id,
     // required this.appointmentid
   });
 
@@ -31,18 +33,75 @@ class _CancelbookingState extends State<Cancelbooking> {
   var names = "ddd";
   List docList = [];
 
+  var count;
+  var name;
+  var email;
+  var location;
+  var about;
+  var available;
+
   @override
   void initState() {
     super.initState();
+
     retrieveUserID();
+    // print(widget.id);
+
+    setState(() {});
     // firedata();
   }
+
+  Future<void> fetchData() async {
+    try {
+      DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+          .collection('doctorlist')
+          .doc(widget.id)
+          .get();
+
+      if (documentSnapshot.exists) {
+        // Document exists, you can access the data
+        Map<String, dynamic> data =
+            documentSnapshot.data() as Map<String, dynamic>;
+
+        // Access specific fields from the data map
+
+        email = data[Index]['email'];
+        location = data[Index]['location'];
+        about = data[Index]['about'];
+        available = data[Index]['available'];
+        count = data[Index]['token'];
+
+        setState(() {
+          count--;
+        });
+
+        await FirebaseFirestore.instance
+            .collection('doctorlist')
+            .doc(widget.id)
+            .update({"token": count});
+        // Now you can use the fetched data as needed
+      } else {
+        // Document does not exist
+        print('Document does not exist');
+      }
+    } catch (e) {
+      // Handle errors
+      print('Error fetching data: $e');
+    }
+  }
+
+  // Future<void> fetchdata() async {
+  //   var a = await FirebaseFirestore.instance.collection("teacher").get();
+  // }
 
   Future<dynamic> retrieveUserID() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       ids = prefs.getString('id') ?? '';
-      print(ids);
+      print("jjjjjjjjjjjjjjjjjj${widget.a_id}");
+      print("${widget.id}");
+      // print("jjjjjbbjbjbj${widget.id}");
+
       // Retrieve the user ID
     });
   }
@@ -50,9 +109,16 @@ class _CancelbookingState extends State<Cancelbooking> {
   Future<void> delt() async {
     await FirebaseFirestore.instance
         .collection('appoinments')
-        .doc(ids)
+        .doc(widget.a_id)
         .delete();
-    Navigator.pop(context);
+  }
+
+  Future<void> updateDocument() async {
+    // Get a reference to the Firestore collection
+    await FirebaseFirestore.instance
+        .collection('doctorlist')
+        .doc(widget.id)
+        .update({"token": count});
   }
 
   @override
@@ -102,7 +168,7 @@ class _CancelbookingState extends State<Cancelbooking> {
                     Expanded(
                       child: ListView(
                         children: [
-                          // Text("${widget.appointmentid}"),
+                          Text("${widget.drabout}"),
                         ],
                       ),
                     ),
@@ -143,10 +209,9 @@ class _CancelbookingState extends State<Cancelbooking> {
               onTap: () {},
               child: InkWell(
                 onTap: () async {
-                  await FirebaseFirestore.instance
-                      .collection('appoinments')
-                      .where("doctorid")
-                      .get();
+                  await delt();
+                  await fetchData();
+                  // await updateDocument();
 
                   Navigator.pop(context);
                 },

@@ -24,6 +24,7 @@ class _DoctorproeditState extends State<Doctorproedit> {
   var emailtext = TextEditingController();
   var locationtext = TextEditingController();
   var abouttext = TextEditingController();
+  var counttext = TextEditingController();
   void initState() {
     super.initState();
     share();
@@ -47,12 +48,23 @@ class _DoctorproeditState extends State<Doctorproedit> {
           selectedOption = available;
         });
       });
+      Future<void> sharedagain() async {
+        SharedPreferences sprefs = await SharedPreferences.getInstance();
+        sprefs.setString("available", selectedOption);
+        sprefs.setString('count', counttext.text);
+      }
 
       print(email);
       print(location);
       print(name); // Retrieve the user ID
     });
+
     return selectedOption;
+  }
+
+  Future<void> sharedagain() async {
+    SharedPreferences pref2 = await SharedPreferences.getInstance();
+    pref2.setString("available", selectedOption);
   }
 
   Future<void> updateDocument() async {
@@ -62,7 +74,8 @@ class _DoctorproeditState extends State<Doctorproedit> {
       'email': emailtext.text,
       "location": locationtext.text,
       "about": abouttext.text,
-      "available": selectedOption
+      "available": selectedOption,
+      "token": counttext.text
     });
 
     print('Document successfully updated!');
@@ -240,6 +253,47 @@ class _DoctorproeditState extends State<Doctorproedit> {
                       ),
                     ),
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 34, bottom: 5),
+                        child: Text(
+                          "Token",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 25, right: 25),
+                      child: Container(
+                        height: 52,
+                        width: double.infinity,
+                        child: Center(
+                          child: TextFormField(
+                            controller: counttext,
+                            decoration: InputDecoration(
+                                enabledBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                icon: Padding(
+                                  padding: const EdgeInsets.only(left: 11),
+                                ),
+                                hintText: "Enter your Token Limit"),
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 1.4,
+                                color: Color.fromARGB(255, 200, 139, 6)),
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            borderRadius: BorderRadius.circular(12)),
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding:
                         const EdgeInsets.only(left: 34, bottom: 5, top: 15),
@@ -289,6 +343,7 @@ class _DoctorproeditState extends State<Doctorproedit> {
                       child: InkWell(
                         onTap: () async {
                           await updateDocument();
+                          await sharedagain();
                           Navigator.pop(context);
                         },
                         child: Container(

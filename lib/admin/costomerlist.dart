@@ -67,9 +67,9 @@ class _CustomerlistState extends State<Customerlist> {
                           await SharedPreferences.getInstance();
                       spref.setString('iduser', data[0]["id"]);
 
-                      // // var email = share.getString("email");
-                      // // var location = share.getString("");
-                      // // });
+                      // var email = share.getString("email");
+                      // var location = share.getString("");
+                      // });
                     }
 
                     // var doc1;
@@ -94,7 +94,7 @@ class _CustomerlistState extends State<Customerlist> {
                         color: Color.fromARGB(255, 164, 125, 111),
                         borderRadius: BorderRadius.circular(12)),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(

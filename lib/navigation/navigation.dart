@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:petcare/user/user1st.dart';
-import 'package:petcare/user/user2nd.dart';
-import 'package:petcare/user/user3rdappoinmnts.dart';
+
+import 'package:petcare/usernavigations/user1st.dart';
+import 'package:petcare/usernavigations/user2nd.dart';
+import 'package:petcare/usernavigations/user3rdappoinmnts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Navigation extends StatefulWidget {
@@ -32,6 +33,8 @@ class _NavigationState extends State<Navigation> {
           fixedColor: Color.fromARGB(255, 11, 9, 148),
           currentIndex: selectedindex,
           onTap: navigat,
+          iconSize: 23,
+          selectedFontSize: 10,
           items: [
             BottomNavigationBarItem(
                 label: "Home",

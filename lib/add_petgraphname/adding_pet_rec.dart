@@ -1,73 +1,109 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:petcare/navigation/navigation.dart';
-import 'package:petcare/user/petrecordview_with_graph/petrecord_graph.dart';
+// import 'dart:io';
 
-class Adding_pet_rec extends StatefulWidget {
-  String userid;
-  Adding_pet_rec({super.key, required this.userid});
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:petcare/add_petgraphname/petrecord_graph.dart';
+import 'package:petcare/usernavigations/user1st.dart';
+
+// ignore: must_be_immutable
+class AddingPetRec extends StatefulWidget {
+  var useraid;
+  var userid;
+  AddingPetRec({super.key, required this.useraid, required this.userid});
 
   @override
-  State<Adding_pet_rec> createState() => _Adding_pet_recState();
+  State<AddingPetRec> createState() => _AddingPetRecState();
 }
 
-class _Adding_pet_recState extends State<Adding_pet_rec> {
+class _AddingPetRecState extends State<AddingPetRec> {
   var name;
   var age;
   var height;
   var Weight;
   var heartrate;
   var bp;
+
+  Future<void> _pickImage(ImageSource source) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: source);
+
+    if (pickedFile != null) {
+      setState(() {
+        image = File(pickedFile.path);
+      });
+    }
+
+    // ... (existing code)
+  }
+
+  Future<String> _uploadImage() async {
+    if (image == null) {
+      return ""; // No image selected
+    }
+
+    final storage = FirebaseStorage.instance;
+    final ref =
+        storage.ref().child('pet_images/${DateTime.now().toString()}.png');
+    final uploadTask = ref.putFile(image!);
+
+    await uploadTask.whenComplete(() => null);
+
+    return await ref.getDownloadURL();
+  }
+
+  File? image;
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(),
       body: Form(
         key: _formKey,
         child: SafeArea(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15),
-                child: SizedBox(
-                  height: 55,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Navigation(),
-                                ));
-                          }
-                        },
-                        child: Icon(
-                          Icons.arrow_back,
-                          size: 30,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
               Expanded(
                 child: ListView(
                   children: [
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(left: 20, right: 20, top: 5),
+                    InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    _pickImage(ImageSource.camera);
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("Camera"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    _pickImage(ImageSource.gallery);
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("Gallery"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
                       child: SizedBox(
                         height: 139,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
-                          child: Image.asset(
-                            "asset/catpic.jpg",
-                            fit: BoxFit.fill,
-                          ),
+                          child: image != null
+                              ? Image.file(image!)
+                              : Image.asset("asset/addimage.png"),
                         ),
                       ),
                     ),
@@ -359,56 +395,57 @@ class _Adding_pet_recState extends State<Adding_pet_rec> {
                     ),
                     Center(
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 20, left: 77.0, right: 77.0, bottom: 70),
-                        child: InkWell(
-                          onTap: () async {
-                            if (_formKey.currentState?.validate() ?? false) {
-                              await FirebaseFirestore.instance
-                                  .collection("petlist")
-                                  .add({
-                                "userid": widget.userid,
-                                "name": name,
-                                "age": age,
-                                "height": height,
-                                "weight": Weight,
-                                "heartrate": heartrate,
-                                "bp": bp
-                              }).then((value) => Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Pet_rec_graph(
-                                            name: name,
-                                            age: age,
-                                            height: height,
-                                            weight: Weight,
-                                            heartrate: heartrate),
-                                      )));
-                            }
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            height: 50,
-                            decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color.fromARGB(255, 234, 227, 236),
-                                    blurRadius: 8,
-                                    spreadRadius: 5,
-                                  )
-                                ],
-                                color: Color.fromARGB(250, 2, 120, 63),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            child: Center(
-                                child: Text(
-                              "Add",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                            )),
-                          ),
-                        ),
-                      ),
+                          padding: const EdgeInsets.only(
+                              top: 20, left: 77.0, right: 77.0, bottom: 70),
+                          child: InkWell(
+                              onTap: () async {
+                                if (_formKey.currentState?.validate() ??
+                                    false) {
+                                  String imageUrl = await _uploadImage();
+                                  await FirebaseFirestore.instance
+                                      .collection("petlist")
+                                      .add({
+                                    "userid": widget.useraid,
+                                    "name": name,
+                                    "age": age,
+                                    "height": height,
+                                    "weight": Weight,
+                                    "heartrate": heartrate,
+                                    "bp": bp,
+                                    "image_url":
+                                        imageUrl, // Add the image URL here
+                                  });
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Customer_pet_add()),
+                                  );
+                                }
+                              },
+                              child: Container(
+                                width: double.infinity,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color:
+                                            Color.fromARGB(255, 234, 227, 236),
+                                        blurRadius: 8,
+                                        spreadRadius: 5,
+                                      )
+                                    ],
+                                    color: Color.fromARGB(250, 2, 120, 63),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10))),
+                                child: Center(
+                                    child: Text(
+                                  "Add",
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.white),
+                                )),
+                              ))),
                     ),
                   ],
                 ),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:petcare/admin/tabbar.dart';
 import 'package:petcare/navigation/navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -157,6 +158,9 @@ class _CustomeraproveState extends State<Customeraprove> {
                               .collection('userlist')
                               .doc(widget.idcustomer)
                               .update({'status': '2'});
+                          await Fluttertoast.showToast(
+                            msg: "Rejected",
+                          );
                           Navigator.pushReplacement(context, MaterialPageRoute(
                             builder: (context) {
                               return Tabbar1();
@@ -184,6 +188,9 @@ class _CustomeraproveState extends State<Customeraprove> {
                               .collection('userlist')
                               .doc(widget.idcustomer)
                               .update({'status': '1'});
+                          await Fluttertoast.showToast(
+                            msg: "Approved",
+                          );
                           Navigator.pushReplacement(context, MaterialPageRoute(
                             builder: (context) {
                               return Tabbar1();

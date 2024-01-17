@@ -66,8 +66,16 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
       "username": userId,
       "token": count,
     });
+    await fair2updatedoctor();
 
     // Fluttertoast.showToast(msg: 'Booking Successful ${widget.name}');
+  }
+
+  Future<void> fair2updatedoctor() async {
+    await FirebaseFirestore.instance
+        .collection("doctorlist")
+        .doc(widget.id)
+        .update({"option1": userogid});
   }
 
   Future<List<QueryDocumentSnapshot>> fetchData() async {

@@ -3,7 +3,7 @@ import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:petcare/logoutbuttun.dart';
-import 'package:petcare/user/bookingappointment/appoinmentouter.dart';
+import 'package:petcare/bookingappointment/appoincancel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_star_rating/simple_star_rating.dart';
 
@@ -37,6 +37,7 @@ class _Customer_bookingState extends State<Customer_booking> {
           .where("userid", isEqualTo: id)
           .get();
       appointment = querySnapshot.docs[0]["doctorid"];
+      print('"""""""""""""object"""""""""""""');
       return querySnapshot.docs;
     } catch (e) {
       // Handle errors, log or display a meaningful error message.
@@ -44,6 +45,8 @@ class _Customer_bookingState extends State<Customer_booking> {
       return [];
     }
   }
+
+  void dlt() {}
 
   Future<dynamic> retrieveUserID() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -55,24 +58,9 @@ class _Customer_bookingState extends State<Customer_booking> {
     });
   }
 
-  // Future<void> fair() async {
-  //   await FirebaseFirestore.instance
-  //       .collection("userlist"[id])
-  //       .get()
-  //       .then((snapshot) {
-  //     List<QueryDocumentSnapshot> docList = snapshot.docs;
-  //     setState(() {
-  //       name = docList[0]["name"];
-  //     });
-  //     print("rrrrrrrrrrrrrrrrrrr$name");
-  //   });
-  // }
-
-  // void()
-
   @override
   Widget build(BuildContext context) {
-    double value = 3.5;
+    double value = 0;
     final Size screenSize = MediaQuery.of(context).size;
     // return var screensize = MediaQuery.of(context).size;
     return StreamBuilder<QuerySnapshot>(
@@ -86,7 +74,36 @@ class _Customer_bookingState extends State<Customer_booking> {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return Text('No data available');
+          return SafeArea(
+              child: Column(children: [
+            logout1(),
+            Container(
+                width: screenSize.width,
+                height: 150,
+                color: Color.fromARGB(255, 164, 125, 111),
+                child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                  Padding(
+                      padding: const EdgeInsets.only(right: 32),
+                      child: Column(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: CircleAvatar(
+                            backgroundColor:
+                                const Color.fromARGB(255, 163, 202, 234),
+                            backgroundImage: AssetImage(
+                              "asset/Avatar-Profile-Vector-PNG-File.png",
+                            ),
+                            radius: 40,
+                          ),
+                        ),
+                        Text(
+                          drname,
+                          style: TextStyle(color: Colors.white),
+                        )
+                      ]))
+                ])),
+            Text('No data available')
+          ]));
         } else {
           return SafeArea(
             child: Column(
@@ -126,6 +143,7 @@ class _Customer_bookingState extends State<Customer_booking> {
                       // Access the data for each document
                       Map<String, dynamic> data = snapshot.data!.docs[index]
                           .data() as Map<String, dynamic>;
+                      print(data);
 
                       // String apointid = data['id'];
                       // Customize the ListTile based on your data structure
@@ -137,13 +155,15 @@ class _Customer_bookingState extends State<Customer_booking> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => Cancelbooking(
-                                    id: "hhh",
-                                    drname: data["name"],
-                                    drabout: data["about"],
-                                    drtime: data["time"],
-                                    drfees: data["fees"],
-                                    // appointmentid: apointid,
-                                  ),
+                                      id: data["doctorid"],
+                                      drname: data["name"],
+                                      drabout: data["about"],
+                                      drtime: data["time"],
+                                      drfees: data["fees"],
+                                      a_id: snapshot.data!.docs[index].id
+
+                                      // appointmentid: apointid,
+                                      ),
                                   // idappointments: data["id"]),
                                 ));
                           },
@@ -209,16 +229,6 @@ class _Customer_bookingState extends State<Customer_booking> {
                                     ],
                                   ),
                                 ),
-                                // Expanded(
-                                //   child: RatingBar(
-                                //     filledIcon: Icons.star, size: 10,
-                                //     // size: screenSize.width / 20,
-                                //     emptyIcon: Icons.star_border,
-                                //     onRatingChanged: (value) => debugPrint('$value'),
-                                //     initialRating: 3,
-                                //     maxRating: 5,
-                                //   ),
-                                // )
                               ],
                             ),
                           ),

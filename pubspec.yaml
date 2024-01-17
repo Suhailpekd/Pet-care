@@ -44,8 +44,11 @@ dependencies:
   cloud_firestore: ^4.13.6
   fluttertoast: ^8.2.4
   shared_preferences: ^2.2.2
-  syncfusion_flutter_charts: any
+  # syncfusion_flutter_charts: ^24.1.45+1
   fl_chart: ^0.41.0
+  image_picker: ^0.8.4+2
+  firebase_storage: ^11.6.0
+  syncfusion_flutter_charts: ^24.1.45+1
 
 dev_dependencies:
   flutter_test:

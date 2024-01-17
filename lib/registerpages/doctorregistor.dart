@@ -19,6 +19,7 @@ class _Loginpage_doctorState extends State<Loginpage_doctor> {
   var fees;
   var department;
   var location;
+  var about;
   final formkey = GlobalKey<FormState>();
 
   @override
@@ -339,6 +340,48 @@ class _Loginpage_doctorState extends State<Loginpage_doctor> {
             ),
           ),
 
+          Padding(
+            padding: EdgeInsets.only(left: 34, bottom: 5, top: 15),
+            child: Text(
+              "About",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            ),
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 25, right: 25),
+              child: Container(
+                height: 62,
+                width: double.infinity,
+                child: Center(
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter somthing about you';
+                      }
+
+                      return null;
+                    },
+                    onChanged: (value) => about = value,
+                    decoration: InputDecoration(
+                        enabledBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        icon: Padding(
+                          padding: const EdgeInsets.only(left: 11),
+                        ),
+                        hintText: "write somthing about you"),
+                  ),
+                ),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        width: 1.4, color: Color.fromARGB(255, 200, 139, 6)),
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    borderRadius: BorderRadius.circular(12)),
+              ),
+            ),
+          ),
+
           Center(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -357,7 +400,7 @@ class _Loginpage_doctorState extends State<Loginpage_doctor> {
                           .add({
                         "token": 0,
                         "sheduledtime": "",
-                        "about": "about",
+                        "about": about,
                         "location": location,
                         "name": name,
                         "email": email,
@@ -366,7 +409,11 @@ class _Loginpage_doctorState extends State<Loginpage_doctor> {
                         "fees": fees,
                         "department": department,
                         'status': "0",
-                        "available": "Not Available"
+                        "available": "Not Available",
+                        "option1": "",
+                        "option2": "",
+                        "review": "",
+                        "option3": ""
                       }).then((value) => Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(

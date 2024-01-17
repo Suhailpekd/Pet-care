@@ -1,11 +1,18 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:custom_rating_bar/custom_rating_bar.dart';
+
 import 'package:flutter/material.dart';
-import 'package:petcare/admin/doctoraprove.dart';
+import 'package:petcare/add_petgraphname/adding_pet_rec.dart';
+import 'package:petcare/add_petgraphname/addpet.dart';
+
+import 'package:petcare/editprofiles/user_edit_profile.dart';
+// import 'package:petcare/add_pet,graph,name/addpetsupdate.dart';
+// import 'package:petcare/add_pet,graph,name/adding_pet_rec.dart';
+// import 'package:petcare/editprofiles/user_edit_profile.dart';
+
 import 'package:petcare/logoutbuttun.dart';
-import 'package:petcare/user/add_pet/adding_pet_rec.dart';
-import 'package:petcare/user/add_pet/addpetsupdate.dart';
-import 'package:petcare/user/profileuserediting/user_edit_profile.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Customer_pet_add extends StatefulWidget {
@@ -16,16 +23,16 @@ class Customer_pet_add extends StatefulWidget {
 }
 
 class _Customer_pet_addState extends State<Customer_pet_add> {
-  var userId = "";
-  var userogid = "";
-
   @override
   void initState() {
     super.initState();
     // Call your function to retrieve user ID here
     retrieveUserID();
+    fetchData();
   }
 
+  var userId = "";
+  var userogid = "";
   Future<dynamic> retrieveUserID() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -35,24 +42,13 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
     });
   }
 
-  //   Future<List<QueryDocumentSnapshot>> fetchData() async {
-  //   try {
-  //     QuerySnapshot querySnapshot =
-  //         await FirebaseFirestore.instance.collection("userlis").get();
-  //     return querySnapshot.docs;
-  //   } catch (e) {
-  //     // Handle errors, log or display a meaningful error message.
-  //     print("Error fetching data: $e");
-  //     return [];
-  //   }
-  // }
-
   Future<List<QueryDocumentSnapshot>> fetchData() async {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection("petlist")
           .where("userid", isEqualTo: userogid)
           .get();
+      print("fffffffffffff$userId");
       return querySnapshot.docs;
     } catch (e) {
       // Handle errors, log or display a meaningful error message.
@@ -63,7 +59,7 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
 
   @override
   Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery.of(context).size;
+    final screenSize = MediaQuery.of(context).size;
     return Scaffold(
         body: Stack(
       children: [
@@ -109,7 +105,7 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
                 // Extract the documents from the snapshot
                 final List<DocumentSnapshot> documents = snapshot.data!.docs;
 
-                // String petId = documents[0].id;
+                String petId = documents[0].id;
 
                 if (documents.isNotEmpty) {
                   var customerId = documents[0].id;
@@ -139,25 +135,31 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
                       // Access data from each document in the collection
                       Map<String, dynamic> data =
                           documents[index].data() as Map<String, dynamic>;
-                      var age = documents[0]["age"];
-                      var height = documents[0]["height"];
-                      var weight = documents[0]["weight"];
-                      var heartrate = documents[0]["heartrate"];
-                      var bp = documents[0]["bp"];
+
+                      var image = documents[index]["image_url"];
+                      var age = documents[index]["age"];
+                      var height = documents[index]["height"];
+                      var weight = documents[index]["weight"];
+                      var heartrate = documents[index]["heartrate"];
+                      var bp = documents[index]["bp"];
                       // Create a Container using the data
-                      return Padding(
-                        padding: EdgeInsets.only(left: 20, right: 20, top: 15),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Updatepet(
-                                    data: data,
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Pet_updates(
                                     userid: userogid,
-                                  ),
-                                ));
-                          },
+                                    image: image,
+                                    age: age,
+                                    height: height,
+                                    weight: weight,
+                                    heartrate: heartrate,
+                                    bp: bp),
+                              ));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(18.0),
                           child: Container(
                             height: 120,
                             width: screenSize.width * 0.9,
@@ -179,9 +181,10 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
                                         child: ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(19),
-                                            child: Image.asset(
-                                              "asset/catpic.jpg",
-                                              fit: BoxFit.cover,
+                                            child: Image.network(
+                                              image.toString(),
+
+                                              // fit: BoxFit.cover,
                                             ))),
                                   ),
                                 ),
@@ -264,8 +267,10 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  Adding_pet_rec(userid: userogid),
+                              builder: (context) => AddingPetRec(
+                                userid: userId,
+                                useraid: userogid,
+                              ),
                             ));
                       },
                       child: Icon(

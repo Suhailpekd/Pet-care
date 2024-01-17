@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare/admin/tabbar.dart';
 import 'package:petcare/doctor/doctorhome.dart';
 import 'package:petcare/firstpages/selectionpageregister.dart';
-import 'package:petcare/registerpages/registor.dart';
-import 'package:petcare/firstpages/selectionpage_user.dart';
+// import 'package:petcare/registerpages/doctorregistor.dart';
+// import 'package:petcare/firstpages/selectionpage_user.dart';
 import 'package:petcare/navigation/navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,7 +28,7 @@ class _FirstloginState extends State<Firstlogin> {
 
       if (email.text == adminEmail && password.text == adminPassword) {
         Fluttertoast.showToast(msg: 'Login Successful as Admin');
-        //Redirect to the admin home page
+        // Redirect to the admin home page
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) {
           return Tabbar1();
@@ -51,26 +51,25 @@ class _FirstloginState extends State<Firstlogin> {
         String email = customerSnapshot.docs[0]["email"];
         String fees = customerSnapshot.docs[0]["fees"];
         String location = customerSnapshot.docs[0]["location"];
-        var count = customerSnapshot.docs[0]["token"];
+        String count = customerSnapshot.docs[0]["token"].toString();
         String available1 = customerSnapshot.docs[0]["available"];
 
-        String qualification = customerSnapshot.docs[0]
-            ["qualification"]; // Retrieve the ID from the first document
+        // String qualification = customerSnapshot.docs[0]
+        //     ["qualification"]; // Retrieve the ID from the first document
 
         SharedPreferences spref = await SharedPreferences.getInstance();
         spref.setString('id', customerId);
         spref.setString('name', name);
         spref.setString('email', email);
         spref.setString('location', location);
-        // spref.setString('count', count);
+        spref.setString('count', count);
         spref.setString("available", available1);
-
         spref.setString('department', department);
         spref.setString('fees', fees); // Save the user ID to SharedPreferences
-        spref.setString('qualification', qualification);
+        // spref.setString('qualification', qualification);
 
         Fluttertoast.showToast(msg: 'Login Successful as Doctor');
-        // print('Customer ID: $customerId');
+        print('Customer ID: $customerId');
 
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) {
@@ -108,10 +107,10 @@ class _FirstloginState extends State<Firstlogin> {
         print('Customer ID: $name');
         String userId = userSnapshot.docs[0].id;
 
-        SharedPreferences spref2 = await SharedPreferences.getInstance();
-        spref.setString('user_id', userId);
+        // SharedPreferences spref2 = await SharedPreferences.getInstance();
+        // spref.setString('user_id', userId);
 
-        print('Customer ID: $userId');
+        // print('Customer ID: $userId');
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) {
           return Navigation();
