@@ -33,7 +33,7 @@ class _CancelbookingState extends State<Cancelbooking> {
   var names = "ddd";
   List docList = [];
 
-  var count;
+  int count = 0;
   var name;
   var email;
   var location;
@@ -47,7 +47,6 @@ class _CancelbookingState extends State<Cancelbooking> {
     retrieveUserID();
     // print(widget.id);
 
-    setState(() {});
     // firedata();
   }
 
@@ -65,15 +64,12 @@ class _CancelbookingState extends State<Cancelbooking> {
 
         // Access specific fields from the data map
 
-        email = data[Index]['email'];
-        location = data[Index]['location'];
-        about = data[Index]['about'];
-        available = data[Index]['available'];
-        count = data[Index]['token'];
-
-        setState(() {
-          count--;
-        });
+        email = data['email'];
+        location = data['location'];
+        about = data['about'];
+        available = data['available'];
+        count = data['token'];
+        if (count != 0) count--;
 
         await FirebaseFirestore.instance
             .collection('doctorlist')

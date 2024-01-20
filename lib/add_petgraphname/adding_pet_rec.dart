@@ -165,6 +165,7 @@ class _AddingPetRecState extends State<AddingPetRec> {
                           width: double.infinity,
                           child: Center(
                             child: TextFormField(
+                              keyboardType: TextInputType.number,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter your pets age';
@@ -242,6 +243,7 @@ class _AddingPetRecState extends State<AddingPetRec> {
                               width: screenSize.width / 2.5,
                               child: Center(
                                 child: TextFormField(
+                                  keyboardType: TextInputType.number,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Enter height';
@@ -275,6 +277,7 @@ class _AddingPetRecState extends State<AddingPetRec> {
                               width: screenSize.width / 2.5,
                               child: Center(
                                 child: TextFormField(
+                                  keyboardType: TextInputType.number,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'enter weight';
@@ -324,6 +327,7 @@ class _AddingPetRecState extends State<AddingPetRec> {
                           width: double.infinity,
                           child: Center(
                             child: TextFormField(
+                              keyboardType: TextInputType.number,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter your pets heart rate';
@@ -367,6 +371,7 @@ class _AddingPetRecState extends State<AddingPetRec> {
                           width: double.infinity,
                           child: Center(
                             child: TextFormField(
+                              keyboardType: TextInputType.number,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter your bp';

@@ -29,7 +29,7 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
   var userId = "";
   var userogid = "";
   List a = [];
-  var b;
+  int limitcount = 0;
   int count = 0;
 
   @override
@@ -80,11 +80,14 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
 
   Future<List<QueryDocumentSnapshot>> fetchData() async {
     try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection("doctorlist")
-          // .where(userogid.isNotEmpty)
-          .get();
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection("doctorlist").get();
       count = querySnapshot.docs[0]["token"];
+      setState(() {
+        limitcount = querySnapshot.docs[0]["option2"];
+      });
+
+      print("hhhhhhhhhhhhh$limitcount");
       return querySnapshot.docs;
     } catch (e) {
       // Handle errors, log or display a meaningful error message.
@@ -95,20 +98,21 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
 
   Future<void> updateDocument() async {
     // fetchData();
-    count++;
 
-    if (count >= 30) {
+    if (count <= limitcount) {
       Fluttertoast.showToast(msg: "Error Booking, Slots Full");
       Navigator.pop(context);
     } else {
+      count++;
       await FirebaseFirestore.instance
           .collection('doctorlist')
           .doc(widget.id)
           .update({
-        'token': count,
+        "option"
+            'token': count,
         "bookedtime": '${now.hour}:${(now.minute)}:${(now.second)}'.toString(),
       });
-
+      await updatebooking();
       Fluttertoast.showToast(msg: 'Booking Successful ${widget.name}');
     }
   }
@@ -167,33 +171,6 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
               ),
             ),
           ),
-          // Padding(
-          //   padding: const EdgeInsets.only(top: 20),
-          //   child: Container(
-          //     height: 110,
-          //     color: Color.fromARGB(255, 255, 255, 255),
-          //     child: Padding(
-          //       padding: const EdgeInsets.all(10.0),
-          //       child: Column(
-          //         crossAxisAlignment: CrossAxisAlignment.start,
-          //         children: [
-          //           Padding(
-          //             padding: const EdgeInsets.only(bottom: 15),
-          //             child: Text("Booked Time",
-          //                 style: TextStyle(fontWeight: FontWeight.w700)),
-          //           ),
-          //           Expanded(
-          //             child: ListView(
-          //               children: [
-          //                 Text("${widget.time}"),
-          //               ],
-          //             ),
-          // ),
-          //   ],
-          // ),
-          //   ),
-          // ),
-          // ),
           Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Container(
@@ -226,71 +203,50 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
               onTap: () async {
                 await updateDocument();
 
-                await updatebooking();
-                if (count < 31)
-                  showDialog(
-                    barrierLabel: "your token",
-                    context: context,
-                    builder: (context) => Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(28.0),
-                        child: Container(
-                          height: 200,
-                          decoration:
-                              BoxDecoration(color: Colors.white, boxShadow: []),
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(18.0),
-                                  child: SizedBox(
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          "Booking Succesfull",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: Color.fromARGB(
-                                                  255, 3, 159, 173)),
-                                        ),
-                                        Text(
-                                          "Your Token Number $count",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: Color.fromARGB(
-                                                  255, 3, 159, 173)),
-                                        ),
-                                      ],
-                                    ),
+                showDialog(
+                  barrierLabel: "your token",
+                  context: context,
+                  builder: (context) => Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(28.0),
+                      child: Container(
+                        height: 200,
+                        decoration:
+                            BoxDecoration(color: Colors.white, boxShadow: []),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(18.0),
+                                child: SizedBox(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "Booking Succesfull",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Color.fromARGB(
+                                                255, 3, 159, 173)),
+                                      ),
+                                      Text(
+                                        "Your Token Number $count",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Color.fromARGB(
+                                                255, 3, 159, 173)),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                // Padding(
-                                //   padding:
-                                //       const EdgeInsets.only(left: 48, right: 48),
-                                //   child: Container(
-                                //       decoration: BoxDecoration(
-                                //           boxShadow: [],
-                                //           color: Color.fromARGB(255, 1, 140, 112),
-                                //           borderRadius: BorderRadius.all(
-                                //               Radius.circular(10))),
-                                //       height: 40,
-                                //       child: Center(
-                                //         child: Text(
-                                //           "Ok",
-                                //           style: TextStyle(
-                                //               fontSize: 16, color: Colors.white),
-                                //         ),
-                                //       )),
-                                // )
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ),
-                  );
-                print("object");
+                  ),
+                );
               },
               child: Container(
                 width: double.infinity,

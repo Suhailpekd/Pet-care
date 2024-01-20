@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 import 'package:petcare/add_petgraphname/adding_pet_rec.dart';
-import 'package:petcare/add_petgraphname/addpet.dart';
+import 'package:petcare/add_petgraphname/petupdates.dart';
 
 import 'package:petcare/editprofiles/user_edit_profile.dart';
 // import 'package:petcare/add_pet,graph,name/addpetsupdate.dart';
@@ -167,7 +167,8 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
                                     height: height,
                                     weight: weight,
                                     heartrate: heartrate,
-                                    bp: bp),
+                                    bp: bp,
+                                    petid: id),
                               ));
                         },
                         child: Padding(

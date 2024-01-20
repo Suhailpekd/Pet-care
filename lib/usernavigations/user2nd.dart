@@ -170,82 +170,62 @@ class _Customer_doctorState extends State<Customer_doctor> {
                                     ));
                               }
                             },
-                            child: Expanded(
-                              child: Container(
-                                height: 120,
-                                width: screenSize.width,
-                                decoration: BoxDecoration(
-                                    color: Color.fromARGB(208, 246, 222, 213),
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Expanded(
-                                    child: SizedBox(
-                                      child: Row(
+                            child: Container(
+                              height: 120,
+                              width: screenSize.width,
+                              decoration: BoxDecoration(
+                                  color: Color.fromARGB(208, 246, 222, 213),
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                          child: Image.asset(
+                                        "asset/Avatar-Profile-Vector-PNG-File.png",
+                                        fit: BoxFit.cover,
+                                      )),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           SizedBox(
-                                              child: Image.asset(
-                                            "asset/Avatar-Profile-Vector-PNG-File.png",
-                                            fit: BoxFit.cover,
-                                          )),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Expanded(
-                                                child: SizedBox(
-                                                  child: Expanded(
-                                                    child: Text(
-                                                      "Name:${data["name"].toString()}",
-                                                      style: TextStyle(
-                                                          fontSize: 18),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: SizedBox(
-                                                  child: Expanded(
-                                                    child: Text(
-                                                      "Location:${data["location"].toString()}",
-                                                      style: TextStyle(
-                                                          fontSize: 16),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: SizedBox(
-                                                  child: Expanded(
-                                                    child: Text(
-                                                      data["available"]
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          color: Color.fromARGB(
-                                                              255, 4, 7, 1)),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                child: RatingBar(
-                                                  filledIcon: Icons.star,
-                                                  size: 20,
-                                                  emptyIcon: Icons.star_border,
-                                                  onRatingChanged: (value) =>
-                                                      _updateRating(value),
-                                                  initialRating: 0,
-                                                  maxRating: 5,
-                                                ),
-                                              )
-                                            ],
+                                            child: Text(
+                                              "Name:${data["name"].toString()}",
+                                              style: TextStyle(fontSize: 18),
+                                            ),
                                           ),
+                                          SizedBox(
+                                            child: Text(
+                                              "Location:${data["location"].toString()}",
+                                              style: TextStyle(fontSize: 16),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            child: Text(
+                                              data["available"].toString(),
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Color.fromARGB(
+                                                      255, 4, 7, 1)),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            child: RatingBar(
+                                              filledIcon: Icons.star,
+                                              size: 20,
+                                              emptyIcon: Icons.star_border,
+                                              onRatingChanged: (value) =>
+                                                  _updateRating(value),
+                                              initialRating: 0,
+                                              maxRating: 5,
+                                            ),
+                                          )
                                         ],
                                       ),
-                                    ),
+                                    ],
                                   ),
                                 ),
                               ),

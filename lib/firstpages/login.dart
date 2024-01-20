@@ -53,6 +53,7 @@ class _FirstloginState extends State<Firstlogin> {
         String location = customerSnapshot.docs[0]["location"];
         String count = customerSnapshot.docs[0]["token"].toString();
         String available1 = customerSnapshot.docs[0]["available"];
+        String limittoken = customerSnapshot.docs[0]["option2"];
 
         // String qualification = customerSnapshot.docs[0]
         //     ["qualification"]; // Retrieve the ID from the first document
@@ -65,7 +66,9 @@ class _FirstloginState extends State<Firstlogin> {
         spref.setString('count', count);
         spref.setString("available", available1);
         spref.setString('department', department);
-        spref.setString('fees', fees); // Save the user ID to SharedPreferences
+        spref.setString('fees', fees);
+        spref.setString(
+            "limittoken", limittoken); // Save the user ID to SharedPreferences
         // spref.setString('qualification', qualification);
 
         Fluttertoast.showToast(msg: 'Login Successful as Doctor');

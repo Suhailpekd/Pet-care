@@ -314,6 +314,7 @@ class _Loginpage_doctorState extends State<Loginpage_doctor> {
                 width: double.infinity,
                 child: Center(
                   child: TextFormField(
+                    keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your fees';
