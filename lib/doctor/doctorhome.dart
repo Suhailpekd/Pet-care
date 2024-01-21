@@ -22,6 +22,7 @@ class _DoctorhomeState extends State<Doctorhome> {
   String username = '';
   var counted = "";
   var available = "";
+  var petid = "";
   @override
   void initState() {
     super.initState();
@@ -164,6 +165,7 @@ class _DoctorhomeState extends State<Doctorhome> {
                   String customerId = documents[0].id;
                   String name = documents[0]["name"];
                   imageurl = documents[0]["image"];
+                  petid = documents[0]["option2"];
 
                   // String department = documents[0]["age"];
                   // String email = customerSnapshot.docs[0]["email"];
@@ -204,7 +206,8 @@ class _DoctorhomeState extends State<Doctorhome> {
                                           bookdate: data["date"],
                                           bookedtime: data["time"],
                                           image: imageurl,
-                                          appointmentid: documents[index].id)));
+                                          appointmentid: documents[index].id,
+                                          petid: documents[index]["option1"])));
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(6.0),

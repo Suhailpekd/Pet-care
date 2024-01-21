@@ -100,7 +100,7 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
       "image": imagestatus,
       "graphdata": "",
       "graph2data": "",
-      "option1": "",
+      "option1": petId,
       "option2": ""
     });
     await fair2updatedoctor();
