@@ -76,6 +76,11 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
     });
   }
 
+  var Image = "";
+  var petId = "";
+  var imagestatus;
+  var customerId = "";
+  var name = "";
   DateTime now = DateTime.now();
 
   Future<void> updatebooking() async {
@@ -92,12 +97,18 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
       "status": "0",
       "username": userId,
       "token": count,
+      "image": imagestatus,
+      "graphdata": "",
+      "graph2data": "",
+      "option1": "",
+      "option2": ""
     });
     await fair2updatedoctor();
 
     // Fluttertoast.showToast(msg: 'Booking Successful ${widget.name}');
   }
 
+  bool isChecked = false;
   Future<void> fair2updatedoctor() async {
     await FirebaseFirestore.instance
         .collection("doctorlist")
@@ -197,21 +208,67 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
               ),
             ),
           ),
-          DropdownButton(
-            value: selectedData,
-            items: firebaseData
-                .map((value) => DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    ))
-                .toList(),
-            onChanged: (String? newValue) {
-              setState(() {
-                selectedData = newValue!;
-                updateFirebaseData(selectedData);
-              });
-            },
-          ),
+          FutureBuilder<QuerySnapshot>(
+              future: FirebaseFirestore.instance
+                  .collection('petlist')
+                  .where("userid", isEqualTo: userogid)
+                  .get(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                }
+
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return Center(child: Text('No data available'));
+                }
+
+                // Extract the documents from the snapshot
+                final List<DocumentSnapshot> documents = snapshot.data!.docs;
+                var petname = documents[0]["name"];
+                petId = documents[0].id;
+                Image = documents[0]["image_url"];
+                var petidmap = {
+                  "petid": petId,
+                };
+
+                if (documents.isNotEmpty) {
+                  // String department = documents[0]["age"];
+                  // String email = customerSnapshot.docs[0]["email"];
+                  // String fees = customerSnapshot.docs[0]["fees"];
+                  // String qualification = customerSnapshot.docs[0]
+                  //     ["qualification"]; // Retrieve the ID from the first document
+                }
+                // spref.setString('agepet', age);
+                // spref.setString('department', department);
+                // spref.setString('fees', fees); // Save the user ID to SharedPreferences
+                // spref.setString('qualification', qualification);
+
+                return Row(
+                  children: [
+                    Checkbox(
+                      value: isChecked,
+                      onChanged: (value) {
+                        setState(() {
+                          isChecked = value ?? false;
+                          if (value == true) {
+                            setState(() {
+                              imagestatus = Image;
+                            });
+                          } else {
+                            imagestatus = "no image";
+                          }
+                        });
+                      },
+                    ),
+                    Text(petname)
+                  ],
+                );
+              }),
           Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Container(

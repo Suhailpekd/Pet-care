@@ -418,9 +418,10 @@ class _AddingPetRecState extends State<AddingPetRec> {
                                     "heartrate": heartrate,
                                     "bp": bp,
                                     "image_url": imageUrl,
-                                    "petupdatedheartrate": [],
-                                    "petupdetheights": [],
-                                    "petupdetweight": [], "petupdetbp": []
+                                    "petupheartrate": [heartrate],
+                                    "petupheight": [height],
+                                    "petupweight": [Weight],
+                                    "petupbp": [bp]
                                     // Add the image URL here
                                   });
 

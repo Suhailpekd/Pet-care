@@ -54,6 +54,7 @@ class _DoctorhomeState extends State<Doctorhome> {
     }
   }
 
+  var imageurl = "";
   @override
   Widget build(BuildContext context) {
     double value = 3.5;
@@ -162,6 +163,8 @@ class _DoctorhomeState extends State<Doctorhome> {
                 if (documents.isNotEmpty) {
                   String customerId = documents[0].id;
                   String name = documents[0]["name"];
+                  imageurl = documents[0]["image"];
+
                   // String department = documents[0]["age"];
                   // String email = customerSnapshot.docs[0]["email"];
                   // String fees = customerSnapshot.docs[0]["fees"];
@@ -200,6 +203,7 @@ class _DoctorhomeState extends State<Doctorhome> {
                                           username: data["username"],
                                           bookdate: data["date"],
                                           bookedtime: data["time"],
+                                          image: imageurl,
                                           appointmentid: documents[index].id)));
                             },
                             child: Padding(
@@ -213,8 +217,8 @@ class _DoctorhomeState extends State<Doctorhome> {
                                       height: 80,
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(15),
-                                        child: Image.asset(
-                                          "asset/catpic.jpg",
+                                        child: Image.network(
+                                          imageurl,
                                           fit: BoxFit.fill,
                                         ),
                                       ),

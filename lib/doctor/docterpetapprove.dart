@@ -4,18 +4,21 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:petcare/doctor/doctorhome.dart';
 import 'package:petcare/user/conformbooking/conformbook.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class Doctorappointments extends StatefulWidget {
   var appointmentid;
   var bookdate;
   var bookedtime;
   var username;
+  var image;
   Doctorappointments(
       {super.key,
       required this.appointmentid,
       required this.bookdate,
       required this.bookedtime,
-      required this.username});
+      required this.username,
+      required this.image});
 
   @override
   State<Doctorappointments> createState() => _DoctorappointmentsState();
@@ -39,8 +42,8 @@ class _DoctorappointmentsState extends State<Doctorappointments> {
               children: [
                 CircleAvatar(
                   backgroundColor: const Color.fromARGB(255, 163, 202, 234),
-                  backgroundImage: AssetImage(
-                    "asset/catpic.jpg",
+                  backgroundImage: NetworkImage(
+                    widget.image,
                   ),
                   radius: 70,
                 ),
@@ -79,6 +82,23 @@ class _DoctorappointmentsState extends State<Doctorappointments> {
               ),
             ),
           ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(28.0),
+          child: Container(
+              width: screenSize.width,
+              height: screenSize.height / 2,
+              child: SfSparkLineChart(
+                //Enable the trackball
+                trackball: SparkChartTrackball(
+                    activationMode: SparkChartActivationMode.tap),
+                //Enable marker
+                marker: SparkChartMarker(
+                    displayMode: SparkChartMarkerDisplayMode.all),
+                //Enable data label
+                labelDisplayMode: SparkChartLabelDisplayMode.all,
+                data: <double>[100, 200, 300],
+              )),
         ),
       ]),
     );
