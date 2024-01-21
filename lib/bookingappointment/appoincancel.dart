@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:petcare/admin/tabbar.dart';
 import 'package:petcare/user/conformbooking/conformbook.dart';
@@ -208,7 +209,7 @@ class _CancelbookingState extends State<Cancelbooking> {
                   await delt();
                   await fetchData();
                   // await updateDocument();
-
+                  Fluttertoast.showToast(msg: "your appointment is Cancelled");
                   Navigator.pop(context);
                 },
                 child: Container(

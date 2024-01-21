@@ -617,7 +617,8 @@ class _Pet_updatesState extends State<Pet_updates> {
                                               "petsid": widget.petid,
                                               "heartrate": heartratelist,
                                               "date": datelistheartrate
-                                            });
+                                            }).then((value) =>
+                                                    Navigator.pop(context));
                                           },
                                           child: Updatebutton())
                                     ],

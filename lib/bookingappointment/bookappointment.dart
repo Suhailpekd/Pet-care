@@ -25,19 +25,46 @@ class Appointment_inner_page extends StatefulWidget {
 }
 
 class _Appointment_inner_pageState extends State<Appointment_inner_page> {
-  @override
-  var userId = "";
-  var userogid = "";
-  List a = [];
-  int limitcount = 0;
-  int count = 0;
-
+// List to store Firebase collection data
   @override
   void initState() {
     super.initState();
     // Call your function to retrieve user ID here
     retrieveUserID();
     fetchData();
+    fetchDataFromFirebase();
+  }
+
+  @override
+  var userId = "";
+  var userogid = "";
+  List a = [];
+  int limitcount = 0;
+  int count = 0;
+  String selectedData = 'Select Data'; // Default value for dropdown
+  List firebaseData = [];
+
+  Future<void> fetchDataFromFirebase() async {
+    // Replace 'your_collection_name' with the actual name of your Firebase collection
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('petlist').get();
+
+    List data = querySnapshot.docs
+        .map((DocumentSnapshot document) => document['your_field_name'])
+        .toList();
+
+    setState(() {
+      firebaseData = data;
+    });
+  }
+
+  Future<void> updateFirebaseData(String selectedValue) async {
+    // Perform the necessary update to another Firebase collection
+    // Replace 'your_other_collection_name' and 'your_field_name' accordingly
+    await FirebaseFirestore.instance
+        .collection('your_other_collection_name')
+        .doc('document_id') // Replace 'document_id' with the actual document ID
+        .update({'your_field_name': selectedValue});
   }
 
   Future<dynamic> retrieveUserID() async {
@@ -108,8 +135,7 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
           .collection('doctorlist')
           .doc(widget.id)
           .update({
-        "option"
-            'token': count,
+        'token': count,
         "bookedtime": '${now.hour}:${(now.minute)}:${(now.second)}'.toString(),
       });
       await updatebooking();
@@ -170,6 +196,21 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
                 ),
               ),
             ),
+          ),
+          DropdownButton(
+            value: selectedData,
+            items: firebaseData
+                .map((value) => DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    ))
+                .toList(),
+            onChanged: (String? newValue) {
+              setState(() {
+                selectedData = newValue!;
+                updateFirebaseData(selectedData);
+              });
+            },
           ),
           Padding(
             padding: const EdgeInsets.only(top: 20),
