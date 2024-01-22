@@ -101,7 +101,11 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
       "graphdata": "",
       "graph2data": "",
       "option1": petId,
-      "option2": ""
+      "option2": "",
+      "height": "",
+      "weight": "",
+      "bp": "",
+      "heartrate": ""
     });
     await fair2updatedoctor();
 

@@ -165,7 +165,7 @@ class _DoctorhomeState extends State<Doctorhome> {
                   String customerId = documents[0].id;
                   String name = documents[0]["name"];
                   imageurl = documents[0]["image"];
-                  petid = documents[0]["option2"];
+                  petid = documents[0]["option1"];
 
                   // String department = documents[0]["age"];
                   // String email = customerSnapshot.docs[0]["email"];
@@ -202,12 +202,13 @@ class _DoctorhomeState extends State<Doctorhome> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => Doctorappointments(
-                                          username: data["username"],
-                                          bookdate: data["date"],
-                                          bookedtime: data["time"],
-                                          image: imageurl,
-                                          appointmentid: documents[index].id,
-                                          petid: documents[index]["option1"])));
+                                            username: data["username"],
+                                            bookdate: data["date"],
+                                            bookedtime: data["time"],
+                                            image: imageurl,
+                                            appointmentid: documents[index].id,
+                                            petid: petid,
+                                          )));
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(6.0),

@@ -27,7 +27,7 @@ class Doctorappointments extends StatefulWidget {
 }
 
 class _DoctorappointmentsState extends State<Doctorappointments> {
-  var graph = [];
+  // var graph;
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQueryData().size;
@@ -107,7 +107,11 @@ class _DoctorappointmentsState extends State<Doctorappointments> {
 
               // Extract the documents from the snapshot
               final List<DocumentSnapshot> documents = snapshot.data!.docs;
-              var graph = documents[0]["height"];
+              List<dynamic> graphData = documents.last["height"];
+
+              // Convert the graphData to a list of double
+              List graph = graphData.map((value) => value.toDouble()).toList();
+              print(graph);
 
               if (documents.isNotEmpty) {
                 // String department = documents[0]["age"];
@@ -122,22 +126,21 @@ class _DoctorappointmentsState extends State<Doctorappointments> {
               // spref.setString('qualification', qualification);
 
               return Padding(
-                padding: const EdgeInsets.all(28.0),
-                child: Container(
-                    width: screenSize.width,
-                    height: screenSize.height / 2,
-                    child: SfSparkLineChart(
-                      //Enable the trackball
-                      trackball: SparkChartTrackball(
-                          activationMode: SparkChartActivationMode.tap),
-                      //Enable marker
-                      marker: SparkChartMarker(
-                          displayMode: SparkChartMarkerDisplayMode.all),
-                      //Enable data label
-                      labelDisplayMode: SparkChartLabelDisplayMode.all,
-                      data: graph,
-                    )),
-              );
+                  padding: const EdgeInsets.all(28.0),
+                  child: Container(
+                      width: screenSize.width,
+                      height: 150,
+                      child: SfSparkLineChart(
+                        //Enable the trackball
+                        trackball: SparkChartTrackball(
+                            activationMode: SparkChartActivationMode.tap),
+                        //Enable marker
+                        marker: SparkChartMarker(
+                            displayMode: SparkChartMarkerDisplayMode.all),
+                        //Enable data label
+                        labelDisplayMode: SparkChartLabelDisplayMode.all,
+                        data: <double>[1, 2, 3],
+                      )));
             }),
       ]),
     );
