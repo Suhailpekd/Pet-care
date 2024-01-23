@@ -32,7 +32,6 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
     // Call your function to retrieve user ID here
     retrieveUserID();
     fetchData();
-    fetchDataFromFirebase();
   }
 
   @override
@@ -44,28 +43,28 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
   String selectedData = 'Select Data'; // Default value for dropdown
   List firebaseData = [];
 
-  Future<void> fetchDataFromFirebase() async {
-    // Replace 'your_collection_name' with the actual name of your Firebase collection
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('petlist').get();
+  // Future<void> fetchDataFromFirebase() async {
+  //   // Replace 'your_collection_name' with the actual name of your Firebase collection
+  //   QuerySnapshot querySnapshot =
+  //       await FirebaseFirestore.instance.collection('petlist').get();
 
-    List data = querySnapshot.docs
-        .map((DocumentSnapshot document) => document['your_field_name'])
-        .toList();
+  //   List data = querySnapshot.docs
+  //       .map((DocumentSnapshot document) => document['your_field_name'])
+  //       .toList();
 
-    setState(() {
-      firebaseData = data;
-    });
-  }
+  //   setState(() {
+  //     firebaseData = data;
+  //   });
+  // }
 
-  Future<void> updateFirebaseData(String selectedValue) async {
-    // Perform the necessary update to another Firebase collection
-    // Replace 'your_other_collection_name' and 'your_field_name' accordingly
-    await FirebaseFirestore.instance
-        .collection('your_other_collection_name')
-        .doc('document_id') // Replace 'document_id' with the actual document ID
-        .update({'your_field_name': selectedValue});
-  }
+  // Future<void> updateFirebaseData(String selectedValue) async {
+  //   // Perform the necessary update to another Firebase collection
+  //   // Replace 'your_other_collection_name' and 'your_field_name' accordingly
+  //   await FirebaseFirestore.instance
+  //       .collection('your_other_collection_name')
+  //       .doc('document_id') // Replace 'document_id' with the actual document ID
+  //       .update({'your_field_name': selectedValue});
+  // }
 
   Future<dynamic> retrieveUserID() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -125,9 +124,8 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
       QuerySnapshot querySnapshot =
           await FirebaseFirestore.instance.collection("doctorlist").get();
       count = querySnapshot.docs[0]["token"];
-      setState(() {
-        limitcount = querySnapshot.docs[0]["option2"];
-      });
+
+      limitcount = querySnapshot.docs[0]["option2"];
 
       print("hhhhhhhhhhhhh$limitcount");
       return querySnapshot.docs;
@@ -141,11 +139,14 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
   Future<void> updateDocument() async {
     // fetchData();
 
-    if (count <= limitcount) {
+    if (count >= limitcount) {
       Fluttertoast.showToast(msg: "Error Booking, Slots Full");
       Navigator.pop(context);
     } else {
-      count++;
+      setState(() {
+        count++;
+      });
+
       await FirebaseFirestore.instance
           .collection('doctorlist')
           .doc(widget.id)
@@ -154,6 +155,49 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
         "bookedtime": '${now.hour}:${(now.minute)}:${(now.second)}'.toString(),
       });
       await updatebooking();
+
+      await showDialog(
+        barrierLabel: "your token",
+        context: context,
+        builder: (context) => Center(
+          child: Padding(
+            padding: const EdgeInsets.all(28.0),
+            child: Container(
+              height: 200,
+              decoration: BoxDecoration(color: Colors.white, boxShadow: []),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: SizedBox(
+                        child: Column(
+                          children: [
+                            Text(
+                              "Booking Succesfull",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Color.fromARGB(255, 3, 159, 173)),
+                            ),
+                            Text(
+                              "Your Token Number $count",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Color.fromARGB(255, 3, 159, 173)),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+
       Fluttertoast.showToast(msg: 'Booking Successful ${widget.name}');
     }
   }
@@ -304,51 +348,6 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
             child: InkWell(
               onTap: () async {
                 await updateDocument();
-
-                showDialog(
-                  barrierLabel: "your token",
-                  context: context,
-                  builder: (context) => Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(28.0),
-                      child: Container(
-                        height: 200,
-                        decoration:
-                            BoxDecoration(color: Colors.white, boxShadow: []),
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(18.0),
-                                child: SizedBox(
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        "Booking Succesfull",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            color: Color.fromARGB(
-                                                255, 3, 159, 173)),
-                                      ),
-                                      Text(
-                                        "Your Token Number $count",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            color: Color.fromARGB(
-                                                255, 3, 159, 173)),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
               },
               child: Container(
                 width: double.infinity,

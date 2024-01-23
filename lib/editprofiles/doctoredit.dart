@@ -39,20 +39,17 @@ class _DoctorproeditState extends State<Doctorproedit> {
       location = prefs.getString('location') ?? '';
       id = prefs.getString('id') ?? '';
       available = prefs.getString("available") ?? "";
+      about = prefs.getString("about") ?? "";
 
       setState(() {
         nametext = TextEditingController(text: name);
         emailtext = TextEditingController(text: email);
         locationtext = TextEditingController(text: location);
+        abouttext = TextEditingController(text: about);
         setState(() {
           selectedOption = available;
         });
       });
-      Future<void> sharedagain() async {
-        SharedPreferences sprefs = await SharedPreferences.getInstance();
-        sprefs.setString("available", selectedOption);
-        sprefs.setString('count', counttext.text);
-      }
 
       print(email);
       print(location);
@@ -62,10 +59,10 @@ class _DoctorproeditState extends State<Doctorproedit> {
     return selectedOption;
   }
 
-  Future<void> sharedagain() async {
-    SharedPreferences pref2 = await SharedPreferences.getInstance();
-    pref2.setString("available", selectedOption);
-  }
+  // Future<void> sharedagain() async {
+  //   SharedPreferences pref2 = await SharedPreferences.getInstance();
+  //   pref2.setString("available", selectedOption);
+  // }
 
   Future<void> updateDocument() async {
     // Get a reference to the Firestore collection
@@ -79,6 +76,16 @@ class _DoctorproeditState extends State<Doctorproedit> {
     });
 
     print('Document successfully updated!');
+  }
+
+  Future<void> sharedagain() async {
+    SharedPreferences sprefs = await SharedPreferences.getInstance();
+    sprefs.setString("available", selectedOption);
+    sprefs.setString('count', counttext.text);
+    sprefs.setString("about", abouttext.text);
+    sprefs.setString("name", nametext.text);
+    sprefs.setString("email", emailtext.text);
+    sprefs.setString("location", locationtext.text);
   }
 
   final formkey = GlobalKey<FormState>();

@@ -23,6 +23,7 @@ class _DoctorhomeState extends State<Doctorhome> {
   var counted = "";
   var available = "";
   var petid = "";
+  var about = "";
   @override
   void initState() {
     super.initState();
@@ -36,7 +37,7 @@ class _DoctorhomeState extends State<Doctorhome> {
     userId = prefs.getString('id') ?? ''.toString();
     counted = prefs.getString('count') ?? "".toString();
     available = prefs.getString("available") ?? "".toString();
-
+    about = prefs.getString("about") ?? "".toString();
     print(userId);
     print(counted); // Retrieve the user ID
   }

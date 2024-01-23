@@ -27,7 +27,7 @@ class Doctorappointments extends StatefulWidget {
 }
 
 class _DoctorappointmentsState extends State<Doctorappointments> {
-  // var graph;
+  List a = [];
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQueryData().size;
@@ -86,6 +86,12 @@ class _DoctorappointmentsState extends State<Doctorappointments> {
             ),
           ),
         ),
+        Center(
+          child: Text(
+            "Height",
+            style: TextStyle(fontSize: 26),
+          ),
+        ),
         FutureBuilder<QuerySnapshot>(
             future: FirebaseFirestore.instance
                 .collection('height')
@@ -109,9 +115,11 @@ class _DoctorappointmentsState extends State<Doctorappointments> {
               final List<DocumentSnapshot> documents = snapshot.data!.docs;
               List<dynamic> graphData = documents.last["height"];
 
+              List a = graphData;
+
               // Convert the graphData to a list of double
               List graph = graphData.map((value) => value.toDouble()).toList();
-              print(graph);
+              print(a);
 
               if (documents.isNotEmpty) {
                 // String department = documents[0]["age"];
@@ -126,21 +134,232 @@ class _DoctorappointmentsState extends State<Doctorappointments> {
               // spref.setString('qualification', qualification);
 
               return Padding(
-                  padding: const EdgeInsets.all(28.0),
-                  child: Container(
-                      width: screenSize.width,
-                      height: 150,
-                      child: SfSparkLineChart(
-                        //Enable the trackball
-                        trackball: SparkChartTrackball(
-                            activationMode: SparkChartActivationMode.tap),
-                        //Enable marker
-                        marker: SparkChartMarker(
-                            displayMode: SparkChartMarkerDisplayMode.all),
-                        //Enable data label
-                        labelDisplayMode: SparkChartLabelDisplayMode.all,
-                        data: <double>[1, 2, 3],
-                      )));
+                padding: const EdgeInsets.all(18.0),
+                child: Column(
+                  children: [
+                    Container(
+                        width: 260,
+                        height: 150,
+                        child: SfSparkLineChart(
+                            //Enable the trackball
+                            trackball: SparkChartTrackball(
+                                activationMode: SparkChartActivationMode.tap),
+                            //Enable marker
+                            marker: SparkChartMarker(
+                                displayMode: SparkChartMarkerDisplayMode.all),
+                            //Enable data label
+                            labelDisplayMode: SparkChartLabelDisplayMode.all,
+                            data: <double>[10, 2, 3, 4, 5, 8, 9])),
+                  ],
+                ),
+              );
+            }),
+
+//weight
+        Center(
+          child: Text(
+            "Weight",
+            style: TextStyle(fontSize: 26),
+          ),
+        ),
+        FutureBuilder<QuerySnapshot>(
+            future: FirebaseFirestore.instance
+                .collection('weight')
+                .where("petid", isEqualTo: widget.petid)
+                .get(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              }
+
+              if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                return Center(child: Text('No data available'));
+              }
+
+              // Extract the documents from the snapshot
+              final List<DocumentSnapshot> documents = snapshot.data!.docs;
+              List<dynamic> graphData = documents.last["weight"];
+
+              List a = graphData;
+
+              // Convert the graphData to a list of double
+              List graph = graphData.map((value) => value.toDouble()).toList();
+              print(a);
+
+              if (documents.isNotEmpty) {
+                // String department = documents[0]["age"];
+                // String email = customerSnapshot.docs[0]["email"];
+                // String fees = customerSnapshot.docs[0]["fees"];
+                // String qualification = customerSnapshot.docs[0]
+                //     ["qualification"]; // Retrieve the ID from the first document
+              }
+              // spref.setString('agepet', age);
+              // spref.setString('department', department);
+              // spref.setString('fees', fees); // Save the user ID to SharedPreferences
+              // spref.setString('qualification', qualification);
+
+              return Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Column(
+                  children: [
+                    Container(
+                        width: 260,
+                        height: 150,
+                        child: SfSparkLineChart(
+                            //Enable the trackball
+                            trackball: SparkChartTrackball(
+                                activationMode: SparkChartActivationMode.tap),
+                            //Enable marker
+                            marker: SparkChartMarker(
+                                displayMode: SparkChartMarkerDisplayMode.all),
+                            //Enable data label
+                            labelDisplayMode: SparkChartLabelDisplayMode.all,
+                            data: <double>[10, 2, 3, 4, 5, 8, 9])),
+                  ],
+                ),
+              );
+            }),
+        Center(
+          child: Text(
+            "Bp",
+            style: TextStyle(fontSize: 26),
+          ),
+        ),
+        FutureBuilder<QuerySnapshot>(
+            future: FirebaseFirestore.instance
+                .collection('bp')
+                .where("petid", isEqualTo: widget.petid)
+                .get(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              }
+
+              if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                return Center(child: Text('No data available'));
+              }
+
+              // Extract the documents from the snapshot
+              final List<DocumentSnapshot> documents = snapshot.data!.docs;
+              List<dynamic> graphData = documents.last["height"];
+
+              List a = graphData;
+
+              // Convert the graphData to a list of double
+              List graph = graphData.map((value) => value.toDouble()).toList();
+              print(a);
+
+              if (documents.isNotEmpty) {
+                // String department = documents[0]["age"];
+                // String email = customerSnapshot.docs[0]["email"];
+                // String fees = customerSnapshot.docs[0]["fees"];
+                // String qualification = customerSnapshot.docs[0]
+                //     ["qualification"]; // Retrieve the ID from the first document
+              }
+              // spref.setString('agepet', age);
+              // spref.setString('department', department);
+              // spref.setString('fees', fees); // Save the user ID to SharedPreferences
+              // spref.setString('qualification', qualification);
+
+              return Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Column(
+                  children: [
+                    Container(
+                        width: 260,
+                        height: 150,
+                        child: SfSparkLineChart(
+                            //Enable the trackball
+                            trackball: SparkChartTrackball(
+                                activationMode: SparkChartActivationMode.tap),
+                            //Enable marker
+                            marker: SparkChartMarker(
+                                displayMode: SparkChartMarkerDisplayMode.all),
+                            //Enable data label
+                            labelDisplayMode: SparkChartLabelDisplayMode.all,
+                            data: <double>[10, 2, 3, 4, 5, 8, 9])),
+                  ],
+                ),
+              );
+            }),
+
+        Center(
+          child: Text(
+            "Heart rate",
+            style: TextStyle(fontSize: 26),
+          ),
+        ),
+        FutureBuilder<QuerySnapshot>(
+            future: FirebaseFirestore.instance
+                .collection('bp')
+                .where("petid", isEqualTo: widget.petid)
+                .get(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              }
+
+              if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                return Center(child: Text('No data available'));
+              }
+
+              // Extract the documents from the snapshot
+              final List<DocumentSnapshot> documents = snapshot.data!.docs;
+              List<dynamic> graphData = documents.last["height"];
+
+              List a = graphData;
+
+              // Convert the graphData to a list of double
+              List graph = graphData.map((value) => value.toDouble()).toList();
+              print(a);
+
+              if (documents.isNotEmpty) {
+                // String department = documents[0]["age"];
+                // String email = customerSnapshot.docs[0]["email"];
+                // String fees = customerSnapshot.docs[0]["fees"];
+                // String qualification = customerSnapshot.docs[0]
+                //     ["qualification"]; // Retrieve the ID from the first document
+              }
+              // spref.setString('agepet', age);
+              // spref.setString('department', department);
+              // spref.setString('fees', fees); // Save the user ID to SharedPreferences
+              // spref.setString('qualification', qualification);
+
+              return Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Column(
+                  children: [
+                    Container(
+                        width: 260,
+                        height: 150,
+                        child: SfSparkLineChart(
+                            //Enable the trackball
+                            trackball: SparkChartTrackball(
+                                activationMode: SparkChartActivationMode.tap),
+                            //Enable marker
+                            marker: SparkChartMarker(
+                                displayMode: SparkChartMarkerDisplayMode.all),
+                            //Enable data label
+                            labelDisplayMode: SparkChartLabelDisplayMode.all,
+                            data: <double>[10, 2, 3, 4, 5, 8, 9])),
+                  ],
+                ),
+              );
             }),
       ]),
     );
