@@ -400,7 +400,6 @@ class _Loginpage_doctorState extends State<Loginpage_doctor> {
                           .collection("doctorlist")
                           .add({
                         "token": 0,
-                        "sheduledtime": "",
                         "about": about,
                         "location": location,
                         "name": name,
@@ -414,7 +413,6 @@ class _Loginpage_doctorState extends State<Loginpage_doctor> {
                         "option1": "",
                         "option2": "",
                         "review": "",
-                        "option3": ""
                       }).then((value) => Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(

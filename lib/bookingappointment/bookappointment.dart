@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:petcare/navigation/navigation.dart';
-import 'package:petcare/user/conformbooking/conformbook.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Appointment_inner_page extends StatefulWidget {
@@ -42,6 +42,7 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
   int count = 0;
   String selectedData = 'Select Data'; // Default value for dropdown
   List firebaseData = [];
+  String selectedValue = 'Option 1';
 
   // Future<void> fetchDataFromFirebase() async {
   //   // Replace 'your_collection_name' with the actual name of your Firebase collection
@@ -77,7 +78,7 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
 
   var Image = "";
   var petId = "";
-  var imagestatus;
+  var imagestatus = "";
   var customerId = "";
   var name = "";
   DateTime now = DateTime.now();
@@ -96,7 +97,7 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
       "status": "0",
       "username": userId,
       "token": count,
-      "image": imagestatus,
+      "image": Image ?? "noimage",
       "graphdata": "",
       "graph2data": "",
       "option1": petId,
@@ -119,20 +120,24 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
         .update({"option1": userogid});
   }
 
-  Future<List<QueryDocumentSnapshot>> fetchData() async {
+  Future<DocumentSnapshot> fetchData() async {
     try {
-      QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection("doctorlist").get();
-      count = querySnapshot.docs[0]["token"];
+      DocumentSnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection("doctorlist")
+          .doc(widget.id)
+          .get();
 
-      limitcount = querySnapshot.docs[0]["option2"];
+      setState(() {
+        count = querySnapshot["token"];
+        limitcount = querySnapshot["option2"];
+      });
 
       print("hhhhhhhhhhhhh$limitcount");
-      return querySnapshot.docs;
+      return querySnapshot;
     } catch (e) {
       // Handle errors, log or display a meaningful error message.
       print("Error fetching data: $e");
-      return [];
+      return Future.value(null);
     }
   }
 
@@ -154,6 +159,7 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
         'token': count,
         "bookedtime": '${now.hour}:${(now.minute)}:${(now.second)}'.toString(),
       });
+
       await updatebooking();
 
       await showDialog(
@@ -278,11 +284,10 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
                 // Extract the documents from the snapshot
                 final List<DocumentSnapshot> documents = snapshot.data!.docs;
                 var petname = documents[0]["name"];
+
                 petId = documents[0].id;
                 Image = documents[0]["image_url"];
-                var petidmap = {
-                  "petid": petId,
-                };
+                print("$Image");
 
                 if (documents.isNotEmpty) {
                   // String department = documents[0]["age"];
@@ -296,25 +301,30 @@ class _Appointment_inner_pageState extends State<Appointment_inner_page> {
                 // spref.setString('fees', fees); // Save the user ID to SharedPreferences
                 // spref.setString('qualification', qualification);
 
-                return Row(
-                  children: [
-                    Checkbox(
-                      value: isChecked,
-                      onChanged: (value) {
-                        setState(() {
-                          isChecked = value ?? false;
-                          if (value == true) {
-                            setState(() {
-                              imagestatus = Image;
-                            });
-                          } else {
-                            imagestatus = "no image";
-                          }
-                        });
-                      },
-                    ),
-                    Text(petname)
-                  ],
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Selecte pet: $selectedValue'),
+                      SizedBox(height: 20),
+                      DropdownButton<String>(
+                        value: selectedValue,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedValue = newValue!;
+                          });
+                        },
+                        items: <String>[]
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
                 );
               }),
           Padding(

@@ -152,12 +152,16 @@ class _UserregState extends State<Userreg> {
                 width: double.infinity,
                 child: Center(
                   child: TextFormField(
+                    keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your phone number';
                       }
                       if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
                         return 'Invalid phone number format';
+                      }
+                      if (value.length != 10) {
+                        return 'Phone number should be 10 digits long';
                       }
                       return null;
                     },
@@ -195,6 +199,7 @@ class _UserregState extends State<Userreg> {
                 width: double.infinity,
                 child: Center(
                   child: TextFormField(
+                    keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your age';
@@ -354,7 +359,7 @@ class _UserregState extends State<Userreg> {
                       "email": email,
                       "password": password,
                       "age": age,
-                      "status": 0,
+                      "status": "0",
                       "location": location,
                       "phone": phone
                     }).then((value) => Navigator.pushReplacement(

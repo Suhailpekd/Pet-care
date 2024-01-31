@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
@@ -29,8 +27,10 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
     // Call your function to retrieve user ID here
     retrieveUserID();
     fetchData();
+    sharedimage();
   }
 
+  var petoid = "";
   var image = "";
   var userId = "";
   var userogid = "";
@@ -195,9 +195,8 @@ class _Customer_pet_addState extends State<Customer_pet_add> {
                                             borderRadius:
                                                 BorderRadius.circular(19),
                                             child: Image.network(
-                                              image.toString(),
-
-                                              // fit: BoxFit.cover,
+                                              image
+                                                  .toString(), // fit: BoxFit.cover,
                                             ))),
                                   ),
                                 ),

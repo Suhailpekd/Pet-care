@@ -1,9 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:custom_rating_bar/custom_rating_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:petcare/logoutbuttun.dart';
 import 'package:petcare/bookingappointment/bookappointment.dart';
+import 'package:petcare/provider.dart';
+import 'package:petcare/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Customer_doctor extends StatefulWidget {
@@ -24,25 +28,32 @@ class _Customer_doctorState extends State<Customer_doctor> {
     retrieveUserID();
   }
 
-  var id = "";
+  var id2 = "";
   double value2 = 0;
+  var ratingstatus = "0";
   void _updateRating(double rating) {
     // Access Firebase Firestore and add the rating to the collection
     FirebaseFirestore.instance.collection('ratings').add({
       'rating': rating,
       'timestamp': FieldValue.serverTimestamp(),
       "userogId": userId,
-      "doctorId": id // Optionally, you can include a timestamp
+      "doctorId": id2 // Optionally, you can include a timestamp
     }).then((value) {
       setState(() {
         value2 = rating;
       });
       print('Rating added to Firestore: $rating');
+      setState(() {
+        ratingstatus = "1";
+      });
+      Navigator.pop(context);
+      Fluttertoast.showToast(msg: "Rating Updated $rating");
     }).catchError((error) {
       print('Error adding rating to Firestore: $error');
     });
   }
 
+  var a = "1";
   Future<dynamic> retrieveUserID() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -138,7 +149,8 @@ class _Customer_doctorState extends State<Customer_doctor> {
                         // Access data from each document in the collection
                         Map<String, dynamic> data =
                             documents[index].data() as Map<String, dynamic>;
-                        id = documents[index].id;
+
+                        var id = documents[index].id;
 
                         // Create a Container using the data
                         return Padding(
@@ -156,7 +168,9 @@ class _Customer_doctorState extends State<Customer_doctor> {
                                 //   "userid": userogid,
                                 //   "review": value2
                                 // });
-
+                                setState(() {
+                                  id2 = id;
+                                });
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -195,7 +209,7 @@ class _Customer_doctorState extends State<Customer_doctor> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                "Name:${data["name"].toString()}kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
+                                                "Name:${data["name"].toString()}",
                                                 style: TextStyle(fontSize: 18),
                                               ),
                                             ),
@@ -215,17 +229,38 @@ class _Customer_doctorState extends State<Customer_doctor> {
                                                         255, 4, 7, 1)),
                                               ),
                                             ),
-                                            Expanded(
-                                              child: RatingBar(
-                                                filledIcon: Icons.star,
-                                                size: 20,
-                                                emptyIcon: Icons.star_border,
-                                                onRatingChanged: (value) =>
-                                                    _updateRating(value),
-                                                initialRating: 0,
-                                                maxRating: 5,
+                                            if (ratingstatus == "0")
+                                              Expanded(
+                                                child: RatingBar(
+                                                  filledIcon: Icons.star,
+                                                  size: 20,
+                                                  emptyIcon: Icons.star_border,
+                                                  onRatingChanged: (value) =>
+                                                      showCupertinoModalPopup(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        Container(
+                                                      width: screenSize.width,
+                                                      height: screenSize.height,
+                                                      color: Color.fromARGB(
+                                                          66, 43, 53, 47),
+                                                      child: Center(
+                                                        child: ElevatedButton(
+                                                            onPressed: () {
+                                                              _updateRating(
+                                                                  value);
+                                                            },
+                                                            child: Text(
+                                                                "Conform Rating$value")),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  initialRating: 0,
+                                                  maxRating: 5,
+                                                ),
                                               ),
-                                            )
+                                            if (ratingstatus == "1")
+                                              Text("Rating Alredy Updated")
                                           ],
                                         ),
                                       ),

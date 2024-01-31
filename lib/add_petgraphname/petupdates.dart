@@ -46,23 +46,267 @@ class _Pet_updatesState extends State<Pet_updates> {
       bp = widget.bp;
       print("jnifi");
     });
+
+    // fetchWeight();
+    fetchHeight();
+    // fetchBp();
+    // fetchHr();
+  }
+
+  List weightData = [];
+  List heightData = [];
+  List bpData = [];
+  List hrData = [];
+  List monthData = [];
+  List monthData1 = [];
+  List monthData2 = [];
+  List monthData3 = [];
+
+  //------------------ WEIGHT GRAPH------------------//
+
+  Future<void> fetchWeight() async {
+    SharedPreferences spref = await SharedPreferences.getInstance();
+    var sp = spref.getString('id');
+    QuerySnapshot weightSnapshot = await FirebaseFirestore.instance
+        .collection('weight')
+        .where('petid', isEqualTo: widget.petid)
+        .get();
+
+    setState(() {
+      // Map weight and month data
+      weightData = weightSnapshot.docs.map((doc) => doc['weight']).toList();
+      monthData = weightSnapshot.docs.map((doc) => doc['month']).toList();
+
+      // Convert month names to numerical values
+      Map<String, int> monthMap = {
+        'January': 1,
+        'February': 2,
+        'March': 3,
+        'April': 4,
+        'May.': 5,
+        'June': 6,
+        'July': 7,
+        'August': 8,
+        'September': 9,
+        'October': 10,
+        'November': 11,
+        'December': 12,
+      };
+
+      // Sort both weightData and monthData based on the numerical month values
+      for (int i = 0; i < monthData.length - 1; i++) {
+        for (int j = i + 1; j < monthData.length; j++) {
+          int? monthValueI = monthMap[monthData[i]];
+          int? monthValueJ = monthMap[monthData[j]];
+
+          if (monthValueI != null && monthValueJ != null) {
+            if (monthValueI > monthValueJ) {
+              // Swap weights
+              var tempWeight = weightData[i];
+              weightData[i] = weightData[j];
+              weightData[j] = tempWeight;
+
+              // Swap months
+              var tempMonth = monthData[i];
+              monthData[i] = monthData[j];
+              monthData[j] = tempMonth;
+            }
+          }
+        }
+      }
+    });
+
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  Future<void> fetchHeight() async {
+    SharedPreferences spref = await SharedPreferences.getInstance();
+    var sp = spref.getString('id');
+    QuerySnapshot heightSnapshot = await FirebaseFirestore.instance
+        .collection('height')
+        .where('petid', isEqualTo: widget.petid)
+        .get();
+
+    setState(() {
+      // Map weight and month data
+      heightData = heightSnapshot.docs.map((doc) => doc['height']).toList();
+      monthData1 = heightSnapshot.docs.map((doc) => doc['month']).toList();
+
+      // Convert month names to numerical values
+      Map<String, int> monthMap1 = {
+        'January': 1,
+        'February': 2,
+        'March': 3,
+        'April': 4,
+        'May': 5,
+        'June': 6,
+        'July': 7,
+        'August': 8,
+        'September': 9,
+        'October': 10,
+        'November': 11,
+        'December': 12,
+      };
+
+      // Sort both weightData and monthData based on the numerical month values
+      for (int i = 0; i < monthData1.length - 1; i++) {
+        for (int j = i + 1; j < monthData1.length; j++) {
+          int? monthValueI = monthMap1[monthData1[i]];
+          int? monthValueJ = monthMap1[monthData1[j]];
+
+          if (monthValueI != null && monthValueJ != null) {
+            if (monthValueI > monthValueJ) {
+              // Swap weights
+              var tempHeight = heightData[i];
+              heightData[i] = heightData[j];
+              heightData[j] = tempHeight;
+
+              // Swap months
+              var tempMonth = monthData1[i];
+              monthData1[i] = monthData1[j];
+              monthData1[j] = tempMonth;
+            }
+          }
+        }
+      }
+    });
+
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  Future<void> fetchHr() async {
+    SharedPreferences spref = await SharedPreferences.getInstance();
+    var sp = spref.getString('id');
+    QuerySnapshot hrSnapshot = await FirebaseFirestore.instance
+        .collection('hr')
+        .where('petid', isEqualTo: widget.petid)
+        .get();
+
+    setState(() {
+      // Map weight and month data
+      hrData = hrSnapshot.docs.map((doc) => doc['hr']).toList();
+      monthData3 = hrSnapshot.docs.map((doc) => doc['month']).toList();
+
+      // Convert month names to numerical values
+      Map<String, int> monthMap3 = {
+        'January': 1,
+        'February': 2,
+        'March': 3,
+        'April': 4,
+        'May': 5,
+        'June': 6,
+        'July': 7,
+        'August': 8,
+        'September': 9,
+        'October': 10,
+        'November': 11,
+        'December': 12,
+      };
+
+      // Sort both weightData and monthData based on the numerical month values
+      for (int i = 0; i < monthData3.length - 1; i++) {
+        for (int j = i + 1; j < monthData3.length; j++) {
+          int? monthValueI = monthMap3[monthData3[i]];
+          int? monthValueJ = monthMap3[monthData3[j]];
+
+          if (monthValueI != null && monthValueJ != null) {
+            if (monthValueI > monthValueJ) {
+              // Swap weights
+              var tempHr = hrData[i];
+              hrData[i] = hrData[j];
+              hrData[j] = tempHr;
+
+              // Swap months
+              var tempMonth = monthData3[i];
+              monthData3[i] = monthData3[j];
+              monthData3[j] = tempMonth;
+            }
+          }
+        }
+      }
+    });
+
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  Future<void> fetchBp() async {
+    SharedPreferences spref = await SharedPreferences.getInstance();
+    var sp = spref.getString('id');
+    QuerySnapshot bpSnapshot = await FirebaseFirestore.instance
+        .collection('bp')
+        .where('petid', isEqualTo: widget.petid)
+        .get();
+
+    setState(() {
+      // Map weight and month data
+      bpData = bpSnapshot.docs.map((doc) => doc['bp']).toList();
+      monthData2 = bpSnapshot.docs.map((doc) => doc['month']).toList();
+
+      // Convert month names to numerical values
+      Map<String, int> monthMap2 = {
+        'January': 1,
+        'February': 2,
+        'March': 3,
+        'April': 4,
+        'May.': 5,
+        'June': 6,
+        'July': 7,
+        'August': 8,
+        'September': 9,
+        'October': 10,
+        'November': 11,
+        'December': 12,
+      };
+
+      // Sort both weightData and monthData based on the numerical month values
+      for (int i = 0; i < monthData2.length - 1; i++) {
+        for (int j = i + 1; j < monthData2.length; j++) {
+          int? monthValueI = monthMap2[monthData2[i]];
+          int? monthValueJ = monthMap2[monthData2[j]];
+
+          if (monthValueI != null && monthValueJ != null) {
+            if (monthValueI > monthValueJ) {
+              // Swap weights
+              var tempBp = bpData[i];
+              bpData[i] = bpData[j];
+              bpData[j] = tempBp;
+
+              // Swap months
+              var tempMonth = monthData2[i];
+              monthData2[i] = monthData2[j];
+              monthData2[j] = tempMonth;
+            }
+          }
+        }
+      }
+    });
+
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Future<void> update() async {
     // Get the current date
     DateTime now = DateTime.now();
-    setState(() {
-      heightlist.add(height);
-      datelistheight.add(
-        '${now.year}-${(now.month)}-${(now.day)}'.toString(),
-      );
-    });
+    // setState(() {
+    //   heightlist.add(height);
+    //   datelistheight.add(
+    //     '${now.year}-${(now.month)}-${(now.day)}'.toString(),
+    //   );
+    // });
 
     // Update the "height" collection
     await FirebaseFirestore.instance.collection("height").add({
       "petid": widget.petid,
-      "height": heightlist,
-      "date": datelistheight,
+      "height": height,
+      "date": '${now.year}-${(now.month)}-${(now.day)}'.toString(),
     });
 
     // Update the "petlist" document
@@ -76,14 +320,14 @@ class _Pet_updatesState extends State<Pet_updates> {
   }
 
   DateTime now = DateTime.now();
-  var datelistheight = [];
-  var datelistweight = [];
-  var datelistbp = [];
+  var datelistheight;
+  var datelistweight;
+  var datelistbp;
   var datelistheartrate = [];
-  var heightlist = [];
-  var weightlist = [];
-  var bplist = [];
-  var heartratelist = [];
+  var heightlist;
+  var weightlist;
+  var bplist;
+  var heartratelist;
   var name = "";
   var age = "";
   var height = "";
@@ -140,23 +384,27 @@ class _Pet_updatesState extends State<Pet_updates> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(28.0),
-                      child: Container(
-                          width: screenSize.width,
-                          height: screenSize.height / 4,
-                          child: SfSparkLineChart(
-                            //Enable the trackball
-                            trackball: SparkChartTrackball(
-                                activationMode: SparkChartActivationMode.tap),
-                            //Enable marker
-                            marker: SparkChartMarker(
-                                displayMode: SparkChartMarkerDisplayMode.all),
-                            //Enable data label
-                            labelDisplayMode: SparkChartLabelDisplayMode.all,
-                            data: <double>[double.parse(widget.height)],
-                          )),
-                    ),
-
+                        padding: const EdgeInsets.all(28.0),
+                        child: Container(
+                            width: screenSize.width,
+                            height: screenSize.height / 4,
+                            child: SfSparkLineChart(
+                                //Enable the trackball
+                                trackball: SparkChartTrackball(
+                                    activationMode:
+                                        SparkChartActivationMode.tap),
+                                //Enable marker
+                                marker: SparkChartMarker(
+                                    displayMode:
+                                        SparkChartMarkerDisplayMode.all),
+                                //Enable data label
+                                labelDisplayMode:
+                                    SparkChartLabelDisplayMode.all,
+                                data: List.generate(weightData.length, (index) {
+                                  // Ensure index is within valid range
+                                  return double.parse(
+                                      weightData[index].toString());
+                                })))),
 //height update
 
                     InkWell(
@@ -234,6 +482,10 @@ class _Pet_updatesState extends State<Pet_updates> {
                                                 .validate()) {
                                               // Form is valid, proceed with the update
                                               await update();
+
+                                              // setState(() {
+                                              //   fetchHeight();
+                                              // });
                                             }
                                           },
                                           child: Updatebutton())
@@ -265,7 +517,7 @@ class _Pet_updatesState extends State<Pet_updates> {
                                 displayMode: SparkChartMarkerDisplayMode.all),
                             //Enable data label
                             labelDisplayMode: SparkChartLabelDisplayMode.all,
-                            data: <double>[double.parse(widget.weight)],
+                            data: <double>[0, double.parse(widget.weight)],
                           )),
                     ),
 
@@ -345,19 +597,15 @@ class _Pet_updatesState extends State<Pet_updates> {
                                             if (formKey.currentState
                                                     ?.validate() ??
                                                 false) {}
-                                            setState(() {
-                                              weightlist.add(Weight);
-                                              datelistweight.add(
-                                                '${now.year}-${(now.month)}-${(now.day)}'
-                                                    .toString(),
-                                              );
-                                            });
+
                                             await FirebaseFirestore.instance
                                                 .collection("weight")
                                                 .add({
                                               "petid": widget.petid,
-                                              "weight": weightlist,
-                                              "date": datelistweight
+                                              "weight": Weight,
+                                              "date":
+                                                  '${now.year}-${(now.month)}-${(now.day)}'
+                                                      .toString(),
                                             });
                                             await FirebaseFirestore.instance
                                                 .collection("petlist")
@@ -398,7 +646,7 @@ class _Pet_updatesState extends State<Pet_updates> {
                                 displayMode: SparkChartMarkerDisplayMode.all),
                             //Enable data label
                             labelDisplayMode: SparkChartLabelDisplayMode.all,
-                            data: <double>[double.parse(widget.bp)],
+                            data: <double>[0, double.parse(widget.bp)],
                           )),
                     ),
 
@@ -478,19 +726,14 @@ class _Pet_updatesState extends State<Pet_updates> {
                                       ),
                                       InkWell(
                                           onTap: () async {
-                                            setState(() {
-                                              bplist.add(bp);
-                                              datelistbp.add(
-                                                '${now.year}-${(now.month)}-${(now.day)}'
-                                                    .toString(),
-                                              );
-                                            });
                                             await FirebaseFirestore.instance
                                                 .collection("bp")
                                                 .add({
                                               "petid": widget.petid,
-                                              "bp": bplist,
-                                              "date": datelistbp
+                                              "bp": bp,
+                                              "date":
+                                                  '${now.year}-${(now.month)}-${(now.day)}'
+                                                      .toString(),
                                             });
                                             await FirebaseFirestore.instance
                                                 .collection("petlist")
@@ -530,7 +773,7 @@ class _Pet_updatesState extends State<Pet_updates> {
                                 displayMode: SparkChartMarkerDisplayMode.all),
                             //Enable data label
                             labelDisplayMode: SparkChartLabelDisplayMode.all,
-                            data: <double>[double.parse(widget.heartrate)],
+                            data: <double>[0, double.parse(widget.heartrate)],
                           )),
                     ),
                     InkWell(
@@ -604,19 +847,14 @@ class _Pet_updatesState extends State<Pet_updates> {
                                       ),
                                       InkWell(
                                           onTap: () async {
-                                            setState(() {
-                                              heartratelist.add(heartrate);
-                                              datelistheartrate.add(
-                                                '${now.year}-${(now.month)}-${(now.day)}'
-                                                    .toString(),
-                                              );
-                                            });
                                             await FirebaseFirestore.instance
                                                 .collection("heartrate")
                                                 .add({
                                               "petsid": widget.petid,
-                                              "heartrate": heartratelist,
-                                              "date": datelistheartrate
+                                              "heartrate": heartrate,
+                                              "date":
+                                                  '${now.year}-${(now.month)}-${(now.day)}'
+                                                      .toString(),
                                             }).then((value) =>
                                                     Navigator.pop(context));
                                           },

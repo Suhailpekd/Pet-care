@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:petcare/admin/adminreview.dart';
 import 'package:petcare/admin/doctoraprove.dart';
@@ -102,46 +101,47 @@ class _DoctorlistState extends State<Doctorlist> {
                                     ))),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10, left: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  data["name"].toString(),
-                                  style: TextStyle(fontSize: 13),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  data["department"].toString(),
-                                  style: TextStyle(fontSize: 13),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              Reviews(doctorid: doctorid),
-                                        ));
-                                  },
-                                  child: SizedBox(
-                                    width: 70,
-                                    child: Text(
-                                      "Reviews",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 18),
-                                      selectionColor: Colors.white,
-                                    ),
+                        Expanded(
+                          child: SizedBox(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    "Name:${data["name"].toString()} ",
+                                    style: TextStyle(fontSize: 13),
                                   ),
                                 ),
-                              )
-                            ],
+                                Expanded(
+                                  child: Text(
+                                    "Department:${data["department"].toString()} ",
+                                    style: TextStyle(fontSize: 13),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                Reviews(doctorid: doctorid),
+                                          ));
+                                    },
+                                    child: SizedBox(
+                                      width: 70,
+                                      child: Text(
+                                        "Reviews",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 18),
+                                        selectionColor: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                         Padding(

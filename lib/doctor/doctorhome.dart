@@ -5,9 +5,8 @@ import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:petcare/doctor/docterpetapprove.dart';
 import 'package:petcare/editprofiles/doctoredit.dart';
 import 'package:petcare/logoutbuttun.dart';
-import 'package:petcare/user/admin/adminlogin.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:simple_star_rating/simple_star_rating.dart';
 
 class Doctorhome extends StatefulWidget {
   var cunt;
@@ -39,7 +38,7 @@ class _DoctorhomeState extends State<Doctorhome> {
     available = prefs.getString("available") ?? "".toString();
     about = prefs.getString("about") ?? "".toString();
     print(userId);
-    print(counted); // Retrieve the user ID
+    // Retrieve the user ID
   }
 
   Future<List<QueryDocumentSnapshot>> fetchData() async {
@@ -163,22 +162,20 @@ class _DoctorhomeState extends State<Doctorhome> {
                 // String petId = documents[0].id;
 
                 if (documents.isNotEmpty) {
-                  String customerId = documents[0].id;
-                  String name = documents[0]["name"];
-                  imageurl = documents[0]["image"];
-                  petid = documents[0]["option1"];
+                  // String customerId = documents[0].id;
+                  // String name = documents[0]["name"];
 
                   // String department = documents[0]["age"];
                   // String email = customerSnapshot.docs[0]["email"];
                   // String fees = customerSnapshot.docs[0]["fees"];
                   // String qualification = customerSnapshot.docs[0]
                   //     ["qualification"]; // Retrieve the ID from the first document
-                  Future<void> share() async {
-                    SharedPreferences spref =
-                        await SharedPreferences.getInstance();
-                    spref.setString('idpet', customerId);
-                    spref.setString('namepet', name);
-                  }
+                  // Future<void> share() async {
+                  //   SharedPreferences spref =
+                  //       await SharedPreferences.getInstance();
+                  //   spref.setString('idpet', customerId);
+                  //   spref.setString('namepet', name);
+                  // }
                 }
                 // spref.setString('agepet', age);
                 // spref.setString('department', department);
@@ -196,6 +193,7 @@ class _DoctorhomeState extends State<Doctorhome> {
                       itemBuilder: (context, index) {
                         final data =
                             documents[index].data() as Map<String, dynamic>;
+                        imageurl = data["image"];
                         // documents[index].id;
                         return InkWell(
                             onTap: () {
@@ -208,7 +206,7 @@ class _DoctorhomeState extends State<Doctorhome> {
                                             bookedtime: data["time"],
                                             image: imageurl,
                                             appointmentid: documents[index].id,
-                                            petid: petid,
+                                            petid: documents[index]["option1"],
                                           )));
                             },
                             child: Padding(

@@ -62,15 +62,7 @@ class _CustomerlistState extends State<Customerlist> {
                 ),
                 child: InkWell(
                   onTap: () {
-                    Future<void> share() async {
-                      SharedPreferences spref =
-                          await SharedPreferences.getInstance();
-                      spref.setString('iduser', data[0]["id"]);
-
-                      // var email = share.getString("email");
-                      // var location = share.getString("");
-                      // });
-                    }
+                    print("${documents[index].id}");
 
                     // var doc1;
                     Navigator.push(

@@ -49,6 +49,7 @@ dependencies:
   image_picker: ^0.8.4+2
   firebase_storage: ^11.6.0
   syncfusion_flutter_charts: ^24.1.45+1
+  provider: ^6.1.1
 
 dev_dependencies:
   flutter_test:

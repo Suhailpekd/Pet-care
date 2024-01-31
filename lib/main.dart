@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:petcare/firebase_options.dart';
 
 import 'package:petcare/firstpages/splash.dart';
+import 'package:petcare/provider.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,20 +21,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: Splash_()
-        // Tabbar1()
-        // Customer_pet_add(),
-        // Customer_doctor());
-        //  Appointment_inner_page());
-        //Customeraprove());
-        // Doctorhome());?
-        );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => Providerclass(),
+          )
+        ],
+        child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              useMaterial3: true,
+            ),
+            home: Splash_()));
   }
 }

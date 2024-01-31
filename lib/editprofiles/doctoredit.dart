@@ -78,15 +78,15 @@ class _DoctorproeditState extends State<Doctorproedit> {
     print('Document successfully updated!');
   }
 
-  Future<void> sharedagain() async {
-    SharedPreferences sprefs = await SharedPreferences.getInstance();
-    sprefs.setString("available", selectedOption);
-    sprefs.setString('count', counttext.text);
-    sprefs.setString("about", abouttext.text);
-    sprefs.setString("name", nametext.text);
-    sprefs.setString("email", emailtext.text);
-    sprefs.setString("location", locationtext.text);
-  }
+  // Future<void> sharedagain() async {
+  //   SharedPreferences sprefs = await SharedPreferences.getInstance();
+  //   sprefs.setString("available", selectedOption);
+  //   sprefs.setString('count', counttext.text);
+  //   sprefs.setString("about", abouttext.text);
+  //   sprefs.setString("name", nametext.text);
+  //   sprefs.setString("email", emailtext.text);
+  //   sprefs.setString("location", locationtext.text);
+  // }
 
   final formkey = GlobalKey<FormState>();
   @override
@@ -360,7 +360,7 @@ class _DoctorproeditState extends State<Doctorproedit> {
                           onTap: () async {
                             if (formkey.currentState?.validate() ?? false) {
                               await updateDocument();
-                              await sharedagain();
+                              // await sharedagain();
                               Navigator.pop(context);
                             }
                           },

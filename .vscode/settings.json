@@ -3,6 +3,7 @@
         "bookedtime",
         "doctoridwrr",
         "droeid",
-        "idappointments"
+        "idappointments",
+        "Querysnapshot"
     ]
 }

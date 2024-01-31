@@ -26,7 +26,8 @@ class _AddingPetRecState extends State<AddingPetRec> {
   var Weight;
   var heartrate;
   var bp;
-
+  DateTime now = DateTime.now();
+  var newid;
   Future<void> _pickImage(ImageSource source) async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: source);
@@ -407,9 +408,14 @@ class _AddingPetRecState extends State<AddingPetRec> {
                                 if (_formKey.currentState?.validate() ??
                                     false) {
                                   String imageUrl = await _uploadImage();
-                                  await FirebaseFirestore.instance
-                                      .collection("petlist")
-                                      .add({
+                                  DocumentReference newDocRef =
+                                      FirebaseFirestore.instance
+                                          .collection("petlist")
+                                          .doc();
+                                  String newDocId = newDocRef.id;
+                                  newid =
+                                      newDocId; // Getting the ID before adding data
+                                  await newDocRef.set({
                                     "userid": widget.useraid,
                                     "name": name,
                                     "age": age,
@@ -422,7 +428,40 @@ class _AddingPetRecState extends State<AddingPetRec> {
                                     "petupheight": [height],
                                     "petupweight": [Weight],
                                     "petupbp": [bp]
-                                    // Add the image URL here
+                                  });
+
+                                  print(newDocId);
+                                  await FirebaseFirestore.instance
+                                      .collection("height")
+                                      .add({
+                                    'height': height,
+                                    'date':
+                                        '${now.year}-${(now.month)}-${(now.day)}',
+                                    "petid": newid
+                                  });
+                                  await FirebaseFirestore.instance
+                                      .collection("bp")
+                                      .add({
+                                    'bp': bp,
+                                    'date':
+                                        '${now.year}-${(now.month)}-${(now.day)}',
+                                    "petid": newid
+                                  });
+                                  await FirebaseFirestore.instance
+                                      .collection("heartrate")
+                                      .add({
+                                    'heartrate': bp,
+                                    'date':
+                                        '${now.year}-${(now.month)}-${(now.day)}',
+                                    "petid": newid
+                                  });
+                                  await FirebaseFirestore.instance
+                                      .collection("weight")
+                                      .add({
+                                    'heartrate': Weight,
+                                    'date':
+                                        '${now.year}-${(now.month)}-${(now.day)}',
+                                    "petid": newid
                                   });
 
                                   Navigator.push(

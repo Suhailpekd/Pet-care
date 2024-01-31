@@ -11,7 +11,7 @@ class Customeraprove extends StatefulWidget {
   var doc1;
   var status;
 
-  String idcustomer;
+  var idcustomer;
 
   Customeraprove({
     super.key,
@@ -30,20 +30,41 @@ class _CustomeraproveState extends State<Customeraprove> {
   @override
   void initState() {
     super.initState();
-    share();
+    // share();
+    fetchData2();
   }
 
+  var status = "";
   var id = "";
-  Future<void> share() async {
-    var share = await SharedPreferences.getInstance();
-    setState(() {
-      id = share.getString("iduser").toString();
-      // var email = share.getString("email");
-      // var location = share.getString("");
-      print(id);
-    });
-  }
+  // Future<void> share() async {
+  //   var share = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     id = share.getString("iduser").toString();
+  //     // var email = share.getString("email");
+  //     // var location = share.getString("");
+  //     print(id);
+  //   });
+  // }
 
+  Future<DocumentSnapshot> fetchData2() async {
+    try {
+      DocumentSnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection("userlist")
+          .doc(widget.idcustomer)
+          .get();
+
+      setState(() {
+        status = querySnapshot["status"];
+      });
+
+      print("hhhhhhhhhhhhh$status");
+      return querySnapshot;
+    } catch (e) {
+      // Handle errors, log or display a meaningful error message.
+      print("Error fetching data: $e");
+      return Future.value(null);
+    }
+  }
   // Future<void> updateDocument() async {
   //   // Get a reference to the Firestore collection
   //   await FirebaseFirestore.instance
@@ -76,23 +97,23 @@ class _CustomeraproveState extends State<Customeraprove> {
               "Customer List",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
             ),
-            InkWell(
-              onTap: () async {
-                await FirebaseFirestore.instance
-                    .collection('doctorlist')
-                    .doc(widget.idcustomer)
-                    .delete();
-                Navigator.pushReplacement(context, MaterialPageRoute(
-                  builder: (context) {
-                    return Tabbar1();
-                  },
-                ));
-              },
-              child: Icon(
-                Icons.delete,
-                size: 29,
-              ),
-            ),
+            // InkWell(
+            //   onTap: () async {
+            //     await FirebaseFirestore.instance
+            //         .collection('doctorlist')
+            //         .doc(widget.idcustomer)
+            //         .delete();
+            //     Navigator.pushReplacement(context, MaterialPageRoute(
+            //       builder: (context) {
+            //         return Tabbar1();
+            //       },
+            //     ));
+            //   },
+            //   child: Icon(
+            //     Icons.delete,
+            //     size: 29,
+            //   ),
+            // ),
           ],
         )),
         body: ListView(children: [
@@ -151,7 +172,7 @@ class _CustomeraproveState extends State<Customeraprove> {
                     SizedBox(
                       height: screenSize.height / 3,
                     ),
-                    if (widget.status == "1")
+                    if (status == "1")
                       InkWell(
                         onTap: () async {
                           await FirebaseFirestore.instance
@@ -161,11 +182,7 @@ class _CustomeraproveState extends State<Customeraprove> {
                           await Fluttertoast.showToast(
                             msg: "Rejected",
                           );
-                          Navigator.pushReplacement(context, MaterialPageRoute(
-                            builder: (context) {
-                              return Tabbar1();
-                            },
-                          ));
+                          Navigator.pop(context);
                         },
                         child: Container(
                           width: screenSize.width / 2.3,
@@ -181,7 +198,7 @@ class _CustomeraproveState extends State<Customeraprove> {
                           )),
                         ),
                       ),
-                    if (widget.status == "0" || widget.status == "2")
+                    if (status == "0" || status == "2")
                       InkWell(
                         onTap: () async {
                           await FirebaseFirestore.instance
@@ -191,11 +208,7 @@ class _CustomeraproveState extends State<Customeraprove> {
                           await Fluttertoast.showToast(
                             msg: "Approved",
                           );
-                          Navigator.pushReplacement(context, MaterialPageRoute(
-                            builder: (context) {
-                              return Tabbar1();
-                            },
-                          ));
+                          Navigator.pop(context);
                         },
                         child: Container(
                           width: screenSize.width / 2.3,
